@@ -8,7 +8,7 @@ Four shared folders sit beside those suites. `shared-data` holds form values, im
 
 Capability features are split into `docs/capabilities/features/web/` and `docs/capabilities/features/app/`. Gherkin stays on those pages. The machine-readable scenario blocks were removed. The feature and scenario mapping tables are in [tests/e2e/README.md](../../../tests/e2e/README.md). How to run the suite is in [Website smoke tests](../../technical/guides/website-smoke-tests.md). How a page object and the session work is in [Playwright standards](../../technical/standards/playwright/README.md).
 
-On the website, accepting cookies now stores that choice for one year, and the cookie policy says so. The public header has Results, Sign up, and Sign in. Sign up asks Auth0 to open the sign-up screen. The score-checking list and the venue judge dialog use layout classes for their fields.
+On the website, accepting cookies now stores that choice for one year, and the cookie policy says so. The public homepage header no longer has a single **My Dashboard** button. It now has a site menu and two account buttons. The menu is a navigation bar labelled Site, and its first item is **Results**, which opens the public results page. **Sign up** is an outlined button and asks Auth0 to open the sign-up screen. **Sign in** is a filled button and goes to the dashboard, which starts sign-in when the visitor is not already signed in. The score-checking list and the venue judge dialog use layout classes for their fields.
 
 `npm run test:web:smoke` passed after the shared session was in place: cookie consent, create event, manage group, submit and amend registration, confirm registration, both invoice reviews, and the public browse.
 
