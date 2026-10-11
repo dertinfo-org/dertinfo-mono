@@ -2,7 +2,7 @@
 name: Public user
 type: role
 status: active
-updated: 2026-07-26
+updated: 2026-10-11
 id: public-user
 ---
 
@@ -15,6 +15,7 @@ Someone using the platform without a signed-in account (or browsing public pages
 ## Capabilities
 
 - [Log in](../features/web/auth-login.md)
+- [Homepage account](../features/web/homepage-account.md) — **Register** and **Login** when there is no active session
 - [Public content](../features/web/public-content.md)
 - [Cookie consent](../features/web/cookie-consent.md)
 - [Publish competition results](../features/web/results-publish.md) — public award outcomes only, after publish

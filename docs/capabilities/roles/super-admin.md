@@ -2,7 +2,7 @@
 name: Super administrator
 type: role
 status: deprecated
-updated: 2026-07-26
+updated: 2026-10-11
 id: super-admin
 ---
 
@@ -22,7 +22,7 @@ Historically a signed-in user with platform-wide administrative authority beyond
 
 ## Capabilities (legacy)
 
-- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md), [Homepage account](../features/web/homepage-account.md)
 - See also: [Deprecated super-admin privilege](../features/web/super-admin-deprecated.md)
 
 ## Limitations

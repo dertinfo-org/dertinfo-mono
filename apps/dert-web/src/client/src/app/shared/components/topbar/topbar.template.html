@@ -78,27 +78,5 @@
   <app-notifications-topbar-button (click)="toggleNotifications()"></app-notifications-topbar-button>
 
   <!-- Top left user menu -->
-  <button mat-icon-button [matMenuTriggerFor]="accountMenu" class="topbar-button-right img-button">
-    <img [src]="userData.picture" alt="">
-  </button>
-  <mat-menu #accountMenu="matMenu">
-    <button mat-menu-item [routerLink]="['/user-account/overview']">
-      <mat-icon>account_box</mat-icon>
-      <span>Profile</span>
-    </button>
-    <button mat-menu-item [routerLink]="['/user-account/settings']">
-      <mat-icon>settings</mat-icon>
-      <span>Account Settings</span>
-    </button>
-    <!--
-    <button mat-menu-item>
-      <mat-icon>notifications_off</mat-icon>
-      <span>Disable alerts</span>
-    </button>
-  -->
-    <button mat-menu-item routerLink="/auth/signout">
-      <mat-icon>exit_to_app</mat-icon>
-      <span>Sign out</span>
-    </button>
-  </mat-menu>
+  <app-session-account-menu *ngIf="userData" class="topbar-button-right" [user]="userData"></app-session-account-menu>
 </mat-toolbar>

@@ -9,8 +9,11 @@
         <a class="home-nav-item" routerLink="/content/results" data-testid="public-nav-results">Results</a>
       </nav>
       <div class="home-auth">
-        <button mat-stroked-button color="primary" type="button" class="home-auth-btn" (click)="signUp()" data-testid="public-signup">Sign up</button>
-        <button mat-raised-button color="primary" type="button" class="home-auth-btn" routerLink="/dashboard" data-testid="public-dashboard">Sign in</button>
+        <app-session-account-menu *ngIf="sessionUser" [user]="sessionUser" data-testid="public-session"></app-session-account-menu>
+        <ng-container *ngIf="!sessionUser">
+          <button mat-stroked-button color="primary" type="button" class="home-auth-btn" (click)="signUp()" data-testid="public-signup">Register</button>
+          <button mat-raised-button color="primary" type="button" class="home-auth-btn" routerLink="/dashboard" data-testid="public-dashboard">Login</button>
+        </ng-container>
       </div>
     </div>
   </div>

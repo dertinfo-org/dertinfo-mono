@@ -2,7 +2,7 @@
 name: Authenticated session
 type: system
 status: active
-updated: 2026-07-26
+updated: 2026-10-11
 id: system.authenticated-session
 roles: [member, group-member, group-admin, event-admin, venue-admin, dod-admin, super-admin]
 ---
@@ -17,6 +17,7 @@ The platform can recognise a signed-in user for the duration of a valid session 
 
 - After [log in](../features/web/auth-login.md), the platform treats the user as authenticated.
 - [Stay signed in](../features/web/auth-session-continuity.md) describes continuity across navigations.
+- [Homepage account](../features/web/homepage-account.md) shows their picture on the public homepage, or **Register** and **Login** when the session is not active. The same menu is available on signed-in pages.
 - [Log out](../features/web/auth-logout.md) ends the session.
 
 ## Dependencies

@@ -2,7 +2,7 @@
 name: Venue administrator
 type: role
 status: active
-updated: 2026-07-26
+updated: 2026-10-11
 id: venue-admin
 ---
 
@@ -15,7 +15,7 @@ At competition venues, captures scores and photographs judge score sheets (prima
 ## Capabilities
 
 - [Venue score capture](../features/app/venue-score-capture.md)
-- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md), [Homepage account](../features/web/homepage-account.md)
 
 ## Limitations
 

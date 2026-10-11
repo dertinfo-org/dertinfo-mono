@@ -210,6 +210,24 @@ export class AuthService {
   }
 
   /**
+   * Signed-in person for the public homepage header.
+   * Reads the Auth0 localStorage cache and user_data only. Does not call Auth0 or the API.
+   * An access-token cache whose expiresAt is not in the future is signed out, even when user_data remains.
+   */
+  public readActiveSession(): UserData | null {
+    if (!this.hasUnexpiredAccessToken()) {
+      return null;
+    }
+
+    const stored = this.userData();
+    if (stored) {
+      return stored;
+    }
+
+    return this.readUserFromUnexpiredCache();
+  }
+
+  /**
    * Step 6 — force a new access token (and refreshed custom claims) via refresh_token grant.
    * Used after group/event create when the API updates Auth0 app_metadata; the previous AT
    * still lacks the new groupadmin/eventadmin claim until we renew.
@@ -264,21 +282,73 @@ export class AuthService {
   }
 
   private applyClaimsToUserData(claims: Record<string, unknown>): void {
-    const user_data: UserData = {
-      email: (claims['email'] as string) || '',
-      name: (claims['name'] as string) || '',
-      nickname: (claims['nickname'] as string) || '',
-      picture: (claims['picture'] as string) || '',
-      firstname: (claims['https://dertinfo.co.uk/firstname'] as string) || '',
-      lastname: (claims['https://dertinfo.co.uk/lastname'] as string) || '',
-      phone: (claims['https://dertinfo.co.uk/phone'] as string) || '',
-      gdprConsentGained: !!(claims['https://dertinfo.co.uk/gdprconsentgained']),
-      dertOfDertsAdmin: !!(claims['https://dertinfo.co.uk/dodadmin']),
-      superAdmin: !!(claims['https://dertinfo.co.uk/superadmin']),
-    };
-
+    const user_data = this.userDataFromRecord(claims);
     localStorage.setItem(this.userDataStorageKey, JSON.stringify(user_data));
     this.userDataChangedSubject.next(user_data);
+  }
+
+  /**
+   * True when an Auth0 token cache entry (not the @@user@@ profile key) has expiresAt in the future.
+   * expiresAt is unix seconds, matching the SPA SDK cache.
+   */
+  private hasUnexpiredAccessToken(): boolean {
+    return this.readUnexpiredCacheEntry() !== null;
+  }
+
+  private readUserFromUnexpiredCache(): UserData | null {
+    const entry = this.readUnexpiredCacheEntry();
+    if (!entry) {
+      return null;
+    }
+
+    const decoded = entry.body && entry.body.decodedToken;
+    const claims = (decoded && decoded.claims) || {};
+    const user = (decoded && decoded.user) || {};
+    return this.userDataFromRecord(Object.assign({}, claims, user));
+  }
+
+  private readUnexpiredCacheEntry(): { body?: { decodedToken?: { user?: Record<string, unknown>; claims?: Record<string, unknown> } } } | null {
+    const now = Math.floor(Date.now() / 1000);
+    const keys = Object.keys(localStorage);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if (key.indexOf('@@auth0spajs@@') !== 0 || key.indexOf('@@user@@') !== -1) {
+        continue;
+      }
+
+      const raw = localStorage.getItem(key);
+      if (!raw) {
+        continue;
+      }
+
+      let entry: { expiresAt?: number; body?: { decodedToken?: { user?: Record<string, unknown>; claims?: Record<string, unknown> } } };
+      try {
+        entry = JSON.parse(raw);
+      } catch {
+        continue;
+      }
+
+      if (typeof entry.expiresAt === 'number' && entry.expiresAt > now) {
+        return entry;
+      }
+    }
+
+    return null;
+  }
+
+  private userDataFromRecord(source: Record<string, unknown>): UserData {
+    return {
+      email: (source['email'] as string) || '',
+      name: (source['name'] as string) || '',
+      nickname: (source['nickname'] as string) || '',
+      picture: (source['picture'] as string) || '',
+      firstname: (source['https://dertinfo.co.uk/firstname'] as string) || '',
+      lastname: (source['https://dertinfo.co.uk/lastname'] as string) || '',
+      phone: (source['https://dertinfo.co.uk/phone'] as string) || '',
+      gdprConsentGained: !!(source['https://dertinfo.co.uk/gdprconsentgained']),
+      dertOfDertsAdmin: !!(source['https://dertinfo.co.uk/dodadmin']),
+      superAdmin: !!(source['https://dertinfo.co.uk/superadmin']),
+    };
   }
 
   /**
