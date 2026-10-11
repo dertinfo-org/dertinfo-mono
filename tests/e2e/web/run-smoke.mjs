@@ -23,39 +23,66 @@ const steps = [
   ['public.content', ['--base-state', 'none', '--clear-session', 'false']],
 ];
 
-const forwarded = [];
-const argv = process.argv.slice(2);
-for (let index = 0; index < argv.length; index += 1) {
-  const arg = argv[index];
-  if (!arg.startsWith('--')) {
-    console.error(`Run one feature with node web/fixtures/<feature>/run.mjs. Unexpected ${arg}`);
+const stripFlags = new Set(['--base-state', '--clear-session']);
+const valueFlags = new Set(['--video', '--event-data', '--group-data']);
+
+export function forwardedSmokeArgs(argv) {
+  const forwarded = [];
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    if (!arg.startsWith('--')) {
+      throw new Error(`Run one feature with node web/fixtures/<feature>/run.mjs. Unexpected ${arg}`);
+    }
+    const equals = arg.indexOf('=');
+    const flag = equals === -1 ? arg : arg.slice(0, equals);
+    if (stripFlags.has(flag)) {
+      if (equals === -1) index += 1;
+      continue;
+    }
+    if (valueFlags.has(flag) && equals === -1) {
+      const value = argv[index + 1];
+      if (value == null || value === '' || value.startsWith('--')) {
+        throw new Error(`${flag} needs a value`);
+      }
+      forwarded.push(flag, value);
+      index += 1;
+      continue;
+    }
+    forwarded.push(arg);
+  }
+  return forwarded;
+}
+
+const invokedDirectly = process.argv[1]
+  && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (invokedDirectly) {
+  let forwarded;
+  try {
+    forwarded = forwardedSmokeArgs(process.argv.slice(2));
+  } catch (error) {
+    console.error(error.message);
     process.exit(1);
   }
-  if (arg === '--base-state' || arg === '--clear-session') {
-    index += 1;
-    continue;
-  }
-  if (arg.startsWith('--base-state=') || arg.startsWith('--clear-session=')) continue;
-  forwarded.push(arg);
-}
 
-clearRunState(sessionDir);
+  clearRunState(sessionDir);
 
-let failed = false;
-for (const [id, flags] of steps) {
-  console.log(`\n${'='.repeat(72)}\nFixture ${id}\n${'='.repeat(72)}`);
-  const code = await new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [path.join(fixturesDir, id, 'run.mjs'), ...forwarded, ...flags], {
-      stdio: 'inherit',
+  let failed = false;
+  for (const [id, flags] of steps) {
+    console.log(`\n${'='.repeat(72)}\nFixture ${id}\n${'='.repeat(72)}`);
+    const code = await new Promise((resolve, reject) => {
+      const child = spawn(process.execPath, [path.join(fixturesDir, id, 'run.mjs'), ...forwarded, ...flags], {
+        stdio: 'inherit',
+      });
+      child.on('error', reject);
+      child.on('close', resolve);
     });
-    child.on('error', reject);
-    child.on('close', resolve);
-  });
-  if (code !== 0) {
-    failed = true;
-    break;
+    if (code !== 0) {
+      failed = true;
+      break;
+    }
   }
-}
 
-if (!failed) clearRunState(sessionDir);
-process.exit(failed ? 1 : 0);
+  if (!failed) clearRunState(sessionDir);
+  process.exit(failed ? 1 : 0);
+}
