@@ -5,7 +5,7 @@ requires: public.cookie-consent
 # system-empty | system-basic | none
 baseState: system-empty
 
-# group1 | group2
+# group1 | group2 | group3
 groupData: group1
 
 # none | errors | all

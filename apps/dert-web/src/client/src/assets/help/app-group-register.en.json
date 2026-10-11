@@ -7,6 +7,18 @@
         "header": "Pricing",
         "body": "<p>These are the published tickets and prices for the event at this time. These may change in the future.</p>"
     },
+    "teams-and-people": {
+        "header": "Teams and people",
+        "body": "<p>Choose the teams that are coming, and the members and guests who are coming with them.</p>"
+    },
+    "activities": {
+        "header": "Activities",
+        "body": "<p>Tick a ticket for each selected team and person. The default ticket starts selected. Sold out tickets cannot be chosen.</p>"
+    },
+    "summary": {
+        "header": "Summary",
+        "body": "<p>Check the teams, people, and tickets before you agree to the terms.</p>"
+    },
     "terms": {
         "header": "Terms & conditions",
         "body": "<p>Accept the terms and conditions only if you wish the organiser of this event to recieve your information</p><p>This will allow the orgnaiser to be notified that you are interested in attending the the event. At submission they will gain the names of the members you are submitting.</p>"

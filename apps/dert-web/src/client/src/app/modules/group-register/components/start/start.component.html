@@ -3,37 +3,126 @@
     <mat-card-title>
       <div class="card-title-text">Registration Information</div>
     </mat-card-title>
-    <!--
-    <span fxFlex fxLayout="row-reverse">
-      <span class="avatar-tag md mr-1 mt-1">
-        <img [src]="eventPictureUrl | imageDimension:'100x100'" alt="" />
-      </span>
-      <span class="avatar-tag md mr-1 mt-1">
-        <img [src]="groupPictureUrl | imageDimension:'100x100'" alt="" />
-      </span>
-    </span>
-    -->
     <mat-divider></mat-divider>
   </mat-card-title-group>
   <mat-card-content>
     <mat-vertical-stepper [linear]="false" (selectionChange)="onStepperStepChange($event)">
       <mat-step>
-        <form>
-          <ng-template matStepLabel>Overview</ng-template>
-          <p>{{eventSynopsis}}</p>
-          <div class="pt-1">
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
-          </div>
-        </form>
+        <ng-template matStepLabel>Overview</ng-template>
+        <p>{{eventSynopsis}}</p>
+        <p *ngIf="eventStartDate || eventEndDate">
+          <span *ngIf="eventStartDate">{{eventStartDate | date:'d MMM yyyy'}}</span>
+          <span *ngIf="eventStartDate && eventEndDate"> – </span>
+          <span *ngIf="eventEndDate">{{eventEndDate | date:'d MMM yyyy'}}</span>
+        </p>
+        <p *ngIf="locationTown || locationPostcode">{{locationTown}} {{locationPostcode}}</p>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
       </mat-step>
       <mat-step>
-        <form>
-          <ng-template matStepLabel>Tickets And Pricing</ng-template>
-          <p>Functionality to show the tickets available here is still under development.</p>
-          <div class="pt-1">
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+        <ng-template matStepLabel>Tickets And Pricing</ng-template>
+        <h3>Individual tickets</h3>
+        <p *ngIf="!individualActivities.length">No individual tickets have been published.</p>
+        <div *ngFor="let activity of individualActivities" class="ticket-row">
+          <div class="ticket-title">{{activity.title}}</div>
+          <div *ngIf="activity.description">{{activity.description}}</div>
+          <div>
+            <span [price]="activity.price" [tbc]="activity.priceTBC"></span>
+            <span class="ticket-availability">{{activity.soldOut ? 'Sold out' : 'Available'}}</span>
           </div>
-        </form>
+        </div>
+        <h3>Team tickets</h3>
+        <p *ngIf="!teamActivities.length">No team tickets have been published.</p>
+        <div *ngFor="let activity of teamActivities" class="ticket-row">
+          <div class="ticket-title">{{activity.title}}</div>
+          <div *ngIf="activity.description">{{activity.description}}</div>
+          <div>
+            <span [price]="activity.price" [tbc]="activity.priceTBC"></span>
+            <span class="ticket-availability">{{activity.soldOut ? 'Sold out' : 'Available'}}</span>
+          </div>
+        </div>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Teams And People</ng-template>
+        <h3>Teams</h3>
+        <p *ngIf="!teams.length">This group has no teams.</p>
+        <div *ngFor="let team of teams">
+          <mat-checkbox [checked]="isTeamSelected(team.teamId)" (change)="onTeamToggle(team.teamId)">
+            {{team.teamName}}
+          </mat-checkbox>
+        </div>
+        <h3>People</h3>
+        <p *ngIf="!members.length">This group has no members or guests.</p>
+        <div *ngFor="let person of members">
+          <mat-checkbox [checked]="isPersonSelected(person.groupMemberId)" (change)="onPersonToggle(person.groupMemberId)">
+            {{person.name}} <span class="person-kind">({{personKind(person)}})</span>
+          </mat-checkbox>
+        </div>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Activities</ng-template>
+        <p *ngIf="!selectedTeams.length && !selectedPeople.length">Select teams and people on the previous step to choose their tickets.</p>
+        <div *ngFor="let team of selectedTeams" class="activity-block">
+          <h3>{{team.teamName}}</h3>
+          <p *ngIf="!teamActivities.length">No team tickets have been published.</p>
+          <div *ngFor="let activity of teamActivities">
+            <mat-checkbox
+              [checked]="isTeamActivitySelected(team.teamId, activity.id)"
+              [disabled]="activity.soldOut"
+              (change)="onTeamActivityToggle(team.teamId, activity.id)">
+              {{activity.title}}
+              <span [price]="activity.price" [tbc]="activity.priceTBC"></span>
+              <span *ngIf="activity.soldOut" class="ticket-availability">Sold out</span>
+            </mat-checkbox>
+          </div>
+        </div>
+        <div *ngFor="let person of selectedPeople" class="activity-block">
+          <h3>{{person.name}} <span class="person-kind">({{personKind(person)}})</span></h3>
+          <p *ngIf="!individualActivities.length">No individual tickets have been published.</p>
+          <div *ngFor="let activity of individualActivities">
+            <mat-checkbox
+              [checked]="isPersonActivitySelected(person.groupMemberId, activity.id)"
+              [disabled]="activity.soldOut"
+              (change)="onPersonActivityToggle(person.groupMemberId, activity.id)">
+              {{activity.title}}
+              <span [price]="activity.price" [tbc]="activity.priceTBC"></span>
+              <span *ngIf="activity.soldOut" class="ticket-availability">Sold out</span>
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Summary</ng-template>
+        <p *ngIf="!selectedTeams.length && !selectedPeople.length">No teams or people have been selected. You can still create the registration and add them afterwards.</p>
+        <div *ngFor="let team of selectedTeams" class="activity-block">
+          <h3>{{team.teamName}}</h3>
+          <p *ngIf="!ticketsForTeam(team.teamId).length">No ticket ticked.</p>
+          <div *ngFor="let activity of ticketsForTeam(team.teamId)">
+            {{activity.title}}
+            <span [price]="activity.price" [tbc]="activity.priceTBC"></span>
+          </div>
+        </div>
+        <div *ngFor="let person of selectedPeople" class="activity-block">
+          <h3>{{person.name}} <span class="person-kind">({{personKind(person)}})</span></h3>
+          <p *ngIf="!ticketsForPerson(person.groupMemberId).length">No ticket ticked.</p>
+          <div *ngFor="let activity of ticketsForPerson(person.groupMemberId)">
+            {{activity.title}}
+            <span [price]="activity.price" [tbc]="activity.priceTBC"></span>
+          </div>
+        </div>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
       </mat-step>
       <mat-step [stepControl]="termsAndConditionsFormGroup">
         <form [formGroup]="termsAndConditionsFormGroup">
@@ -50,7 +139,7 @@
             I agree to the terms and conditions
           </mat-checkbox>
           <div class="pt-1">
-            <button mat-raised-button color="primary" (click)="submit()" [disabled]="!termsAndConditionsFormGroup.valid">Submit</button>
+            <button mat-raised-button color="primary" (click)="submit()" [disabled]="!termsAndConditionsFormGroup.valid || submitting">Submit</button>
           </div>
         </form>
       </mat-step>

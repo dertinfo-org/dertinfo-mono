@@ -18,3 +18,17 @@
     cursor: pointer !important;
     color: #8FBE36;
 }
+
+.ticket-row,
+.activity-block {
+    margin-bottom: 12px;
+}
+
+.ticket-title {
+    font-weight: 600;
+}
+
+.ticket-availability,
+.person-kind {
+    margin-left: 8px;
+}

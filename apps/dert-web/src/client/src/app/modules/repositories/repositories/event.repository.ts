@@ -155,6 +155,22 @@ export class EventRepository extends RepositoryBase {
             catchError((err) => this.processApiError(err)));
     }
 
+    publishedTeamActivities(eventId: number): Observable<ActivityDto[]> {
+        const url = this.ApiUri + '/event/' + eventId.toString() + '/published-team-activities';
+
+        return this.http.get(url).pipe(
+            map((data) => this.eventActivityDtoMap(data)),
+            catchError((err) => this.processApiError(err)));
+    }
+
+    publishedIndividualActivities(eventId: number): Observable<ActivityDto[]> {
+        const url = this.ApiUri + '/event/' + eventId.toString() + '/published-individual-activities';
+
+        return this.http.get(url).pipe(
+            map((data) => this.eventActivityDtoMap(data)),
+            catchError((err) => this.processApiError(err)));
+    }
+
     // note - will use detail as development continues
     activityDetail(eventId: number, activityId: number): Observable<ActivityDetailDto> {
         const url = this.ApiUri + '/event/' + eventId.toString() + '/activities/' + activityId.toString();  // URL to web API

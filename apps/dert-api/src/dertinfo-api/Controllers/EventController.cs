@@ -289,6 +289,20 @@ namespace DertInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Route("{eventId}/published-individual-activities")]
+        public async Task<IActionResult> GetPublishedIndividualActivities(int eventId)
+        {
+            return await this.GetPublishedActivities(eventId, individual: true);
+        }
+
+        [HttpGet]
+        [Route("{eventId}/published-team-activities")]
+        public async Task<IActionResult> GetPublishedTeamActivities(int eventId)
+        {
+            return await this.GetPublishedActivities(eventId, individual: false);
+        }
+
+        [HttpGet]
         [Route("{eventId}/activities/{activityId}")]
         [Authorize(Policy = "EventAdministratorOnlyPolicy")]
         public async Task<IActionResult> GetActivity([FromRoute] int eventId, [FromRoute] int activityId)
@@ -805,6 +819,62 @@ namespace DertInfo.Api.Controllers
         #endregion
 
         #region Private
+
+        private async Task<IActionResult> GetPublishedActivities(int eventId, bool individual)
+        {
+            var authorisationPolicy = EventGetPublishedActivitiesPolicy.PolicyName;
+
+            Event myEvent = await this._eventService.GetForAuthorization(eventId);
+
+            if (myEvent == null) return NotFound();
+
+            if (!this.PublishedActivitiesAreAvailable(myEvent))
+            {
+                return StatusCode(403, "event activities are not published");
+            }
+
+            if (await this.CheckAuthorisationPolicy(authorisationPolicy, myEvent))
+            {
+                base.ExtractUser();
+
+                var activities = individual
+                    ? await _eventService.GetPublishedIndividualActivities(eventId)
+                    : await _eventService.GetPublishedTeamActivities(eventId);
+
+                List<ActivityDto> activityDtos = _mapper.Map<List<ActivityDto>>(activities);
+
+                return Ok(activityDtos);
+            }
+
+            return StatusCode(403, " Failed to meet requirements for " + authorisationPolicy);
+        }
+
+        /// <summary>
+        /// Same day boundaries as EventRepository.GetAvailableWithPrimaryImage.
+        /// Private events are not published. A private event should be published only when
+        /// the group administrator is the same person who created the event. We do not
+        /// currently record that link, so there is no exception yet.
+        /// </summary>
+        private bool PublishedActivitiesAreAvailable(Event myEvent)
+        {
+            if (myEvent.EventVisibilityType == EventVisibilityType._private)
+            {
+                return false;
+            }
+
+            var now = DateTime.Now;
+            var startOfToday = new DateTime(now.Year, now.Month, now.Day);
+            var startOfTomorrow = startOfToday.AddDays(1);
+
+            var registrationHasOpened = myEvent.RegistrationOpenDate.HasValue
+                && myEvent.RegistrationOpenDate.Value < startOfTomorrow;
+            var registrationHasNotClosed = myEvent.RegistrationCloseDate.HasValue
+                && myEvent.RegistrationCloseDate.Value > startOfToday;
+            var eventHasNotStarted = myEvent.EventStartDate.HasValue
+                && myEvent.EventStartDate.Value > startOfToday;
+
+            return registrationHasOpened && registrationHasNotClosed && eventHasNotStarted;
+        }
 
         #endregion
 

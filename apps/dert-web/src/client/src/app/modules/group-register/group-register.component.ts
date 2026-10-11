@@ -34,6 +34,7 @@ export class GroupRegisterComponent implements OnInit, OnDestroy {
         this._activatedRoute.snapshot.data.groupRegisterOverview[1],
       );
       this._conductor.initUserData();
+      this._conductor.initCatalogue();
       this.activeView = this._activatedRoute.snapshot.params['view'];
     }));
 

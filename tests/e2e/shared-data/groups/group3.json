@@ -1,0 +1,26 @@
+{
+  "GroupName": "The Bouviers",
+  "Image": "family.jpg",
+  "GroupBio": "The sisters from Springfield",
+  "OriginTown": "Springfield",
+  "OriginPostcode": "SP1 3CC",
+  "PrimaryContactName": "Patty Bouvier",
+  "PrimaryContactEmail": "patty.bouvier@dertinfo.co.uk",
+  "PrimaryContactNumber": "01234567893",
+  "GroupMembers": [
+    {
+      "Name": "Patty Bouvier",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Selma Bouvier",
+      "MemberType": "guest"
+    }
+  ],
+  "Teams": [
+    {
+      "TeamName": "DMV",
+      "TeamBio": "The driving test team from Springfield"
+    }
+  ]
+}
