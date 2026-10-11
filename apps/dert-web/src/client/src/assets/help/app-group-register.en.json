@@ -9,7 +9,7 @@
     },
     "teams-and-people": {
         "header": "Teams and people",
-        "body": "<p>Choose the teams that are coming, and the members and guests who are coming with them.</p>"
+        "body": "<p>Choose the teams that are coming, and the members and guests who are coming with them.</p><p>New members can be added to the group before this form, or added after it.</p>"
     },
     "activities": {
         "header": "Activities",
