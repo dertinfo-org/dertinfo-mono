@@ -17,7 +17,7 @@
  *   - Body still shows "Warming up"
  *   - No "Warmup kick" console logs (giveItAKick never runs)
  *
- * Run: npm run test:login:warmup:refresh-trap  (from tests/e2e)
+ * Run: npm run test:login:warmup  (from tests/e2e)
  */
 import { chromium } from 'playwright';
 import { WEB_BASE, seedFakeSession } from '../../shared-tools/session.mjs';

@@ -6,6 +6,7 @@
 import path from 'path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'url';
+import { forwardedSmokeArgs } from '../shared-tools/smoke-args.mjs';
 import { clearRunState, sharedSessionDir } from '../shared-tools/run-config.mjs';
 
 const webDir = path.dirname(fileURLToPath(import.meta.url));
@@ -23,39 +24,36 @@ const steps = [
   ['public.content', ['--base-state', 'none', '--clear-session', 'false']],
 ];
 
-const forwarded = [];
-const argv = process.argv.slice(2);
-for (let index = 0; index < argv.length; index += 1) {
-  const arg = argv[index];
-  if (!arg.startsWith('--')) {
-    console.error(`Run one feature with node web/fixtures/<feature>/run.mjs. Unexpected ${arg}`);
+const invokedDirectly = process.argv[1]
+  && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (invokedDirectly) {
+  let forwarded;
+  try {
+    forwarded = forwardedSmokeArgs(process.argv.slice(2), 'web');
+  } catch (error) {
+    console.error(error.message);
     process.exit(1);
   }
-  if (arg === '--base-state' || arg === '--clear-session') {
-    index += 1;
-    continue;
-  }
-  if (arg.startsWith('--base-state=') || arg.startsWith('--clear-session=')) continue;
-  forwarded.push(arg);
-}
 
-clearRunState(sessionDir);
+  clearRunState(sessionDir);
 
-let failed = false;
-for (const [id, flags] of steps) {
-  console.log(`\n${'='.repeat(72)}\nFixture ${id}\n${'='.repeat(72)}`);
-  const code = await new Promise((resolve, reject) => {
-    const child = spawn(process.execPath, [path.join(fixturesDir, id, 'run.mjs'), ...forwarded, ...flags], {
-      stdio: 'inherit',
+  let failed = false;
+  for (const [id, flags] of steps) {
+    console.log(`\n${'='.repeat(72)}\nFixture ${id}\n${'='.repeat(72)}`);
+    const code = await new Promise((resolve, reject) => {
+      const child = spawn(process.execPath, [path.join(fixturesDir, id, 'run.mjs'), ...forwarded, ...flags], {
+        stdio: 'inherit',
+      });
+      child.on('error', reject);
+      child.on('close', resolve);
     });
-    child.on('error', reject);
-    child.on('close', resolve);
-  });
-  if (code !== 0) {
-    failed = true;
-    break;
+    if (code !== 0) {
+      failed = true;
+      break;
+    }
   }
-}
 
-if (!failed) clearRunState(sessionDir);
-process.exit(failed ? 1 : 0);
+  if (!failed) clearRunState(sessionDir);
+  process.exit(failed ? 1 : 0);
+}

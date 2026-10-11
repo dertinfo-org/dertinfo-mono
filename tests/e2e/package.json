@@ -7,15 +7,8 @@
   "scripts": {
     "postinstall": "playwright install chromium",
     "test:login:warmup": "node web/fixtures/fixture-2/run.mjs",
-    "test:login:warmup:baseline": "node web/tests/warmup.signed-in.records-full-flow.mjs",
-    "test:login:warmup:refresh-trap": "node web/tests/warmup.signed-in.stays-after-refresh.mjs",
-    "test:login:warmup:url-history": "node web/tests/warmup.signed-in.records-url-history.mjs",
-    "test:login:warmup:mid-race": "node web/tests/warmup.signed-in.sticks-on-slow-status.mjs",
-    "test:login:warmup:delay-control": "node web/tests/warmup.signed-in.reaches-dashboard.mjs",
-    "test:login:warmup:hang-vs-auth": "node web/tests/warmup.signed-in.compares-hang-with-auth-failure.mjs",
-    "test:login:warmup:stale-session": "node web/tests/warmup.signed-in.rejected-cache-returns-to-sign-in.mjs",
     "test:web:smoke": "node web/run-smoke.mjs",
-    "test:app:core": "node app/fixtures/scoring.venue-capture/run.mjs",
+    "test:app:smoke": "node app/run-smoke.mjs",
     "apply:state": "node shared-state/apply.mjs",
     "check:state": "node shared-state/apply.mjs --check"
   },

@@ -17,7 +17,7 @@
  *   - Mid-warmup: URL may still be /dashboard, warmup UI not yet visible
  *   - After complete: URL=/session/warmup, "Warming up"=true, sessionwarm=true
  *
- * Run: npm run test:login:warmup:mid-race  (from tests/e2e)
+ * Run: npm run test:login:warmup  (from tests/e2e)
  */
 import { chromium } from 'playwright';
 import { WEB_BASE, seedFakeSession } from '../../shared-tools/session.mjs';

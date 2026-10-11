@@ -18,6 +18,7 @@ Capability pages say what the product does. They keep the Gherkin and do not car
 | `tests/e2e/web/fixtures/<feature-id>/` | One website Gherkin feature. `run.mjs` is the entry point |
 | `tests/e2e/app/fixtures/<feature-id>/` | One app Gherkin feature. `run.mjs` is the entry point |
 | `tests/e2e/web/run-smoke.mjs` | Runs the website feature fixtures that have tests, in dependency order |
+| `tests/e2e/app/run-smoke.mjs` | Runs the app feature fixtures that have tests, in dependency order |
 | `tests/e2e/web/fixtures/fixture-2/` | Login warmup. This is not a Gherkin feature |
 | `tests/e2e/web/tests/` | Tests. Each fixture runner loads its own files |
 | `tests/e2e/web/pages/` | Page objects a flow calls. The runner does not load this folder |

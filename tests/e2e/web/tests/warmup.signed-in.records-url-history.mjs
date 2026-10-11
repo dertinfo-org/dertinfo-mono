@@ -16,7 +16,7 @@
  *   - URL visits /dashboard briefly, then may end on / (home) after 401s
  *   - sessionwarm: true, "Warmup kick succeeded" in console
  *
- * Run: npm run test:login:warmup:url-history  (from tests/e2e)
+ * Run: npm run test:login:warmup  (from tests/e2e)
  */
 import { chromium } from 'playwright';
 import { WEB_BASE, seedFakeSession } from '../../shared-tools/session.mjs';

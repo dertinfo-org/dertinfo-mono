@@ -17,7 +17,7 @@
  *   - Warming up: false
  *   - Dashboard-ish content visible
  *
- * Run: npm run test:login:warmup:delay-control  (from tests/e2e)
+ * Run: npm run test:login:warmup  (from tests/e2e)
  */
 import { chromium } from 'playwright';
 import { WEB_BASE, seedFakeSession } from '../../shared-tools/session.mjs';

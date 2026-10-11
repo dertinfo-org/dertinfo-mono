@@ -48,13 +48,6 @@ From `tests/e2e`:
 
 ```bash
 npm run test:login:warmup
-npm run test:login:warmup:baseline
-npm run test:login:warmup:mid-race
-npm run test:login:warmup:delay-control
-npm run test:login:warmup:refresh-trap
-npm run test:login:warmup:url-history
-npm run test:login:warmup:hang-vs-auth
-npm run test:login:warmup:stale-session
 ```
 
 Real Auth0 redirect and silent token refresh are not part of this fixture.
