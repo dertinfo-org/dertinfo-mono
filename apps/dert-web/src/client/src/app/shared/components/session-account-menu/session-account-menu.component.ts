@@ -10,4 +10,7 @@ import { UserData } from 'app/models/auth/userdata.model';
 })
 export class SessionAccountMenuComponent {
   @Input() user: UserData;
+
+  /** Local mark used when the session has no picture, so the page never loads an image over HTTP. */
+  readonly defaultAvatar = 'assets/images/di-avatar.svg';
 }
