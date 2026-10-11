@@ -19,7 +19,7 @@ Capability pages say what the product does. This page says how a smoke scenario 
 | `tests/e2e/web/smoke/steps/` | Page actions a flow calls, in order. The runner does not load this folder |
 | `tests/e2e/web/smoke/scenarios/run.mjs` | Reads feature contracts and runs the suite |
 | `tests/e2e/web/smoke/helpers.mjs` | Shared mechanics used by more than one flow |
-| `tests/e2e/web/smoke/recording.mjs` | Video flag, run folders, and clip names |
+| `tests/e2e/web/smoke/recording.mjs` | Video flag, run folders, and clip names. The app core fixture uses this too |
 | `tests/e2e/web/smoke/state/` | Gitignored session files and the chain of provided tokens |
 | `_recordings/` | Gitignored videos. The three newest timestamp folders are kept |
 | `tests/e2e/.env` | Gitignored persona emails and passwords |

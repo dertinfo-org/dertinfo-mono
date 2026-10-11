@@ -1,0 +1,132 @@
+[
+  {
+    "EventName": "City Zoo Gathering",
+    "Name": "Traditional Competition",
+    "CompetitionDescription": "A traditional competition where teams compete in front of 2 judges.",
+    "TeamEntryFee": 20,
+    "FlowState": "Generated",
+    "HasBeenPopulated": true,
+    "ResultsPublished": false,
+    "ResultsAreCollated": false,
+    "InTestingMode": false,
+    "AllowAdHocDanceAddition": false,
+    "JudgeRequirementPerVenue": 2,
+    "Venues": [
+      {
+        "Auth0ForcedId": 1,
+        "Name": "Main Hall",
+        "Auth0Username": "venue-admin-1@dertinfo.co.uk"
+      }
+    ],
+    "Judges": [
+      {
+        "Name": "Ada Judge",
+        "Email": "ada.judge@dertinfo.co.uk",
+        "Telephone": "01234567001"
+      },
+      {
+        "Name": "Bea Judge",
+        "Email": "bea.judge@dertinfo.co.uk",
+        "Telephone": "01234567002"
+      }
+    ],
+    "ScoreSets": [
+      {
+        "Name": "Trad Comp - Set A - Music & Stepping",
+        "Description": "MU,ST,PR,BZ,CH - Music and stepping marks plus Presentation, Buzz & Character marks"
+      },
+      {
+        "Name": "Trad Comp - Set B - Sword Handling & Dance Technique",
+        "Description": "SH,DT,PR,BZ,CH - Sword handling and dance technique marks plus Presentation, Buzz & Character marks"
+      }
+    ],
+    "ScoreCategories": [
+      {
+        "Name": "Music",
+        "Tag": "MUS",
+        "Description": "Music marks",
+        "MaxMarks": 15,
+        "SortOrder": 100,
+        "ScoreSets": ["Trad Comp - Set A - Music & Stepping"]
+      },
+      {
+        "Name": "Stepping",
+        "Tag": "STP",
+        "Description": "Stepping marks",
+        "MaxMarks": 15,
+        "SortOrder": 200,
+        "ScoreSets": ["Trad Comp - Set A - Music & Stepping"]
+      },
+      {
+        "Name": "Sword Handling",
+        "Tag": "SWD",
+        "Description": "Sword handling marks",
+        "MaxMarks": 15,
+        "SortOrder": 300,
+        "ScoreSets": ["Trad Comp - Set B - Sword Handling & Dance Technique"]
+      },
+      {
+        "Name": "Dance Technique",
+        "Tag": "DTK",
+        "Description": "Dance technique marks",
+        "MaxMarks": 15,
+        "SortOrder": 400,
+        "ScoreSets": ["Trad Comp - Set B - Sword Handling & Dance Technique"]
+      },
+      {
+        "Name": "Presentation",
+        "Tag": "PRE",
+        "Description": "Presentation marks",
+        "MaxMarks": 15,
+        "SortOrder": 500,
+        "ScoreSets": ["Trad Comp - Set A - Music & Stepping", "Trad Comp - Set B - Sword Handling & Dance Technique"]
+      },
+      {
+        "Name": "Buzz",
+        "Tag": "BUZ",
+        "Description": "Buzz marks",
+        "MaxMarks": 15,
+        "SortOrder": 600,
+        "ScoreSets": ["Trad Comp - Set A - Music & Stepping", "Trad Comp - Set B - Sword Handling & Dance Technique"]
+      },
+      {
+        "Name": "Character",
+        "Tag": "CH",
+        "Description": "Character marks",
+        "MaxMarks": 10,
+        "SortOrder": 700,
+        "ScoreSets": ["Trad Comp - Set A - Music & Stepping", "Trad Comp - Set B - Sword Handling & Dance Technique"]
+      }
+    ],
+    "EntryAttributes": [
+      {
+        "Name": "Premier Team",
+        "Tag": "P"
+      },
+      {
+        "Name": "Championship Team",
+        "Tag": "C"
+      },
+      {
+        "Name": "Open Team",
+        "Tag": "O"
+      }
+    ],
+    "Dances": [
+      {
+        "TeamName": "Springfield",
+        "VenueName": "Main Hall",
+        "HasScoresEntered": false,
+        "HasScoresChecked": false,
+        "Overrun": false
+      },
+      {
+        "TeamName": "Leftorium",
+        "VenueName": "Main Hall",
+        "HasScoresEntered": false,
+        "HasScoresChecked": false,
+        "Overrun": false
+      }
+    ]
+  }
+]

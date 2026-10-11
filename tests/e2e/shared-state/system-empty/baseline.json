@@ -1,0 +1,19 @@
+{
+  "description": "The database after the API has started: migrations already applied, plus the SystemSettings rows written by EnsureSeedData. apply.mjs deletes every other dbo table and leaves these in place. It does not drop the database and it does not run migrations.",
+  "observed": "Checked local DertInfoDb on 2026-10-10. The only startup rows were these 12 SystemSettings refs and __EFMigrationsHistory (69 rows). Other populated tables were prior website smoke data, not startup seed.",
+  "preserveTables": ["SystemSettings", "__EFMigrationsHistory"],
+  "systemSettings": [
+    { "ref": "SYSTEM-DERTYEAR", "name": "System - DertYear" },
+    { "ref": "CloudStorageContainer", "name": "System - CloudStorageContainer" },
+    { "ref": "SMTPServer", "name": "SMTPServer" },
+    { "ref": "SMTPUsername", "name": "SMTPUsername" },
+    { "ref": "SMTPPassword", "name": "SMTPPassword" },
+    { "ref": "SYSTEM-FORGOTTEN-PASSWORD-EMAIL-TEMPLATE-ID", "name": "Forgotten Password Email Id" },
+    { "ref": "SYSTEM-JUDGEACCESSTOKEN", "name": "JudgeAccessToken" },
+    { "ref": "SYSTEM-DOD-RESULTSPUBLISHED", "name": "DERTofDERTs Results Published" },
+    { "ref": "SYSTEM-DOD-OPENFORPUBLIC", "name": "DERTofDERTs Open for public" },
+    { "ref": "SYSTEM-DOD-PUBLICRESULTSFORWARDED", "name": "DERTofDERTs Public Results Forwarded" },
+    { "ref": "SYSTEM-DOD-OFFICIALRESULTSFORWARDED", "name": "DERTofDERTs Official Results Forwarded" },
+    { "ref": "SYSTEM-DOD-JUDGEPASSWORDS", "name": "Valid passwords to identify judges" }
+  ]
+}

@@ -2,7 +2,7 @@
 name: Cookie consent
 type: feature
 status: active
-updated: 2026-10-03
+updated: 2026-10-11
 id: public.cookie-consent
 roles: [public-user]
 ---
@@ -20,6 +20,7 @@ On the public website, visitors are asked for **cookie consent**. This is requir
 ## Behaviour
 
 - Cookie consent is presented on the public part of the site.
+- Accepting stores a first-party `cookie-consent` cookie for one year, on path `/`. Later visits in that browser do not show the banner again until the cookie expires or is deleted.
 - Supports lawful use of cookies for site functionality/analytics as configured.
 
 ## Limitations

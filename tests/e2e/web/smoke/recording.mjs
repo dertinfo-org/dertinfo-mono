@@ -1,5 +1,5 @@
 /**
- * Video recording for the website smoke suite.
+ * Video recording for the website smoke suite and the app fixtures.
  * none records nothing. all keeps every clip. errors keeps clips only when the scenario fails.
  */
 import fs from 'fs';

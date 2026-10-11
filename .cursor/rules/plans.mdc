@@ -1,5 +1,5 @@
 ---
-description: Structure for Cursor plans — outcomes, steps, then detail
+description: Structure for Cursor plans — outcomes, ordered milestones, then detail
 alwaysApply: true
 ---
 
@@ -11,12 +11,14 @@ When creating or updating a Cursor plan (CreatePlan / plan markdown), use this s
 
 A short bullet list of **defined, verifiable outcomes** for the work. Each bullet is something that will be true when the work is done.
 
-## 2. Steps
+## 2. Milestones
 
-A short bullet list of **actions** intended to achieve those outcomes. Keep steps actionable and ordered; avoid burying the plan of action in prose.
+Ordered phases. Each milestone is a checkpoint: a short name, then what is true when that phase is done.
+
+Under each milestone, list **tasks in the order they should be completed**. Put a task after the one it depends on. Do this whenever a sequence is possible. Mark a task as parallel only when it does not depend on the other tasks in that milestone.
 
 ## 3. Detail
 
-Supporting context only **after** outcomes and steps: diagrams, file paths, allow-lists, constraints, out of scope, and rationale. Omit detail that does not help execute or verify the outcomes.
+Supporting context only **after** outcomes and milestones: diagrams, file paths, allow-lists, constraints, out of scope, and rationale. Omit detail that does not help execute or verify the milestones.
 
-Do not lead with long narrative or options matrices; put the goal and plan of action first.
+Do not lead with long narrative or options matrices; put the goal and the milestones first.

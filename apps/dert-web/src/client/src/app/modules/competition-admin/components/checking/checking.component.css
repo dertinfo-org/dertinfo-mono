@@ -1,1 +1,6 @@
-app-competition-checking {}
+.score-list .mat-mdc-list-item {
+    height: auto;
+    overflow: visible;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}

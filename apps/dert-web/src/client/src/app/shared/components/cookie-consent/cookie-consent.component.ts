@@ -10,6 +10,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class CookieConsentComponent implements OnInit {
 
+  /** How long an acceptance is remembered. A session cookie is dropped when the browser closes. */
+  private readonly consentLifetimeDays = 365;
+
   public isVisible = false;
 
   constructor(private cookieService: CookieService) { }
@@ -26,10 +29,13 @@ export class CookieConsentComponent implements OnInit {
 
   public onAcceptCookiesClick() {
 
-    // Set Cookie-Consent Cookie
-    this.cookieService.set( 'cookie-consent', 'consented' );
+    this.cookieService.set('cookie-consent', 'consented', {
+      expires: this.consentLifetimeDays,
+      path: '/',
+      sameSite: 'Lax',
+      secure: window.location.protocol === 'https:',
+    });
 
-    // Put a cookie to identify that we can hide this
     this.isVisible = false;
   }
 }

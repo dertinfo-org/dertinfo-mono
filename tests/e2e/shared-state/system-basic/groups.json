@@ -1,0 +1,60 @@
+[
+  {
+    "Auth0ForcedId": 1,
+    "GroupName": "The Simpsons",
+    "Image": "family.jpg",
+    "GroupBio": "The family from Springfield",
+    "OriginTown": "Springfield",
+    "OriginPostcode": "SP1 1AA",
+    "PrimaryContactName": "Homer Simpson",
+    "PrimaryContactEmail": "group-admin-1@dertinfo.co.uk",
+    "PrimaryContactNumber": "01234567890",
+    "GroupMemberJoiningPinCode": "1001",
+    "GroupMembers": [
+      {
+        "Name": "Homer Simpson",
+        "MemberType": "activeMember",
+        "EmailAddress": "group-member-1@dertinfo.co.uk"
+      },
+      {
+        "Name": "Marge Simpson",
+        "MemberType": "guest"
+      }
+    ],
+    "Teams": [
+      {
+        "TeamName": "Springfield",
+        "TeamBio": "A team from Springfield"
+      }
+    ]
+  },
+  {
+    "Auth0ForcedId": 2,
+    "GroupName": "The Flanders",
+    "Image": "family.jpg",
+    "GroupBio": "The neighbours from Evergreen Terrace",
+    "OriginTown": "Springfield",
+    "OriginPostcode": "SP1 2BB",
+    "PrimaryContactName": "Ned Flanders",
+    "PrimaryContactEmail": "group-admin-2@dertinfo.co.uk",
+    "PrimaryContactNumber": "01234567892",
+    "GroupMemberJoiningPinCode": "1002",
+    "GroupMembers": [
+      {
+        "Name": "Ned Flanders",
+        "MemberType": "activeMember",
+        "EmailAddress": "group-admin-2@dertinfo.co.uk"
+      },
+      {
+        "Name": "Maude Flanders",
+        "MemberType": "guest"
+      }
+    ],
+    "Teams": [
+      {
+        "TeamName": "Leftorium",
+        "TeamBio": "The shop team from Springfield"
+      }
+    ]
+  }
+]

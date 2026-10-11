@@ -1,0 +1,41 @@
+[
+  {
+    "Auth0ForcedId": 1,
+    "Name": "City Zoo Gathering",
+    "Image": "giraffe.jpg",
+    "EventSynopsis": "A day riding a giraffe at the city zoo",
+    "EventStartDate": "2027-06-01",
+    "EventEndDate": "2027-06-02",
+    "LocationTown": "Springfield",
+    "LocationPostcode": "SP1 1AA",
+    "ContactName": "Event Keeper",
+    "ContactEmail": "event-admin-1@dertinfo.co.uk",
+    "ContactTelephone": "01234567891",
+    "RegistrationOpenDate": "2026-01-01",
+    "RegistrationCloseDate": "2027-05-01",
+    "EventTemplateType": "StandardDert",
+    "Activities": [
+      {
+        "Title": "Adult Giraffe Ride",
+        "Description": "A ticket for an adult to ride a giraffe",
+        "Price": 15,
+        "IsDefault": true,
+        "AudienceTypeId": "INDIVIDUAL"
+      },
+      {
+        "Title": "Child Giraffe Ride",
+        "Description": "A ticket for a child to ride a giraffe",
+        "Price": 8,
+        "IsDefault": false,
+        "AudienceTypeId": "INDIVIDUAL"
+      },
+      {
+        "Title": "Carry a Giraffe",
+        "Description": "A team carries a giraffe across the zoo",
+        "Price": 20,
+        "IsDefault": false,
+        "AudienceTypeId": "TEAM"
+      }
+    ]
+  }
+]

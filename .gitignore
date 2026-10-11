@@ -46,9 +46,11 @@ desktop.ini
 # Environment and secrets
 .env
 tests/e2e/web/smoke/state/
+tests/e2e/shared-state/logins.env
 
 # Smoke test video recordings (the three newest timestamp folders are kept)
 /_recordings/
+tests/e2e/_recordings/
 .env.*
 !.env.example
 .cursor/mcp.json

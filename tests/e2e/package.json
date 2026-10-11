@@ -14,9 +14,13 @@
     "test:login:warmup:delay-control": "node web/login/warmup/delay-success-control.mjs",
     "test:login:warmup:hang-vs-auth": "node web/login/warmup/resolver-hang-vs-auth.mjs",
     "test:login:warmup:stale-session": "node web/login/warmup/stale-session.mjs",
-    "test:web:smoke": "node web/smoke/scenarios/run.mjs"
+    "test:web:smoke": "node web/smoke/scenarios/run.mjs",
+    "test:app:core": "node app/tests/scoring.venue-capture.enter-scores.mjs",
+    "apply:state": "node shared-state/apply.mjs",
+    "check:state": "node shared-state/apply.mjs --check"
   },
   "dependencies": {
+    "mssql": "^11.0.1",
     "playwright": "^1.49.0"
   }
 }
