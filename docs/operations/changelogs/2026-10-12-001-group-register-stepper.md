@@ -2,7 +2,7 @@
 
 ## Summary of the work completed
 
-The group register stepper now has six steps: overview, tickets and pricing, teams and people, activities, summary, and terms. A group administrator can see published ticket prices, tick existing teams and people, and tick tickets for each of them. The default ticket starts selected. Sold-out tickets stay visible and cannot be chosen. Submit creates the registration, attaches those choices, and opens the registration page. The organiser activity routes are unchanged. Two new event routes, `published-individual-activities` and `published-team-activities`, return `ActivityDto` only while registration is open, the event has not started, and the event is not private.
+The group register stepper now has six steps: overview, tickets and pricing, teams and people, activities, summary, and terms. Overview labels the event, dates, and location and shows the event image when one is available. Tickets, teams, people, activities, and the summary are tables. Teams and people can be filtered on the page, five at a time, and the summary shows a total. A group administrator can see published ticket prices, tick existing teams and people, and tick tickets for each of them. The default ticket starts selected. Sold-out tickets stay visible and cannot be chosen. Submit creates the registration, attaches those choices, and opens the registration page. [Submit event registration](../../capabilities/features/web/registration-submit.md) describes those steps, including the Gherkin. The organiser activity routes are unchanged. Two new event routes, `published-individual-activities` and `published-team-activities`, return `ActivityDto` only while registration is open, the event has not started, and the event is not private.
 
 ## Why the work was completed
 
@@ -14,7 +14,7 @@ Registering previously created an empty registration after a short overview and 
 
 ## Date the work was completed
 
-2026-10-11
+2026-10-12
 
 ## Issues that were encountered on the way
 

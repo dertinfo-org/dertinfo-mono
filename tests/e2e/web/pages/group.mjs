@@ -1,6 +1,6 @@
 /** Group configuration, members, teams, and gallery. */
 import path from 'path';
-import { GROUP_NAME, fixtureImage, group, member, team } from '../../shared-tools/loadData.js';
+import { GROUP_NAME, fixtureImage, group, team } from '../../shared-tools/loadData.js';
 import { WEB_BASE, normalizeToken } from '../utils/helpers.mjs';
 import {
   clickLabelledCheckbox,
@@ -11,6 +11,12 @@ import {
   fillControl,
   groupAdminUrl,
 } from './controls.mjs';
+
+function peopleOfType(memberType) {
+  const people = group.GroupMembers.filter((person) => person.MemberType === memberType);
+  if (!people.length) throw new Error(`${group.GroupName} has no ${memberType}`);
+  return people;
+}
 
 export class GroupPage {
   constructor(page) {
@@ -58,29 +64,32 @@ export class GroupPage {
 
   async addMember(ctx) {
     const groupId = ctx.chain[normalizeToken('configuredGroupId')];
-    await this.page.goto(groupAdminUrl(groupId, 'members'), { waitUntil: 'domcontentloaded', timeout: 60000 });
-    await clickPageAdd(this.page);
-    await this.page.getByRole('tab', { name: 'Add New Person' }).click();
-    const person = member('activeMember');
-    await fillControl(this.page, 'name', person.Name);
-    await clickLabelledRadio(this.page, 'Member');
-    await this.page.getByRole('button', { name: /Add Member/ }).click();
-    await this.page.getByText(person.Name).waitFor({ state: 'visible', timeout: 30000 });
-    ctx.provide('addedMemberId', person.Name);
+    const people = peopleOfType('activeMember');
+    for (const person of people) {
+      await this.addPerson(groupId, person, 'Member');
+      await this.page.getByText(person.Name).waitFor({ state: 'visible', timeout: 30000 });
+    }
+    ctx.provide('addedMemberId', people[0].Name);
   }
 
   async addGuest(ctx) {
     const groupId = ctx.chain[normalizeToken('configuredGroupId')];
+    const people = peopleOfType('guest');
+    for (const person of people) {
+      await this.addPerson(groupId, person, 'Guest');
+      await this.page.getByRole('tab', { name: 'Guests' }).click();
+      await this.page.getByText(person.Name).waitFor({ state: 'visible', timeout: 30000 });
+    }
+    ctx.provide('addedGuestId', people[0].Name);
+  }
+
+  async addPerson(groupId, person, kind) {
     await this.page.goto(groupAdminUrl(groupId, 'members'), { waitUntil: 'domcontentloaded', timeout: 60000 });
     await clickPageAdd(this.page);
     await this.page.getByRole('tab', { name: 'Add New Person' }).click();
-    const person = member('guest');
     await fillControl(this.page, 'name', person.Name);
-    await clickLabelledRadio(this.page, 'Guest');
+    await clickLabelledRadio(this.page, kind);
     await this.page.getByRole('button', { name: /Add Member/ }).click();
-    await this.page.getByRole('tab', { name: 'Guests' }).click();
-    await this.page.getByText(person.Name).waitFor({ state: 'visible', timeout: 30000 });
-    ctx.provide('addedGuestId', person.Name);
   }
 
   async addTeam(ctx) {
