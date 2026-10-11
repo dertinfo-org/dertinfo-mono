@@ -210,6 +210,12 @@
   path: features/web/auth-session-continuity.md
   roles: [member, group-member, group-admin, event-admin, venue-admin, dod-admin, super-admin]
 
+- id: auth.homepage-account
+  title: Homepage account
+  status: active
+  path: features/web/homepage-account.md
+  roles: [public-user, member, group-member, group-admin, event-admin, venue-admin, dod-admin, super-admin]
+
 # --- Primary features ---
 - id: groups.manage
   title: Create and manage group

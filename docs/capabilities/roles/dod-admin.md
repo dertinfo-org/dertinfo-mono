@@ -2,7 +2,7 @@
 name: Dert of Derts administrator
 type: role
 status: active
-updated: 2026-07-26
+updated: 2026-10-11
 id: dod-admin
 ---
 
@@ -15,7 +15,7 @@ Administers the online **Dert of Derts** programme (submissions, judging program
 ## Capabilities
 
 - [Dert of Derts](../features/web/dod-programme.md)
-- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md), [Homepage account](../features/web/homepage-account.md)
 
 ## Limitations
 

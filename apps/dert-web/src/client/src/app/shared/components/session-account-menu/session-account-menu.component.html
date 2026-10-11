@@ -1,0 +1,19 @@
+<button type="button" class="session-account-avatar" [matMenuTriggerFor]="accountMenu" aria-label="Account menu" data-testid="public-session-menu">
+  <img [src]="user.picture || (user.email | gravitar:user.name)" alt="">
+</button>
+<mat-menu #accountMenu="matMenu" xPosition="before">
+  <div class="session-account-email" data-testid="public-session-email">{{ user.email }}</div>
+  <div class="session-account-divide" role="separator"></div>
+  <button mat-menu-item routerLink="/dashboard" data-testid="public-session-dashboard">
+    <mat-icon>dashboard</mat-icon>
+    <span>Dashboard</span>
+  </button>
+  <button mat-menu-item routerLink="/user-account/overview" data-testid="public-session-account">
+    <mat-icon>account_box</mat-icon>
+    <span>My account</span>
+  </button>
+  <button mat-menu-item routerLink="/auth/signout" data-testid="public-session-logout">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Log out</span>
+  </button>
+</mat-menu>

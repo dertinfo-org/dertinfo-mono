@@ -2,7 +2,7 @@
 name: Member
 type: role
 status: active
-updated: 2026-07-26
+updated: 2026-10-11
 id: member
 ---
 
@@ -14,7 +14,7 @@ A signed-in user of the platform. Any member may create a group; further powers 
 
 ## Capabilities
 
-- [Log in](../features/web/auth-login.md) / [Log out](../features/web/auth-logout.md) / [Stay signed in](../features/web/auth-session-continuity.md)
+- [Log in](../features/web/auth-login.md) / [Log out](../features/web/auth-logout.md) / [Stay signed in](../features/web/auth-session-continuity.md) / [Homepage account](../features/web/homepage-account.md)
 - [User account and GDPR consent](../features/web/account-gdpr-consent.md)
 - [Create and manage group](../features/web/groups-manage.md) — **create** a group only; managing requires group-admin
 - [Dert of Derts](../features/web/dod-programme.md) — as the product allows
