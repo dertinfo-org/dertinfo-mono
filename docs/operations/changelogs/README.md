@@ -8,6 +8,7 @@ For operational how-to (CI/CD setup, configuration, planned fixes), see the wide
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-10-11 | Website homepage announces DERT 2027 in Bath | [2026-10-11-003-dert-2027-homepage.md](./2026-10-11-003-dert-2027-homepage.md) |
 | 2026-10-11 | Smoke runners keep the video mode, and the app has its own smoke command | [2026-10-11-002-smoke-video-arg.md](./2026-10-11-002-smoke-video-arg.md) |
 | 2026-10-11 | End-to-end fixtures share a session and match Gherkin features | [2026-10-11-001-e2e-shared-session.md](./2026-10-11-001-e2e-shared-session.md) |
 | 2026-10-05 | Website upgraded from Angular 21 to Angular 22 | [2026-10-05-002-web-angular-22.md](./2026-10-05-002-web-angular-22.md) |
