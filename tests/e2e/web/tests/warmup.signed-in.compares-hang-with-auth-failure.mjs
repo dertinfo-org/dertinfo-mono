@@ -22,7 +22,7 @@
  *   - group-hang: URL=/dashboard,   warmup=true (UI stuck, URL looks correct)
  *   - notif-hang: URL=/dashboard,   warmup=true (same)
  *
- * Run: npm run test:login:warmup:hang-vs-auth  (from tests/e2e)
+ * Run: npm run test:login:warmup  (from tests/e2e)
  */
 import { chromium } from 'playwright';
 import { WEB_BASE, seedFakeSession } from '../../shared-tools/session.mjs';

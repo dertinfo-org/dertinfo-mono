@@ -8,7 +8,7 @@
  * "Warming up" for the sign-in page. On today's Warmup code that exit is
  * expected to fail while the page is still warming up.
  *
- * Run: npm run test:login:warmup:stale-session  (from tests/e2e)
+ * Run: node web/tests/warmup.signed-in.rejected-cache-returns-to-sign-in.mjs  (from tests/e2e)
  * Requires the local website (:44200) and API (:44100).
  */
 import { chromium } from 'playwright';

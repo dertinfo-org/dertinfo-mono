@@ -21,4 +21,4 @@ clearSession: true
 
 # Command line overrides, from tests/e2e:
 #   npm run test:app:smoke -- --video all
-#   npm run test:app:core -- --base-state none --clear-session false
+#   node app/fixtures/scoring.venue-capture/run.mjs --base-state none --clear-session false

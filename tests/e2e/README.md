@@ -28,7 +28,6 @@ The smoke suite expects the local profile already running. SQL is Docker. The AP
 | Shared data | [`shared-data/`](shared-data/) | form values, images, Auth0 personas, and login emails and passwords |
 | Shared database state | [`shared-state/`](shared-state/) | `npm run apply:state -- system-basic` |
 | Login id check | [`shared-state/apply.mjs`](shared-state/apply.mjs) | `npm run check:state -- system-basic` |
-| Venue score capture | [`app/fixtures/scoring.venue-capture/description.md`](app/fixtures/scoring.venue-capture/description.md) | `node app/fixtures/scoring.venue-capture/run.mjs` |
 
 Persona passwords for the website smoke suite and the app fixture live in gitignored [`shared-data/logins.env`](shared-data/logins.env.example). [`shared-tools/logins.mjs`](shared-tools/logins.mjs) loads that file. Auth0 `app_metadata` for those users is in [`shared-data/auth0-personas.json`](shared-data/auth0-personas.json).
 

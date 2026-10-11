@@ -4,7 +4,7 @@
 
 `npm run test:web:smoke -- --video all` now records the website fixtures. The smoke runner was keeping `--video` and then treating `all` as a fixture name, so the suite stopped before the first fixture. `--video`, `--event-data`, and `--group-data` keep the value that follows them. `--base-state` and `--clear-session` stay with the smoke runner.
 
-The same flag handling is shared, and the app has `app/run-smoke.mjs`. `npm run test:app:smoke` runs the venue score-capture fixture. That fixture applies `system-basic`. The runner clears the shared session at the start and again when the run passes. `npm run test:app:core` still starts that fixture directly.
+The same flag handling is shared, and the app has `app/run-smoke.mjs`. `npm run test:app:smoke` runs the venue score-capture fixture. That fixture applies `system-basic`. The runner clears the shared session at the start and again when the run passes.
 
 ## Why the work was completed
 

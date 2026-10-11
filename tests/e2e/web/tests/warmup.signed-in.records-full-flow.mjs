@@ -19,7 +19,7 @@
  *   - Dashboard APIs: 401
  *   - User does NOT stay on /dashboard (navigation fails after warmup)
  *
- * Run: npm run test:login:warmup:baseline  (from tests/e2e)
+ * Run: npm run test:login:warmup  (from tests/e2e)
  */
 import { chromium } from 'playwright';
 import { WEB_BASE, seedFakeSession } from '../../shared-tools/session.mjs';

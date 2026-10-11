@@ -62,7 +62,7 @@ Not run as a formal suite yet; recommended when building the harness. Relies on 
 | C1 | Cold open `/dashboard` while logged in | Warmup + auth; must not stick on `/session/warmup` |
 | C2 | Deep link (e.g. dert-of-derts) while logged in | Same guard / warmup path as applicable |
 | C3 | Staging / prod smoke | Same M1–M5 against non-localhost origins (consent skip rules differ from localhost) |
-| C4 | **Stale authenticated session** | **Addressed** (2026-09-26). A planted Auth0 cache that can no longer renew must not leave the user on `/session/warmup`. Recovery is sign-in again, without clearing site data by hand. Script: `tests/e2e/web/tests/warmup.signed-in.rejected-cache-returns-to-sign-in.mjs` (`npm run test:login:warmup:stale-session` from `tests/e2e`). [Changelog](../changelogs/2026-09-26-002-warmup-stale-session.md) |
+| C4 | **Stale authenticated session** | **Addressed** (2026-09-26). A planted Auth0 cache that can no longer renew must not leave the user on `/session/warmup`. Recovery is sign-in again, without clearing site data by hand. Script: `tests/e2e/web/tests/warmup.signed-in.rejected-cache-returns-to-sign-in.mjs`. [Changelog](../changelogs/2026-09-26-002-warmup-stale-session.md) |
 
 ---
 
