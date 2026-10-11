@@ -16,11 +16,11 @@ Awards are calculated from the scores. They are not stored as their own object. 
 
 ## What can be done
 
-- **Create** — event-admin, from the event-type template, via [Create event](../features/events-create.md) and [Run competitions](../features/competitions-run.md). Starts as New.
+- **Create** — event-admin, from the event-type template, via [Create event](../features/web/events-create.md) and [Run competitions](../features/web/competitions-run.md). Starts as New.
 - **Populate** — event-admin. Attach entrants from confirmed [registrations](registration.md). New becomes Populated.
 - **Generate** — event-admin. Build the [dances](dance.md) and the paperwork for the judges and [score sets](score-set.md). Populated becomes Generated.
 - **Collate** — event-admin. Bring scores together so reporting can identify award winners.
-- **Publish** — event-admin, via [Publish competition results](../features/results-publish.md), after the awards ceremony. The competition becomes Published. Award outcomes are public. Group admins and members of a team can see that team's scores and [marking sheets](marking-sheet.md) in the app. Further changes stop.
+- **Publish** — event-admin, via [Publish competition results](../features/web/results-publish.md), after the awards ceremony. The competition becomes Published. Award outcomes are public. Group admins and members of a team can see that team's scores and [marking sheets](marking-sheet.md) in the app. Further changes stop.
 
 ## States
 

@@ -14,8 +14,8 @@ Administers the online **Dert of Derts** programme (submissions, judging program
 
 ## Capabilities
 
-- [Dert of Derts](../features/dod-programme.md)
-- Auth: [Log out](../features/auth-logout.md), [Stay signed in](../features/auth-session-continuity.md)
+- [Dert of Derts](../features/web/dod-programme.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
 
 ## Limitations
 

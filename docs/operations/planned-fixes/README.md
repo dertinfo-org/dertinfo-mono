@@ -2,7 +2,7 @@
 name: Planned fixes
 type: index
 status: active
-updated: 2026-10-05
+updated: 2026-10-10
 ---
 
 # Planned fixes
@@ -11,6 +11,9 @@ Open in-repo notes for work still to do in the solution. **Not a ticket backlog*
 
 | Topic | File |
 |-------|------|
+| Remove legacy auth tables (access keys and old webpages membership) | [remove-legacy-auth-tables.md](remove-legacy-auth-tables.md) |
+| Remove unused system settings (judge token, SMTP, storage container, DERT year) | [remove-unused-system-settings.md](remove-unused-system-settings.md) |
+| Decouple Auth0 permission claims from database identity keys | [decouple-auth0-ids-from-database.md](decouple-auth0-ids-from-database.md) |
 | Continue `npm run start` when a service is already up / port in use | [start-skip-running-services.md](start-skip-running-services.md) |
 | Agent-safe Azure subscription foundation (subscription CD + policy + RG Actions) | [agent-safe-subscription-foundation.md](agent-safe-subscription-foundation.md) |
 | Azure estate layout (dev/prd RGs, deploy scope, permission boundaries) — **parked** | [azure-estate-dev-prd.md](azure-estate-dev-prd.md) |

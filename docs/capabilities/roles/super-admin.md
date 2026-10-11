@@ -22,8 +22,8 @@ Historically a signed-in user with platform-wide administrative authority beyond
 
 ## Capabilities (legacy)
 
-- Auth: [Log out](../features/auth-logout.md), [Stay signed in](../features/auth-session-continuity.md)
-- See also: [Deprecated super-admin privilege](../features/super-admin-deprecated.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
+- See also: [Deprecated super-admin privilege](../features/web/super-admin-deprecated.md)
 
 ## Limitations
 

@@ -14,8 +14,8 @@ At competition venues, captures scores and photographs judge score sheets (prima
 
 ## Capabilities
 
-- [Venue score capture](../features/venue-score-capture.md)
-- Auth: [Log out](../features/auth-logout.md), [Stay signed in](../features/auth-session-continuity.md)
+- [Venue score capture](../features/app/venue-score-capture.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
 
 ## Limitations
 

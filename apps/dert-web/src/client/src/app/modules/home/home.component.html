@@ -1,12 +1,18 @@
 <header id="home-header" data-testid="public-home">
-  <div class="container" fxLayout="row wrap" fxLayoutAlign="start center">
+  <div class="container home-header-bar">
     <div class="home-logo">
       <!--<img src="assets/images/logo-full-strong.png" alt="Egret logo">-->
       <a class="navbar-brand" href="/" data-testid="public-brand"><span class="">Dert</span>Info</a>
     </div>
-    <span fxFlex></span>
-    <button mat-button id="dashboard-topbtn" class="hometop-btn" routerLink="/dashboard" data-testid="public-dashboard"><strong>My
-        Dashboard</strong></button>
+    <div class="home-header-actions">
+      <nav class="home-nav" aria-label="Site" data-testid="public-nav">
+        <a class="home-nav-item" routerLink="/content/results" data-testid="public-nav-results">Results</a>
+      </nav>
+      <div class="home-auth">
+        <button mat-stroked-button color="primary" type="button" class="home-auth-btn" (click)="signUp()" data-testid="public-signup">Sign up</button>
+        <button mat-raised-button color="primary" type="button" class="home-auth-btn" routerLink="/dashboard" data-testid="public-dashboard">Sign in</button>
+      </div>
+    </div>
   </div>
 </header>
 <dert2026-intro-banner></dert2026-intro-banner>

@@ -12,7 +12,7 @@ id: entity.email
 
 A message the platform sends. It is built from an event's [email template](email-template.md) and the details of the entity that triggered it. People do not compose these messages. A registration or event change sends them.
 
-Delivery uses [Send email](../features/send-email.md). The wording comes from [Registration email templates](../features/registration-email-templates.md).
+Delivery uses [Send email](../features/web/send-email.md). The wording comes from [Registration email templates](../features/web/registration-email-templates.md).
 
 ## What can be done
 

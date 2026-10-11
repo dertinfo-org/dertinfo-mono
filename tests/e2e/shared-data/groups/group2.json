@@ -1,0 +1,26 @@
+{
+  "GroupName": "The Flanders",
+  "Image": "family.jpg",
+  "GroupBio": "The neighbours from Evergreen Terrace",
+  "OriginTown": "Springfield",
+  "OriginPostcode": "SP1 2BB",
+  "PrimaryContactName": "Ned Flanders",
+  "PrimaryContactEmail": "ned.flanders@dertinfo.co.uk",
+  "PrimaryContactNumber": "01234567892",
+  "GroupMembers": [
+    {
+      "Name": "Ned Flanders",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Maude Flanders",
+      "MemberType": "guest"
+    }
+  ],
+  "Teams": [
+    {
+      "TeamName": "Leftorium",
+      "TeamBio": "The shop team from Springfield"
+    }
+  ]
+}

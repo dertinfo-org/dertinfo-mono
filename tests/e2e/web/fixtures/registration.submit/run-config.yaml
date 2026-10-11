@@ -1,0 +1,20 @@
+# Fixture ids that must already have been run.
+# The event and the group must already exist.
+# The runner does not check this list. Fixtures share tests/e2e/shared-session.
+requires: events.create, groups.manage
+
+# system-empty | system-basic | none
+# none leaves the event and the group in the database.
+baseState: none
+
+# event1 | event2
+eventData: event1
+
+# group1 | group2
+groupData: group1
+
+# none | errors | all
+video: none
+
+# true | false
+clearSession: true

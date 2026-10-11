@@ -14,11 +14,11 @@ Someone using the platform without a signed-in account (or browsing public pages
 
 ## Capabilities
 
-- [Log in](../features/auth-login.md)
-- [Public content](../features/public-content.md)
-- [Cookie consent](../features/cookie-consent.md)
-- [Publish competition results](../features/results-publish.md) — public award outcomes only, after publish
-- [Dert of Derts](../features/dod-programme.md) — public DoD flows as offered
+- [Log in](../features/web/auth-login.md)
+- [Public content](../features/web/public-content.md)
+- [Cookie consent](../features/web/cookie-consent.md)
+- [Publish competition results](../features/web/results-publish.md) — public award outcomes only, after publish
+- [Dert of Derts](../features/web/dod-programme.md) — public DoD flows as offered
 
 ## Limitations
 

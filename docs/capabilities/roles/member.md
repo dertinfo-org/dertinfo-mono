@@ -14,11 +14,11 @@ A signed-in user of the platform. Any member may create a group; further powers 
 
 ## Capabilities
 
-- [Log in](../features/auth-login.md) / [Log out](../features/auth-logout.md) / [Stay signed in](../features/auth-session-continuity.md)
-- [User account and GDPR consent](../features/account-gdpr-consent.md)
-- [Create and manage group](../features/groups-manage.md) — **create** a group only; managing requires group-admin
-- [Dert of Derts](../features/dod-programme.md) — as the product allows
-- [In-app notifications](../features/in-app-notifications.md) — rarely used
+- [Log in](../features/web/auth-login.md) / [Log out](../features/web/auth-logout.md) / [Stay signed in](../features/web/auth-session-continuity.md)
+- [User account and GDPR consent](../features/web/account-gdpr-consent.md)
+- [Create and manage group](../features/web/groups-manage.md) — **create** a group only; managing requires group-admin
+- [Dert of Derts](../features/web/dod-programme.md) — as the product allows
+- [In-app notifications](../features/web/in-app-notifications.md) — rarely used
 
 ## Limitations
 

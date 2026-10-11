@@ -48,7 +48,7 @@ Product language for DertInfo. The platform supports **sword-dancing clubs** (gr
 | **Data processor** | The platform — processes personal data on behalf of organisers. |
 | **Data owner / controller** | Event administrators — responsible for personal data in the context of their events. |
 
-See [User account and GDPR consent](../features/account-gdpr-consent.md) and [Cookie consent](../features/cookie-consent.md).
+See [User account and GDPR consent](../features/web/account-gdpr-consent.md) and [Cookie consent](../features/web/cookie-consent.md).
 
 ## Deprecated
 

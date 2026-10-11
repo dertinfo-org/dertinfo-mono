@@ -1,0 +1,21 @@
+# Fixture ids that must already have been run.
+# An empty list means this fixture can run on its own.
+# The runner does not check this yet.
+requires: []
+
+# system-empty | system-basic | none
+# none leaves the database as it is. This fixture does not load a pack.
+baseState: none
+
+# none | errors | all
+# none records nothing. This is the default.
+# These warmup scripts open their own browsers and do not write clips.
+video: none
+
+# true | false
+# true removes shared-session files after a passing run.
+# false leaves them. A failing run always leaves shared-session.
+clearSession: true
+
+# Command line overrides, from tests/e2e:
+#   npm run test:login:warmup -- --clear-session false

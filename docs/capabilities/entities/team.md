@@ -14,7 +14,7 @@ A subset of a [group](group.md), formed to enter team activities and competition
 
 ## What can be done
 
-- **Create** — group-admin, via [Create and manage group](../features/groups-manage.md).
+- **Create** — group-admin, via [Create and manage group](../features/web/groups-manage.md).
 - **Update** — group-admin. Change the team name, bio, and other team information.
 - **Attach images** — group-admin. See [Image](image.md) and [Image handling](../system/image-handling.md).
 - **Show or hide in the showcase** — group-admin.

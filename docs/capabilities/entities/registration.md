@@ -16,9 +16,9 @@ Submission is not confirmation. The registration stays unconfirmed until an even
 
 ## What can be done
 
-- **Create / edit** — group-admin, while the registration is New or Submitted, via [Create and manage group](../features/groups-manage.md) and [Submit event registration](../features/registration-submit.md). Choose team activities, member activities, and guests.
-- **Submit** — group-admin, via [Submit event registration](../features/registration-submit.md). New or Submitted becomes Submitted. The registration becomes visible to the event admin. A registration-submitted [email](email.md) is sent, with the team and member activities requested.
-- **Confirm** — event-admin, via [Confirm registrations](../features/registration-confirm.md). Submitted becomes Confirmed. An [invoice](invoice.md) is created. A registration-confirmed [email](email.md) is sent, with pricing and how to pay. The group admin can no longer edit the registration.
+- **Create / edit** — group-admin, while the registration is New or Submitted, via [Create and manage group](../features/web/groups-manage.md) and [Submit event registration](../features/web/registration-submit.md). Choose team activities, member activities, and guests.
+- **Submit** — group-admin, via [Submit event registration](../features/web/registration-submit.md). New or Submitted becomes Submitted. The registration becomes visible to the event admin. A registration-submitted [email](email.md) is sent, with the team and member activities requested.
+- **Confirm** — event-admin, via [Confirm registrations](../features/web/registration-confirm.md). Submitted becomes Confirmed. An [invoice](invoice.md) is created. A registration-confirmed [email](email.md) is sent, with pricing and how to pay. The group admin can no longer edit the registration.
 - **Close** — when the event closes. Confirmed becomes Closed. New or Submitted becomes Cancelled.
 - **Cancel** — when the event or group is deleted, or the event is cancelled. The registration becomes Cancelled. Event cancellation can send the event-cancelled [email](email.md).
 

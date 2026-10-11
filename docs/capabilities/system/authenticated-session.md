@@ -15,9 +15,9 @@ The platform can recognise a signed-in user for the duration of a valid session 
 
 ## Behaviour
 
-- After [log in](../features/auth-login.md), the platform treats the user as authenticated.
-- [Stay signed in](../features/auth-session-continuity.md) describes continuity across navigations.
-- [Log out](../features/auth-logout.md) ends the session.
+- After [log in](../features/web/auth-login.md), the platform treats the user as authenticated.
+- [Stay signed in](../features/web/auth-session-continuity.md) describes continuity across navigations.
+- [Log out](../features/web/auth-logout.md) ends the session.
 
 ## Dependencies
 

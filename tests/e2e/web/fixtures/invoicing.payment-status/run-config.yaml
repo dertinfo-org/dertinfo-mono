@@ -1,0 +1,18 @@
+# Fixture ids that must already have been run.
+# The runner does not check this list. Fixtures share tests/e2e/shared-session.
+requires: registration.confirm
+
+# system-empty | system-basic | none
+baseState: none
+
+# event1 | event2
+eventData: event1
+
+# group1 | group2
+groupData: group1
+
+# none | errors | all
+video: none
+
+# true | false
+clearSession: true

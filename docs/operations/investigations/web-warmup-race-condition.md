@@ -61,7 +61,7 @@ Even with all APIs returning 200, a timing race can leave the warmup UI visible:
 3. `giveItAKick` calls `GET /api/status` (async)
 4. If the warmup route activation completes **before** `continueTo()` runs, and the subsequent `navigateByUrl('/dashboard')` fails or is cancelled, the user stays on `/session/warmup` with `sessionwarm` already set
 
-Reproduced with Playwright scripts under `tests/e2e/web/login/warmup/`: delayed `/api/status` + 401 on dashboard APIs → stuck on `/session/warmup` with `sessionwarm=true`. Same delay + mocked 200s → dashboard loads.
+Reproduced with Playwright scripts in [fixture 2](../../../tests/e2e/web/fixtures/fixture-2/description.md): delayed `/api/status` + 401 on dashboard APIs → stuck on `/session/warmup` with `sessionwarm=true`. Same delay + mocked 200s → dashboard loads.
 
 Additional trap: **refresh or direct visit to `/session/warmup`** never calls `giveItAKick` and has no recovery — permanent dead end until manual navigation.
 
@@ -120,7 +120,7 @@ apps/dert-web/src/client/src/app/modules/session/components/warmup/
 apps/dert-web/src/client/src/app/regions/authenticated/authenticated-region.routing.ts
 apps/dert-web/src/client/src/app/modules/dashboard/dashboard.resolver.ts
 apps/dert-web/src/client/src/app/core/base/repository.base.ts
-tests/e2e/web/login/warmup/          # Playwright repro scripts (see README there)
+tests/e2e/web/fixtures/fixture-2/   # Playwright repro fixture (see description.md)
 infra/docker/api.env                    # Auth0 secrets for API (gitignored)
 docker-compose.yml                      # env_file: ./infra/docker/api.env
 ```

@@ -25,6 +25,8 @@ docs/
     capabilities.yaml
     roles/
     features/
+      web/
+      app/
     entities/
     system/
   technical/
@@ -83,7 +85,7 @@ Each inventory entry:
 - id: auth.login
   title: Log in
   status: active          # active | planned | deprecated
-  path: features/auth-login.md
+  path: features/web/auth-login.md
   roles: [public-user, member]
 ```
 
@@ -122,13 +124,13 @@ id: member
 …
 
 ## Capabilities
-- [Log in](../features/auth-login.md)
+- [Log in](../features/web/auth-login.md)
 
 ## Limitations
 …
 ```
 
-### Feature (`capabilities/features/<feature>.md`)
+### Feature (`capabilities/features/web/<feature>.md` or `capabilities/features/app/<feature>.md`)
 
 ```markdown
 ---
@@ -155,7 +157,7 @@ roles: [public-user, member]
 …
 ```
 
-Add a `## Scenarios` section when a feature has smoke coverage. Given, When, Then, And, and But stay in one Gherkin block. A YAML contract beside it is what the Playwright runner reads (`id`, `persona`, `sequence`, `requires`, `provides`). A provided name or requirement with no `[n]` is instance 1. A behaviour that a wider flow now performs keeps its own Gherkin and YAML, and adds `coveredBy` with that flow's id. The runner does not execute a `coveredBy` entry. A flow id may end in `-scenarioN` when it is one complete path through an action. How to run the suite is in [Website smoke tests](technical/guides/website-smoke-tests.md). How a scenario is sized, how it calls steps, and how session state and video work is in [Playwright standards](technical/standards/playwright/README.md).
+Add a `## Scenarios` section when a feature has Gherkin. Given, When, Then, And, and But stay in one block. The Playwright runner does not read that page. A feature maps to a fixture, and a scenario maps to a test, as described in [Playwright standards](technical/standards/playwright/README.md). How to run the website suite is in [Website smoke tests](technical/guides/website-smoke-tests.md).
 
 ### Entity (`capabilities/entities/<entity>.md`)
 
@@ -178,7 +180,7 @@ id: entity.registration
 …
 
 ## What can be done
-- **Submit** — group-admin, via [Submit event registration](../features/registration-submit.md). New or Submitted becomes Submitted. The registration becomes visible to the event admin, and a registration-submitted email is sent.
+- **Submit** — group-admin, via [Submit event registration](../features/web/registration-submit.md). New or Submitted becomes Submitted. The registration becomes visible to the event admin, and a registration-submitted email is sent.
 
 ## States
 - **New** — …

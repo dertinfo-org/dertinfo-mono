@@ -45,10 +45,15 @@ desktop.ini
 
 # Environment and secrets
 .env
-tests/e2e/web/smoke/state/
+# Shared session: the folder and its README stay in git. Runtime files do not.
+tests/e2e/shared-session/**
+!tests/e2e/shared-session/
+!tests/e2e/shared-session/README.md
+tests/e2e/shared-data/logins.env
 
 # Smoke test video recordings (the three newest timestamp folders are kept)
 /_recordings/
+tests/e2e/_recordings/
 .env.*
 !.env.example
 .cursor/mcp.json

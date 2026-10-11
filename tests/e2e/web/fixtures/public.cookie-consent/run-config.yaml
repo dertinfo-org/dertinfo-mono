@@ -1,0 +1,13 @@
+# Fixture ids that must already have been run.
+# An empty list means this fixture can run on its own.
+# The runner does not check this list. Fixtures share tests/e2e/shared-session.
+requires: []
+
+# system-empty | system-basic | none
+baseState: system-empty
+
+# none | errors | all
+video: none
+
+# true | false
+clearSession: true

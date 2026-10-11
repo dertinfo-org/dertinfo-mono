@@ -10,7 +10,7 @@ id: entity.dod-result
 
 ## Description
 
-One person's scores and comments on a [Dert of Derts submission](dod-submission.md). The marks follow the same kind of criteria as a live competition: music, stepping, sword handling, dance technique, presentation, buzz, and characters, plus overall comments. This result belongs to the online programme. It is separate from a venue [score](score.md) on a Dert competition day. See [Dert of Derts](../features/dod-programme.md).
+One person's scores and comments on a [Dert of Derts submission](dod-submission.md). The marks follow the same kind of criteria as a live competition: music, stepping, sword handling, dance technique, presentation, buzz, and characters, plus overall comments. This result belongs to the online programme. It is separate from a venue [score](score.md) on a Dert competition day. See [Dert of Derts](../features/web/dod-programme.md).
 
 A complaint about the scores or the comments is recorded against the result. It is not a separate object.
 

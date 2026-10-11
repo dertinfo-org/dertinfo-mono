@@ -8,6 +8,7 @@ For operational how-to (CI/CD setup, configuration, planned fixes), see the wide
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-10-11 | End-to-end fixtures share a session and match Gherkin features | [2026-10-11-001-e2e-shared-session.md](./2026-10-11-001-e2e-shared-session.md) |
 | 2026-10-05 | Website upgraded from Angular 21 to Angular 22 | [2026-10-05-002-web-angular-22.md](./2026-10-05-002-web-angular-22.md) |
 | 2026-10-05 | Website upgraded from Angular 20 to Angular 21 | [2026-10-05-001-web-angular-21.md](./2026-10-05-001-web-angular-21.md) |
 | 2026-10-04 | Website upgraded from Angular 19 to Angular 20 | [2026-10-04-007-web-angular-20.md](./2026-10-04-007-web-angular-20.md) |

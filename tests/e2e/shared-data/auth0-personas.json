@@ -1,0 +1,102 @@
+{
+  "tenant": "dertinfodev.eu.auth0.com",
+  "connection": "Username-Password-Authentication",
+  "emailPattern": "{role-id}-1@dertinfo.co.uk",
+  "personas": [
+    {
+      "id": "event-admin",
+      "email": "event-admin-1@dertinfo.co.uk",
+      "env": {
+        "email": "DERTINFO_E2E_EVENT_ADMIN_EMAIL",
+        "password": "DERTINFO_E2E_EVENT_ADMIN_PASSWORD"
+      },
+      "app_metadata": {
+        "gdprConsentGained": true,
+        "gdprConsentGainedDate": "2026-01-01T00:00:00.0000000+00:00",
+        "isSuperAdmin": false,
+        "isDodAdmin": false,
+        "eventadmin": ["1"],
+        "groupadmin": [],
+        "groupmember": [],
+        "venueadmin": []
+      }
+    },
+    {
+      "id": "venue-admin",
+      "email": "venue-admin-1@dertinfo.co.uk",
+      "env": {
+        "email": "DERTINFO_E2E_VENUE_ADMIN_EMAIL",
+        "password": "DERTINFO_E2E_VENUE_ADMIN_PASSWORD"
+      },
+      "app_metadata": {
+        "gdprConsentGained": true,
+        "gdprConsentGainedDate": "2026-01-01T00:00:00.0000000+00:00",
+        "isSuperAdmin": false,
+        "isDodAdmin": false,
+        "eventadmin": [],
+        "groupadmin": [],
+        "groupmember": [],
+        "venueadmin": ["1"]
+      }
+    },
+    {
+      "id": "group-admin",
+      "email": "group-admin-1@dertinfo.co.uk",
+      "env": {
+        "email": "DERTINFO_E2E_GROUP_ADMIN_EMAIL",
+        "password": "DERTINFO_E2E_GROUP_ADMIN_PASSWORD"
+      },
+      "app_metadata": {
+        "gdprConsentGained": true,
+        "gdprConsentGainedDate": "2026-01-01T00:00:00.0000000+00:00",
+        "isSuperAdmin": false,
+        "isDodAdmin": false,
+        "groupadmin": ["1"],
+        "groupmember": [],
+        "venueadmin": []
+      }
+    },
+    {
+      "id": "group-admin-2",
+      "email": "group-admin-2@dertinfo.co.uk",
+      "env": {
+        "email": "DERTINFO_E2E_GROUP_ADMIN_2_EMAIL",
+        "password": "DERTINFO_E2E_GROUP_ADMIN_2_PASSWORD"
+      },
+      "app_metadata": {
+        "gdprConsentGained": true,
+        "gdprConsentGainedDate": "2026-01-01T00:00:00.0000000+00:00",
+        "isSuperAdmin": false,
+        "isDodAdmin": false,
+        "eventadmin": [],
+        "groupadmin": ["2"],
+        "groupmember": [],
+        "venueadmin": []
+      }
+    },
+    {
+      "id": "group-member",
+      "email": "group-member-1@dertinfo.co.uk",
+      "env": {
+        "email": "DERTINFO_E2E_GROUP_MEMBER_EMAIL",
+        "password": "DERTINFO_E2E_GROUP_MEMBER_PASSWORD"
+      },
+      "app_metadata": {
+        "gdprConsentGained": true,
+        "gdprConsentGainedDate": "2026-01-01T00:00:00.0000000+00:00",
+        "isSuperAdmin": false,
+        "isDodAdmin": false,
+        "eventadmin": [],
+        "groupadmin": [],
+        "groupmember": ["1"],
+        "venueadmin": []
+      }
+    }
+  ],
+  "reservedEmails": [
+    "member-1@dertinfo.co.uk",
+    "public-user-1@dertinfo.co.uk",
+    "dod-admin-1@dertinfo.co.uk",
+    "super-admin-1@dertinfo.co.uk"
+  ]
+}

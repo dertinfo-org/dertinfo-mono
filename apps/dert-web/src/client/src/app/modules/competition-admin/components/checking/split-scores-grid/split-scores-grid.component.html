@@ -21,13 +21,13 @@
                         class="splitscoreinput"
                         *ngIf="element[column.header].isVisible"
                         matInput type="number"
+                        size="4"
                         placeholder=""
                         value="{{ element[column.header].markGiven }}"
                         maintain-original
                         autocomplete="off"
                         (keyup)="onScorePartChanged(element.judgeSlotId,element[column.header].danceScoreId,$event)"
                         >
-                    <br/>
                     <!--<small>{{element.judgeSlotId}} - {{element[column.header].match}} - {{element[column.header].danceScoreId}}</small>-->
                 </mat-cell>
         </ng-container>

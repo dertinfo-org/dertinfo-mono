@@ -2,7 +2,7 @@
 name: Website smoke tests
 type: guide
 status: active
-updated: 2026-10-04
+updated: 2026-10-11
 ---
 
 # Website smoke tests
@@ -38,7 +38,7 @@ cd tests/e2e
 npm install
 ```
 
-`postinstall` installs Chromium. Persona passwords live in gitignored `tests/e2e/.env`. Auth0 `app_metadata` for those users is in `tests/e2e/auth0-personas.json`. Emails are `event-admin-1@dertinfo.co.uk` and `group-admin-1@dertinfo.co.uk` on tenant `dertinfodev.eu.auth0.com`.
+`postinstall` installs Chromium. Persona passwords live in gitignored `tests/e2e/shared-data/logins.env` (copy `logins.env.example`). Auth0 `app_metadata` for those users is in `tests/e2e/shared-data/auth0-personas.json`. Emails are `event-admin-1@dertinfo.co.uk` and `group-admin-1@dertinfo.co.uk` on tenant `dertinfodev.eu.auth0.com`.
 
 ## Run the suite
 
@@ -48,20 +48,19 @@ From `tests/e2e`:
 npm run test:web:smoke
 ```
 
-That command runs every smoke flow, in order, after one database reset. There is no separate command per flow.
+That command runs one fixture per feature, in dependency order, from `web/run-smoke.mjs`. Cookie consent applies `system-empty`. Each later fixture leaves the database as it is. A passing run clears `shared-session`. A failing run stops and leaves it. What the packs contain is in [tests/e2e/README.md](../../../../tests/e2e/README.md#run-configyaml).
 
-The runner removes whatever container is publishing port `44000`, deletes its SQL data volume and the Compose volume `sqlserver-data`, starts SQL Server again, and restarts the API. API startup applies EF migrations on that empty database. The previous smoke chain is discarded. Auth0 session files are left in place.
+Fixtures, in order:
 
-Order:
+1. `public.cookie-consent` — a visitor accepts cookies. This fixture applies `system-empty`.
+2. `events.create` — an event administrator creates and configures an event.
+3. `groups.manage` — a group administrator creates and configures a group.
+4. `registration.submit` — a group administrator registers that group for the event, then amends the submitted registration.
+5. `registration.confirm` — an event administrator confirms the registration.
+6. `invoicing.payment-status` — the event administrator and the group administrator review the invoice.
+7. `public.content` — a visitor browses the public pages.
 
-1. Cookie consent
-2. Event administrator creates and configures an event
-3. Group administrator creates and configures a group
-4. Group administrator registers that group for the event
-5. Group administrator amends the registration; the event administrator confirms it; both review the invoice
-6. A visitor browses the public pages
-
-`auth.session-continuity.rejected-cache-returns-to-sign-in` stays available and is left out of this command. Pass its id to run it on its own.
+Stay signed in is its own fixture and is left out of this command. Run it with `node web/fixtures/auth.session-continuity/run.mjs`.
 
 The console prints `PASS` or `FAIL` for each flow. Inside a flow it prints each part as soon as that part finishes:
 
@@ -72,18 +71,21 @@ FAIL group.groupadmin.createandconfigure-scenario1 > change image
 FAIL group.groupadmin.createandconfigure-scenario1
 ```
 
-A failed part is printed before the flow itself is marked failed. Later flows that need its data stop with `prerequisites not available` and do not open a browser.
+A failed part is printed before the flow itself is marked failed. The fixture then stops, so later flows do not start.
 
 ## Run one flow
 
-Name the flow id. That invocation does not reset SQL and does not rebuild the group or the event. It runs when the tokens that flow requires are already in `tests/e2e/web/smoke/state/chain.json`. When they are missing, it stops with `prerequisites not available`.
+Run that feature's fixture. Its `run-config.yaml` chooses the database and the form data. The fields are in [tests/e2e/README.md](../../../../tests/e2e/README.md#run-configyaml). Pass `--base-state none --clear-session false` when this fixture must keep the database and the chain already in `shared-session`.
 
 ```bash
-npm run test:web:smoke -- public.cookie-consent.visitor-accepts
-node web/smoke/scenarios/run.mjs public.cookie-consent.visitor-accepts
+node web/fixtures/events.create/run.mjs
+node web/fixtures/registration.submit/run.mjs --base-state none --clear-session false
+npm run test:web:smoke -- --event-data event2 --group-data group2
 ```
 
-Cookie consent has no predecessor, so it can run on its own against the site that is already up. Registration needs a configured group and a configured event from an earlier full run whose database and chain are still in place.
+`--event-data` is `event1` or `event2`. `--group-data` is `group1` or `group2`. Those files are the values the flows type. The flow id chooses which scenarios run. It does not choose the form data.
+
+Cookie consent has no predecessor, so it can run on its own against the site that is already up. Registration needs a configured group and a configured event already in the database, and the tokens still in `shared-session`. Those tokens remain when an earlier run failed.
 
 ## Video
 
@@ -102,26 +104,26 @@ npm run test:web:smoke -- --video errors
 ```
 
 - The `--` with a space after it belongs to npm. It means "append the rest of this line to the script." npm consumes it. The runner never sees it.
-- `--video` is one flag. The next word is the mode. A flow id after that is optional.
+- `--video` is one flag. The next word is the mode.
 
 ```bash
 npm run test:web:smoke
 npm run test:web:smoke -- --video errors
-npm run test:web:smoke -- --video all public.cookie-consent.visitor-accepts
+node web/fixtures/events.create/run.mjs --video all
 ```
 
-The first command records nothing. The second keeps videos only for flows that fail. The third records that one flow and does not reset the database.
+The first command records nothing. Cookie consent applies `system-empty`, and the later fixtures leave the database as it is. The second keeps videos only for fixtures that fail. The third records the create-event fixture. Add `--base-state none` when that fixture must keep the database already in place.
 
 Calling the runner directly has no npm separator:
 
 ```bash
-node web/smoke/scenarios/run.mjs --video errors public.cookie-consent.visitor-accepts
+node web/fixtures/public.cookie-consent/run.mjs --video errors
 ```
 
-Videos for one run go in `_recordings/YYYYMMDD-HHMM/` at the repo root, using local time. Each flow has its own subfolder. Clips are numbered in the order the browsers opened (`01-cookie-consent.webm`, `02-login.webm`, `03-page.webm`). A second run in the same minute uses `YYYYMMDD-HHMM-2`. After a recording run, only the three newest timestamp folders remain. An `errors` run that passes everything leaves no folder. Move a folder out of `_recordings` to keep it longer. The folder is gitignored.
+Videos for one run go in `_recordings/YYYYMMDD-HHMM/` at the repo root, using local time. Each fixture has its own subfolder, named for the feature. Clips are numbered in the order the browsers opened (`01-cookie-consent.webm`, `02-login.webm`, `03-page.webm`). A second run in the same minute uses `YYYYMMDD-HHMM-2`. After a recording run, timestamp folders older than one day are removed. An `errors` run that passes everything leaves no folder. Move a folder out of `_recordings` to keep it longer than a day. The folder is gitignored.
 
-A flow that does several jobs in one browser produces one clip for that stretch. Sign-in, and a later actor, each open another browser and so another clip. The mapping from steps to clips is in [Playwright standards](../standards/playwright/README.md#videos-and-steps).
+A flow that does several jobs in one browser produces one clip for that stretch. Sign-in, and a later actor, each open another browser and so another clip. The mapping from page calls to clips is in [Playwright standards](../standards/playwright/README.md#videos-and-steps).
 
 ## Other scripts
 
-`npm run test:login:warmup` runs the warmup investigations under `tests/e2e/web/login/`. Those are separate from the smoke suite.
+`npm run test:login:warmup` runs the warmup fixture at `tests/e2e/web/fixtures/fixture-2/`. Those tests are separate from the smoke suite.

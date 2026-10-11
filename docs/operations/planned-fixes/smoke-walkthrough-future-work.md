@@ -14,7 +14,7 @@ When a group administrator submits a registration, the status becomes submitted 
 
 Show a thank-you modal, then return them automatically to the group home screen after a short countdown, or give an equivalent clear confirmation.
 
-Related: [Submit event registration](../../capabilities/features/registration-submit.md), [Registration](../../capabilities/entities/registration.md).
+Related: [Submit event registration](../../capabilities/features/web/registration-submit.md), [Registration](../../capabilities/entities/registration.md).
 
 ## 2. Submitted registration: what the group can still do
 
@@ -22,7 +22,7 @@ On the group registration screen, a submitted registration does not say that the
 
 Show what remains allowed in the submitted state, including edit and resubmit. Editing already stops once an event administrator confirms the registration.
 
-Related: [Registration](../../capabilities/entities/registration.md), [Submit event registration](../../capabilities/features/registration-submit.md).
+Related: [Registration](../../capabilities/entities/registration.md), [Submit event registration](../../capabilities/features/web/registration-submit.md).
 
 ## 3. Group privacy settings
 
@@ -30,19 +30,19 @@ Remove the restricted visibility state from group privacy settings. It has no im
 
 Validate that public and private work as intended. Private must keep that group's information off the public part of the website.
 
-Related: [Group](../../capabilities/entities/group.md) (visibility is currently public, restricted, or private), [Public content](../../capabilities/features/public-content.md).
+Related: [Group](../../capabilities/entities/group.md) (visibility is currently public, restricted, or private), [Public content](../../capabilities/features/web/public-content.md).
 
 ## 4. Public results screen redesign
 
 Redesign the results screen on the public website so it is more user-friendly and more engaging.
 
-Related: [Public content](../../capabilities/features/public-content.md), [Publish competition results](../../capabilities/features/results-publish.md).
+Related: [Public content](../../capabilities/features/web/public-content.md), [Publish competition results](../../capabilities/features/web/results-publish.md).
 
 ## 5. History page redesign
 
 Redesign the public history page so it shows all previous Derts and the people who attended them, excluding private groups. Make the page more engaging, and link each entry to the matching results page.
 
-Related: [Public content](../../capabilities/features/public-content.md).
+Related: [Public content](../../capabilities/features/web/public-content.md).
 
 ## 6. Site-admin reports
 
@@ -52,13 +52,13 @@ A super administrator can log into the website and open a section that only site
 
 In the site-admin part of the site, a super administrator can test email and confirm that it is working.
 
-Related: [Send email](../../capabilities/features/send-email.md).
+Related: [Send email](../../capabilities/features/web/send-email.md).
 
 ## 8. Site-admin messaging
 
 In the site-admin part of the site, improve messaging so notifications can be sent into the messaging system and appear for users.
 
-Related: [In-app notifications](../../capabilities/features/in-app-notifications.md).
+Related: [In-app notifications](../../capabilities/features/web/in-app-notifications.md).
 
 ## 9. Event setup templates
 
@@ -66,19 +66,19 @@ When setting up an event, the organiser can choose a template. Templates carry d
 
 Event creation already uses an event-type template for activities and competitions. This item is the scoring side of that choice: criteria, score sheets, and categories.
 
-Related: [Create event](../../capabilities/features/events-create.md), [Event](../../capabilities/entities/event.md), [Score set](../../capabilities/entities/score-set.md), [Score category](../../capabilities/entities/score-category.md), [Marking sheet](../../capabilities/entities/marking-sheet.md).
+Related: [Create event](../../capabilities/features/web/events-create.md), [Event](../../capabilities/entities/event.md), [Score set](../../capabilities/entities/score-set.md), [Score category](../../capabilities/entities/score-category.md), [Marking sheet](../../capabilities/entities/marking-sheet.md).
 
 ## 10. Who can create events
 
 In the site-admin part of the site, specify the user-account emails that are allowed to create events. That setting hides or shows the create-event button for each user.
 
-Related: [Create event](../../capabilities/features/events-create.md).
+Related: [Create event](../../capabilities/features/web/events-create.md).
 
 ## 11. Homepage promotion from the event
 
 From the admin center, turn on an organiser's ability to promote an event to the homepage. When that is on, the event homepage gains extra fields for the content that should appear on the public homepage. Filling those in promotes the event. Today that promotion is done by manually updating the HTML.
 
-Related: [Event](../../capabilities/entities/event.md) (promote currently means the event can appear in the public listing), [Public content](../../capabilities/features/public-content.md).
+Related: [Event](../../capabilities/entities/event.md) (promote currently means the event can appear in the public listing), [Public content](../../capabilities/features/web/public-content.md).
 
 ## 12. Integration suite with a tagged smoke flow
 
@@ -104,7 +104,7 @@ When this is picked up:
 - Remove the client-side `isConfigured` filter once those responses are already limited to usable events.
 - Keep the registration create check as a guard, not as a substitute for the list.
 
-Related: [Create event](../../capabilities/features/events-create.md), [Submit event registration](../../capabilities/features/registration-submit.md).
+Related: [Create event](../../capabilities/features/web/events-create.md), [Submit event registration](../../capabilities/features/web/registration-submit.md).
 
 ## 15. Cookie consent is covered by the signed-in navigation
 
@@ -112,4 +112,4 @@ The cookie banner is fixed to the bottom left of the page and has no stacking or
 
 Keep the banner above the signed-in shell, and keep it in the way until the visitor accepts. The smoke suite does not wait for that layout change. It accepts cookies once when the site opens, then uses the site as if the banner is gone.
 
-Related: [Cookie consent](../../capabilities/features/cookie-consent.md).
+Related: [Cookie consent](../../capabilities/features/web/cookie-consent.md).

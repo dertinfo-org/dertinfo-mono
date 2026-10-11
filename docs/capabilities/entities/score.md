@@ -14,9 +14,9 @@ A mark, and an optional comment, for one [score category](score-category.md) on 
 
 ## What can be done
 
-- **Enter** — venue-admin or event-admin, via [Venue score capture](../features/venue-score-capture.md). Entering scores moves the dance from awaiting scores to scores entered.
-- **Check** — event-admin, via [Validate scores](../features/scoring-validate.md). The dance becomes scores checked. The score is then fixed: the venue admin can no longer change it.
-- **Publish** — event-admin, via [Publish competition results](../features/results-publish.md), for the whole [competition](competition.md). After publish, a group can see its own team's scores. Other groups' detailed scores stay private. Public pages show award outcomes, not every mark.
+- **Enter** — venue-admin or event-admin, via [Venue score capture](../features/app/venue-score-capture.md). Entering scores moves the dance from awaiting scores to scores entered.
+- **Check** — event-admin, via [Validate scores](../features/web/scoring-validate.md). The dance becomes scores checked. The score is then fixed: the venue admin can no longer change it.
+- **Publish** — event-admin, via [Publish competition results](../features/web/results-publish.md), for the whole [competition](competition.md). After publish, a group can see its own team's scores. Other groups' detailed scores stay private. Public pages show award outcomes, not every mark.
 
 ## States
 

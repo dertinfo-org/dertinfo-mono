@@ -19,10 +19,10 @@ Named price bands used when booking people onto a registration (attendance class
 
 ## What can be done
 
-- **Supply from the event type** — event-admin, when the event is created via [Create event](../features/events-create.md). The template provides the starting activities.
+- **Supply from the event type** — event-admin, when the event is created via [Create event](../features/web/events-create.md). The template provides the starting activities.
 - **Price** — event-admin. Set a price, or leave the price to be confirmed.
 - **Mark sold out** — event-admin. A sold-out activity cannot take further bookings.
-- **Book** — group-admin, by choosing the activity on a [registration](registration.md) via [Submit event registration](../features/registration-submit.md).
+- **Book** — group-admin, by choosing the activity on a [registration](registration.md) via [Submit event registration](../features/web/registration-submit.md).
 
 ## States
 

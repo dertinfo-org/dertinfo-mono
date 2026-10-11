@@ -19,8 +19,9 @@
             </div>
 
             <div class="pb-1" fxFlex="100" *ngFor="let item of venue.judgeSlots; let i = index">
-                <mat-form-field style="width:100%">
-                    <mat-select [placeholder]="getScoreSetName(i)" [formControlName]="'slot_'+ i" (selectionChange)="onJudgeSelectionChange(item.id)">
+                <mat-form-field class="full-width">
+                    <mat-label>{{ getScoreSetName(i) }}</mat-label>
+                    <mat-select [formControlName]="'slot_'+ i" (selectionChange)="onJudgeSelectionChange(item.id)">
                         <mat-option *ngFor="let judgeOption of allJudges" [value]="judgeOption.id">
                             {{judgeOption.name}}
                         </mat-option>

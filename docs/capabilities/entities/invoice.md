@@ -14,8 +14,8 @@ The bill for a confirmed [registration](registration.md), addressed to the group
 
 ## What can be done
 
-- **Create** — happens when an event admin confirms a registration, via [Confirm registrations](../features/registration-confirm.md). The registration-confirmed [email](email.md) includes the invoice, pricing, and how to pay. See [Invoicing](../features/invoicing.md).
-- **Mark paid** — event-admin, via [Invoicing](../features/invoicing.md). Unpaid becomes paid when payment is received.
+- **Create** — happens when an event admin confirms a registration, via [Confirm registrations](../features/web/registration-confirm.md). The registration-confirmed [email](email.md) includes the invoice, pricing, and how to pay. See [Invoicing](../features/web/invoicing.md).
+- **Mark paid** — event-admin, via [Invoicing](../features/web/invoicing.md). Unpaid becomes paid when payment is received.
 - **Mark unpaid** — event-admin. Paid can be set back to unpaid.
 - **View** — group-admin. The group admin can see whether the invoice is paid.
 

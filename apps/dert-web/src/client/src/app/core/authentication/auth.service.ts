@@ -90,6 +90,19 @@ export class AuthService {
   }
 
   /**
+   * Same redirect as login(), asking New Universal Login to open the sign-up screen.
+   * Classic Universal Login ignores screen_hint and shows the usual Auth0 page.
+   */
+  public signUp(): void {
+    this.auth0.loginWithRedirect({
+      appState: { target: '/dashboard' },
+      authorizationParams: {
+        screen_hint: 'signup',
+      },
+    });
+  }
+
+  /**
    * Drop a browser session that can no longer mint an access token, then send the user to sign-in.
    * openUrl: false clears the Auth0 SPA cache in memory and localStorage without visiting /v2/logout.
    */

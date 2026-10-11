@@ -14,7 +14,7 @@ A picture used by the platform. An image can be attached to a [group](group.md),
 
 ## What can be done
 
-- **Upload** — group-admin, for a group or team, via [Create and manage group](../features/groups-manage.md). Event admins upload event images. Venue admins and event admins upload marking-sheet photos via [Venue score capture](../features/venue-score-capture.md).
+- **Upload** — group-admin, for a group or team, via [Create and manage group](../features/web/groups-manage.md). Event admins upload event images. Venue admins and event admins upload marking-sheet photos via [Venue score capture](../features/app/venue-score-capture.md).
 - **Attach** — the uploader, to the group, team, event, or dance the picture belongs to.
 - **Mark for removal** — an administrator of that picture. The image is then due to be removed.
 
