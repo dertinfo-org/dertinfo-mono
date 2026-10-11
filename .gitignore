@@ -45,8 +45,11 @@ desktop.ini
 
 # Environment and secrets
 .env
-tests/e2e/web/smoke/state/
-tests/e2e/shared-state/logins.env
+# Fixture run-state: the folder stays in git. Nothing inside it does.
+tests/e2e/**/fixtures/*/run-state/**
+!tests/e2e/**/fixtures/*/run-state/
+!tests/e2e/**/fixtures/*/run-state/.gitkeep
+tests/e2e/shared-data/logins.env
 
 # Smoke test video recordings (the three newest timestamp folders are kept)
 /_recordings/

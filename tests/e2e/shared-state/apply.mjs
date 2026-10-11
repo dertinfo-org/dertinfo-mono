@@ -219,7 +219,7 @@ async function assertStoredLoginIds(executor) {
 }
 
 function assertPersonaClaim(personaId, claim, ids) {
-  const personas = readJson(path.join(here, '..', 'auth0-personas.json'));
+  const personas = readJson(path.join(here, '../shared-data', 'auth0-personas.json'));
   const persona = personas.personas.find((item) => item.id === personaId);
   if (!persona) throw new Error(`Auth0 persona "${personaId}" is missing`);
   const claimed = (persona.app_metadata && persona.app_metadata[claim]) || [];

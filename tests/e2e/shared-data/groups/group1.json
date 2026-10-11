@@ -1,0 +1,26 @@
+{
+  "GroupName": "The Simpsons",
+  "Image": "family.jpg",
+  "GroupBio": "The family from Springfield",
+  "OriginTown": "Springfield",
+  "OriginPostcode": "SP1 1AA",
+  "PrimaryContactName": "Homer Simpson",
+  "PrimaryContactEmail": "group-admin-1@dertinfo.co.uk",
+  "PrimaryContactNumber": "01234567890",
+  "GroupMembers": [
+    {
+      "Name": "Homer Simpson",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Marge Simpson",
+      "MemberType": "guest"
+    }
+  ],
+  "Teams": [
+    {
+      "TeamName": "Springfield",
+      "TeamBio": "A team from Springfield"
+    }
+  ]
+}

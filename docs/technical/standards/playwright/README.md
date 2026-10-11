@@ -2,12 +2,12 @@
 name: Playwright standards
 type: standards
 status: active
-updated: 2026-10-04
+updated: 2026-10-11
 ---
 
 # Playwright standards
 
-How a website smoke scenario is built: how large it is, how it calls steps, how those browsers become videos, and how session state is kept.
+How a website smoke scenario is built: how large it is, how it calls page objects, how those browsers become videos, and how session state is kept.
 
 Capability pages say what the product does. This page says how a smoke scenario is wired to those pages. It is not a capability description. Commands for running the suite and turning video on are in [Website smoke tests](../../guides/website-smoke-tests.md).
 
@@ -15,15 +15,17 @@ Capability pages say what the product does. This page says how a smoke scenario 
 
 | Path | Role |
 |------|------|
-| `tests/e2e/web/smoke/scenarios/` | One module per smoke flow. The runner loads these |
-| `tests/e2e/web/smoke/steps/` | Page actions a flow calls, in order. The runner does not load this folder |
-| `tests/e2e/web/smoke/scenarios/run.mjs` | Reads feature contracts and runs the suite |
-| `tests/e2e/web/smoke/helpers.mjs` | Shared mechanics used by more than one flow |
-| `tests/e2e/web/smoke/recording.mjs` | Video flag, run folders, and clip names. The app core fixture uses this too |
-| `tests/e2e/web/smoke/state/` | Gitignored session files and the chain of provided tokens |
+| `tests/e2e/web/fixtures/fixture-1/` | The smoke fixture: what the suite covers, and `run.mjs`, the entry point |
+| `tests/e2e/web/fixtures/fixture-2/` | The login warmup fixture: what that suite covers, and `run.mjs`, the entry point |
+| `tests/e2e/web/tests/` | Smoke flows and warmup tests. Each fixture runner loads its own files |
+| `tests/e2e/web/pages/` | Page objects a flow calls. The runner does not load this folder |
+| `tests/e2e/web/fixtures/fixture-1/run.mjs` | Reads feature contracts and runs the tests for this fixture |
+| `tests/e2e/web/utils/helpers.mjs` | Shared mechanics used by more than one flow |
+| `tests/e2e/shared-tools/recording.mjs` | Video flag, run folders, and clip names. Website smoke and the app fixture both use this |
+| `tests/e2e/web/fixtures/fixture-1/run-state/` | Gitignored session files and the chain of provided tokens for this fixture |
 | `_recordings/` | Gitignored videos. The three newest timestamp folders are kept |
-| `tests/e2e/.env` | Gitignored persona emails and passwords |
-| `tests/e2e/auth0-personas.json` | `app_metadata` to paste onto Auth0 users. No passwords |
+| `tests/e2e/shared-data/logins.env` | Gitignored persona emails and passwords. `shared-tools/logins.mjs` loads this for the smoke suite and the app |
+| `tests/e2e/shared-data/auth0-personas.json` | `app_metadata` to paste onto Auth0 users. Shared by the website and the app. No passwords |
 
 ## How large a scenario is
 
@@ -46,21 +48,23 @@ The current smoke scenarios, in run order:
 | `registration.groupadmin.checkregistrationandedit-scenario1` | Submitted registration | Amended, confirmed, invoices reviewed |
 | `public.content.visitor-browses` | Public home | Public pages have rendered |
 
-## Steps
+## Pages
 
-The clicks that used to be their own scenarios live in `tests/e2e/web/smoke/steps/`. A flow calls those functions in order on one page. The step function keeps the checks it already had. The flow owns the browser.
+The clicks live on page objects under `tests/e2e/web/pages/`. A flow creates the page for the screen it is on and calls those methods in order. The method keeps the checks it already had. The flow owns the browser.
 
 ```js
 await withPersonaPage('group-admin', async (page) => {
-  await part(id, 'create', () => createGroup(page, ctx));
-  await part(id, 'configure', () => configureGroup(page, ctx));
-  await part(id, 'add member', () => addGroupMember(page, ctx));
+  const dashboard = new DashboardPage(page);
+  const group = new GroupPage(page);
+  await part(id, 'create', () => dashboard.createGroup(ctx));
+  await part(id, 'configure', () => group.configure(ctx));
+  await part(id, 'add member', () => group.addMember(ctx));
 });
 ```
 
-`part` prints `PASS <flow id> > <name>` when the step returns, and `FAIL <flow id> > <name>` plus the error when it throws. The flow then fails, and the runner prints `FAIL` for the scenario id.
+`part` prints `PASS <flow id> > <name>` when the call returns, and `FAIL <flow id> > <name>` plus the error when it throws. The flow then fails, and the runner prints `FAIL` for the scenario id.
 
-Add a new check by adding a step function and one `part` call. Leave the other step functions as they are. A behaviour that belongs to one flow stays in `steps/`. A behaviour that more than one flow needs, and that is a single job, goes in `helpers.mjs`: loading a persona, opening a browser, signing in, carrying the cookie, reading the page, recognising the session-error page, and reading or writing tokens.
+Add a new check by adding a method on the page that owns that screen, and one `part` call. Leave the other methods as they are. Shared locators used by more than one page live in `pages/controls.mjs`. A behaviour that more than one flow needs, and that is a single job, goes in `utils/helpers.mjs`: loading a persona, opening a browser, signing in, carrying the cookie, reading the page, recognising the session-error page, and reading or writing tokens.
 
 ## Scenario id
 
@@ -111,15 +115,15 @@ Provided names in this suite: `cookie-consent`, `session:event-admin`, `session:
 
 On a full smoke run, the first action of a scenario checks that every required scenario has passed in this run and that its tokens are present. The check does nothing else.
 
-When they are present, the scenario continues. When any are missing, the scenario fails immediately with `prerequisites not available` and the missing ids or tokens. Its own steps do not run.
+When they are present, the scenario continues. When any are missing, the scenario fails immediately with `prerequisites not available` and the missing ids or tokens. Its own page calls do not run.
 
-A named scenario id is the exception. It does not re-run the flows it requires. It continues when those flows' tokens are already in the chain, and it fails the same way when they are not. That invocation does not reset the database.
+A named scenario id is the exception. It does not re-run the flows it requires. It continues when those flows' tokens are already in the chain, and it fails the same way when they are not. The database still follows `run-config.yaml` unless the command passes `--base-state none`. When the run passes and `clearSession` is true, the runner removes the files in `run-state`.
 
 Leave a `requires` entry in place when a later scenario needs that token. Fix the scenario that should have provided it.
 
 ## Session state
 
-Three stores sit under `tests/e2e/web/smoke/state/`. All of them are gitignored.
+Three stores sit under `tests/e2e/web/fixtures/fixture-1/run-state/`. The files are gitignored. The folder stays.
 
 | Store | What it holds | When it is written |
 |-------|----------------|--------------------|
@@ -137,17 +141,17 @@ A flow that needs a signed-in actor signs in at the start, through Auth0, and st
 
 `auth.session-continuity.rejected-cache-returns-to-sign-in` plants a rejected cache and returns to sign-in. It does not write the persona session files.
 
-A full smoke run deletes `chain.json` after it has recreated the database. Persona files and the cookie file stay, and the create flows sign in again so the tokens match the empty database. A named flow leaves the chain and the database as they are.
+A smoke run applies the pack in `run-config.yaml`, then deletes `chain.json` when that pack is not `none`, so the suite does not reuse old ids. That apply leaves SQL running and does not restart the API. Persona files and the cookie file stay for that run, and the create flows sign in again so the tokens match the empty database. When every planned scenario passes and `clearSession` is true, the runner removes the files in `run-state`. A failed run leaves them. `--base-state none` reads the chain already in `run-state`.
 
 ## Videos and steps
 
-Recording follows the browsers, which follow the actor. It does not cut a new file for each step. Several steps on one page are one clip. The console still prints a line per step, so a failure names the step while the clip shows the whole visit.
+Recording follows the browsers, which follow the actor. It does not cut a new file for each page call. Several calls on one page are one clip. The console still prints a line per part, so a failure names the part while the clip shows the whole visit.
 
 | Browser opened by the flow | Clip name |
 |----------------------------|-----------|
 | Site launch | `01-cookie-consent.webm` |
 | Sign-in at the start of a create flow | `01-login.webm` |
-| The page that then runs that flow's steps | `02-page.webm` |
+| The page that then runs that flow's page calls | `02-page.webm` |
 | Sign-in after the page closes, so the saved token includes the new id | `03-login.webm` |
 | Each later browser in the review flow | the next `NN-page.webm` |
 
@@ -163,11 +167,11 @@ Do not locate rows with `ng-reflect-*`. Angular emits those attributes only in d
 
 ## Test data
 
-Smoke data lives in `tests/e2e/web/smoke/config/`. `groups.json` holds two groups. `events.json` holds two events. Keys match the database entities (`GroupName`, `GroupBio`, `GroupMembers`, `Teams`, `Activities`, and so on). Enum values use the C# names (`activeMember`, `guest`, `INDIVIDUAL`, `TEAM`, `StandardDert`).
+Form values a user would type live in `tests/e2e/shared-data/`. `groups/group1.json` and `group2.json` hold the two groups. `events/event1.json` and `event2.json` hold the two events. Keys match the database entities (`GroupName`, `GroupBio`, `GroupMembers`, `Teams`, `Activities`, and so on). Enum values use the C# names (`activeMember`, `guest`, `INDIVIDUAL`, `TEAM`, `StandardDert`). The smoke suite reads the pair named by `run-config.yaml` through `tests/e2e/shared-tools/loadData.js`.
 
-The current scenarios enter the first group and the first event. Groups are named for The Simpsons. Events are named for a zoo. The first group is `The Simpsons`. The first event is `City Zoo Gathering`.
+The checked-in smoke config types `event1` and `group1`. That event is `City Zoo Gathering`. That group is `The Simpsons`. `event2` is `Ride a Giraffe`. `group2` is `The Flanders`.
 
-Each record has an `Image` file name under `tests/e2e/web/smoke/fixtures/`. Groups use `family.jpg`. Events use `giraffe.jpg`. The stored image address stays under `originals`. The picture on the page is the `480x360` address.
+Each record has an `Image` file name under `tests/e2e/shared-data/images/`. Groups use `family.jpg`. Events use `giraffe.jpg`. The stored image address stays under `originals`. The picture on the page is the `480x360` address.
 
 ## When a run fails
 

@@ -1,0 +1,38 @@
+{
+  "Name": "Ride a Giraffe",
+  "Image": "giraffe.jpg",
+  "EventSynopsis": "An afternoon riding a giraffe around the city zoo",
+  "EventStartDate": "2027-07-15",
+  "EventEndDate": "2027-07-16",
+  "LocationTown": "Springfield",
+  "LocationPostcode": "SP2 2GG",
+  "ContactName": "Zoo Keeper",
+  "ContactEmail": "event-admin-1@dertinfo.co.uk",
+  "ContactTelephone": "01234567893",
+  "RegistrationOpenDate": "2026-02-01",
+  "RegistrationCloseDate": "2027-06-01",
+  "EventTemplateType": "StandardDert",
+  "Activities": [
+    {
+      "Title": "Adult Giraffe Ride",
+      "Description": "A ticket for an adult to ride a giraffe through the safari paddock",
+      "Price": 18,
+      "IsDefault": true,
+      "AudienceTypeId": "INDIVIDUAL"
+    },
+    {
+      "Title": "Child Giraffe Ride",
+      "Description": "A ticket for a child to ride a giraffe through the safari paddock",
+      "Price": 9,
+      "IsDefault": false,
+      "AudienceTypeId": "INDIVIDUAL"
+    },
+    {
+      "Title": "Carry a Giraffe",
+      "Description": "A team carries a giraffe between the enclosures",
+      "Price": 25,
+      "IsDefault": false,
+      "AudienceTypeId": "TEAM"
+    }
+  ]
+}

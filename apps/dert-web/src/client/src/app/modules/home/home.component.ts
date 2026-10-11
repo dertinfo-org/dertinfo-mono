@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/core/authentication/auth.service';
 
 @Component({
     selector: 'app-home',
@@ -14,7 +15,8 @@ export class HomeComponent implements OnInit {
   contactForm: UntypedFormGroup;
   constructor(
     private router: Router,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -24,6 +26,10 @@ export class HomeComponent implements OnInit {
       subject: ['', [Validators.required]],
       message: ['', Validators.required]
     });
+  }
+
+  public signUp() {
+    this.authService.signUp();
   }
 
   public routeToTerms() {

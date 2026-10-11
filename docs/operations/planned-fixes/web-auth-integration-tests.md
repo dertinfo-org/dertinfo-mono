@@ -9,7 +9,7 @@
 - Changelog: [`docs/operations/changelogs/2026-07-26-001-web-auth-refresh-warmup.md`](../changelogs/2026-07-26-001-web-auth-refresh-warmup.md)
 - Historical silent-auth diagnosis: [`local-silent-auth-localhost.md`](../investigations/local-silent-auth-localhost.md)
 - Warmup race (often coupled to auth’d dashboard load): [`web-warmup-race-condition.md`](../investigations/web-warmup-race-condition.md)
-- Existing Playwright warmup scripts (may need updates): `tests/e2e/web/login/warmup/`
+- Existing Playwright warmup scripts (may need updates): `tests/e2e/web/fixtures/fixture-2/`
 
 ---
 
@@ -62,7 +62,7 @@ Not run as a formal suite yet; recommended when building the harness. Relies on 
 | C1 | Cold open `/dashboard` while logged in | Warmup + auth; must not stick on `/session/warmup` |
 | C2 | Deep link (e.g. dert-of-derts) while logged in | Same guard / warmup path as applicable |
 | C3 | Staging / prod smoke | Same M1–M5 against non-localhost origins (consent skip rules differ from localhost) |
-| C4 | **Stale authenticated session** | **Addressed** (2026-09-26). A planted Auth0 cache that can no longer renew must not leave the user on `/session/warmup`. Recovery is sign-in again, without clearing site data by hand. Script: `tests/e2e/web/login/warmup/stale-session.mjs` (`npm run test:login:warmup:stale-session` from `tests/e2e`). [Changelog](../changelogs/2026-09-26-002-warmup-stale-session.md) |
+| C4 | **Stale authenticated session** | **Addressed** (2026-09-26). A planted Auth0 cache that can no longer renew must not leave the user on `/session/warmup`. Recovery is sign-in again, without clearing site data by hand. Script: `tests/e2e/web/tests/warmup.signed-in.rejected-cache-returns-to-sign-in.mjs` (`npm run test:login:warmup:stale-session` from `tests/e2e`). [Changelog](../changelogs/2026-09-26-002-warmup-stale-session.md) |
 
 ---
 
@@ -78,6 +78,6 @@ Not run as a formal suite yet; recommended when building the harness. Relies on 
 
 ## Out of scope for this note
 
-- Implementing M1–M5 and S1–S7 (deferred). C4 is covered by `tests/e2e/web/login/warmup/stale-session.mjs`.
+- Implementing M1–M5 and S1–S7 (deferred). C4 is covered by `tests/e2e/web/tests/warmup.signed-in.rejected-cache-returns-to-sign-in.mjs`.
 - Migrating `dert-app` (PWA) auth to the same SDK (separate workstream)
 - Auth0 dashboard configuration runbooks beyond what tests must assume

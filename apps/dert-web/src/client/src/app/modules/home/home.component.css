@@ -9,3 +9,65 @@
 .navbar-brand span {
     color: #8fbe36;
 }
+
+#home-header {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+#home-header > .container {
+    height: auto;
+    min-height: 100px;
+}
+
+.home-header-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+}
+
+.home-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-left: auto;
+}
+
+.home-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.home-nav-item {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    color: rgba(0, 0, 0, 0.72);
+    cursor: pointer;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 10px 14px;
+    text-decoration: none;
+}
+
+.home-nav-item:hover {
+    background: rgba(36, 123, 160, 0.08);
+    color: #247ba0;
+}
+
+.home-auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.home-auth-btn {
+    min-width: 96px;
+}

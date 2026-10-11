@@ -49,6 +49,6 @@ Branch: `feature/web-auth-refresh-warmup` (uncommitted at changelog write time; 
 - Confirm Auth0 Application / API settings for refresh-token rotation and first-party consent skip on staging/prod (dashboard changes are manual).
 - Consider migrating **`dert-app` (PWA)** to the same Auth0 Angular SDK later for consistency (PWA was not broken the same way on localhost).
 - Optional: Auth0 “Allow Skipping User Consent” / reduce repeated consent screens during local testing.
-- Playwright warmup e2e under `tests/e2e/web/login/warmup/` may need updates for `WarmupGuard` behaviour.
+- Playwright warmup e2e under `tests/e2e/web/fixtures/fixture-2/` may need updates for `WarmupGuard` behaviour.
 - Staging/prod smoke of login + group create after deploy.
 - **Integration / e2e coverage for auth behaviours** (refresh, logout, long-session token renew, etc.) — see [`docs/operations/planned-fixes/web-auth-integration-tests.md`](../planned-fixes/web-auth-integration-tests.md).
