@@ -6,6 +6,7 @@
 import path from 'path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'url';
+import { forwardedSmokeArgs } from '../shared-tools/smoke-args.mjs';
 import { clearRunState, sharedSessionDir } from '../shared-tools/run-config.mjs';
 
 const webDir = path.dirname(fileURLToPath(import.meta.url));
@@ -23,43 +24,13 @@ const steps = [
   ['public.content', ['--base-state', 'none', '--clear-session', 'false']],
 ];
 
-const stripFlags = new Set(['--base-state', '--clear-session']);
-const valueFlags = new Set(['--video', '--event-data', '--group-data']);
-
-export function forwardedSmokeArgs(argv) {
-  const forwarded = [];
-  for (let index = 0; index < argv.length; index += 1) {
-    const arg = argv[index];
-    if (!arg.startsWith('--')) {
-      throw new Error(`Run one feature with node web/fixtures/<feature>/run.mjs. Unexpected ${arg}`);
-    }
-    const equals = arg.indexOf('=');
-    const flag = equals === -1 ? arg : arg.slice(0, equals);
-    if (stripFlags.has(flag)) {
-      if (equals === -1) index += 1;
-      continue;
-    }
-    if (valueFlags.has(flag) && equals === -1) {
-      const value = argv[index + 1];
-      if (value == null || value === '' || value.startsWith('--')) {
-        throw new Error(`${flag} needs a value`);
-      }
-      forwarded.push(flag, value);
-      index += 1;
-      continue;
-    }
-    forwarded.push(arg);
-  }
-  return forwarded;
-}
-
 const invokedDirectly = process.argv[1]
   && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 
 if (invokedDirectly) {
   let forwarded;
   try {
-    forwarded = forwardedSmokeArgs(process.argv.slice(2));
+    forwarded = forwardedSmokeArgs(process.argv.slice(2), 'web');
   } catch (error) {
     console.error(error.message);
     process.exit(1);

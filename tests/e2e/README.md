@@ -22,16 +22,17 @@ The smoke suite expects the local profile already running. SQL is Docker. The AP
 | Suite | Folder | npm script |
 |-------|--------|------------|
 | Website smoke | One fixture per feature that has tests. [`run-smoke.mjs`](web/run-smoke.mjs) runs them in order | `npm run test:web:smoke` |
+| App smoke | One fixture per feature that has tests. [`run-smoke.mjs`](app/run-smoke.mjs) runs them in order | `npm run test:app:smoke` |
 | Login warmup | [`web/fixtures/fixture-2/description.md`](web/fixtures/fixture-2/description.md) | `npm run test:login:warmup` |
 | Shared tools | [`shared-tools/`](shared-tools/) | recording, form data, logins, and the planted-session helper |
 | Shared data | [`shared-data/`](shared-data/) | form values, images, Auth0 personas, and login emails and passwords |
 | Shared database state | [`shared-state/`](shared-state/) | `npm run apply:state -- system-basic` |
 | Login id check | [`shared-state/apply.mjs`](shared-state/apply.mjs) | `npm run check:state -- system-basic` |
-| Venue score capture | [`app/fixtures/scoring.venue-capture/description.md`](app/fixtures/scoring.venue-capture/description.md) | `npm run test:app:core` |
+| Venue score capture | [`app/fixtures/scoring.venue-capture/description.md`](app/fixtures/scoring.venue-capture/description.md) | `node app/fixtures/scoring.venue-capture/run.mjs` |
 
 Persona passwords for the website smoke suite and the app fixture live in gitignored [`shared-data/logins.env`](shared-data/logins.env.example). [`shared-tools/logins.mjs`](shared-tools/logins.mjs) loads that file. Auth0 `app_metadata` for those users is in [`shared-data/auth0-personas.json`](shared-data/auth0-personas.json).
 
-`npm run test:app:core -- --video all` records the app scenario in the same way as the website smoke suite. Modes and the `_recordings/` folder are described in [Website smoke tests](../../docs/technical/guides/website-smoke-tests.md#video).
+`npm run test:app:smoke -- --video all` records the app fixture in the same way as the website smoke suite. Modes and the `_recordings/` folder are described in [Website smoke tests](../../docs/technical/guides/website-smoke-tests.md#video).
 
 Legacy Protractor e2e for Angular apps remains under `apps/dert-web/src/client/e2e/` and `apps/dert-app/src/client/e2e/`.
 
@@ -78,6 +79,7 @@ A fixture is one Gherkin feature. The website suites live under `web/`. The app 
 
 ```text
 web/  or  app/
+  run-smoke.mjs           runs the feature fixtures that have tests, in order
   fixtures/<feature-id>/
     description.md      what this fixture covers, and which tests it runs
     run-config.yaml     database pack, form data, video, and whether to clear the session
@@ -89,7 +91,7 @@ web/  or  app/
   reports/
 ```
 
-`npm` scripts in `package.json` point at `web/run-smoke.mjs`, `web/fixtures/<feature-id>/run.mjs`, and `app/fixtures/scoring.venue-capture/run.mjs`. They do not point at a test file.
+`npm` scripts in `package.json` point at `web/run-smoke.mjs` and `app/run-smoke.mjs`. They do not point at a test file. A single fixture is `node web/fixtures/<feature-id>/run.mjs` or `node app/fixtures/<feature-id>/run.mjs`.
 
 ### description.md
 
@@ -118,7 +120,7 @@ npm run apply:state -- system-basic
 npm run check:state -- system-basic
 npm run test:web:smoke -- --event-data event2 --group-data group2
 npm run test:web:smoke -- --base-state none --clear-session false
-npm run test:app:core -- --video all
+npm run test:app:smoke -- --video all
 ```
 
 `check:state` confirms the inserted ids match the Auth0 persona claims. The loader is [`shared-state/apply.mjs`](shared-state/apply.mjs).

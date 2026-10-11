@@ -20,5 +20,5 @@ video: none
 clearSession: true
 
 # Command line overrides, from tests/e2e:
-#   npm run test:app:core -- --video all
+#   npm run test:app:smoke -- --video all
 #   npm run test:app:core -- --base-state none --clear-session false
