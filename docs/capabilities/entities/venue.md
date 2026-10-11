@@ -14,10 +14,10 @@ A place where part of a [competition](competition.md) is judged. A competition c
 
 ## What can be done
 
-- **Create** — event-admin, via [Run competitions](../features/competitions-run.md). A venue belongs to an event.
+- **Create** — event-admin, via [Run competitions](../features/web/competitions-run.md). A venue belongs to an event.
 - **Attach to a competition** — event-admin. The competition is then judged at that venue.
 - **Assign judges** — event-admin. Each judge at the venue is given a [score set](score-set.md). See [Judge](judge.md).
-- **Capture scores** — venue-admin or event-admin, via [Venue score capture](../features/venue-score-capture.md). Scores and [marking sheet](marking-sheet.md) photos are taken for each [dance](dance.md) at the venue.
+- **Capture scores** — venue-admin or event-admin, via [Venue score capture](../features/app/venue-score-capture.md). Scores and [marking sheet](marking-sheet.md) photos are taken for each [dance](dance.md) at the venue.
 
 ## States
 

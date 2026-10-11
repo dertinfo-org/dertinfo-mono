@@ -1,0 +1,11 @@
+# Fixture ids that must already have been run.
+requires: []
+
+# system-empty | system-basic | none
+baseState: none
+
+# none | errors | all
+video: none
+
+# true | false
+clearSession: true

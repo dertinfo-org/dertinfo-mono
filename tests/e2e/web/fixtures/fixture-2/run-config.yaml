@@ -1,3 +1,8 @@
+# Fixture ids that must already have been run.
+# An empty list means this fixture can run on its own.
+# The runner does not check this yet.
+requires: []
+
 # system-empty | system-basic | none
 # none leaves the database as it is. This fixture does not load a pack.
 baseState: none
@@ -8,8 +13,8 @@ baseState: none
 video: none
 
 # true | false
-# true removes run-state files after a passing run.
-# false leaves them. A failing run always leaves run-state.
+# true removes shared-session files after a passing run.
+# false leaves them. A failing run always leaves shared-session.
 clearSession: true
 
 # Command line overrides, from tests/e2e:

@@ -1,5 +1,5 @@
 /**
- * Reads fixtures/fixture-N/run-config.yaml and applies command-line overrides.
+ * Reads a fixture's run-config.yaml and applies command-line overrides.
  * Comments in that file are ignored.
  */
 import fs from 'fs';
@@ -49,7 +49,17 @@ export function loadRunConfig(fixtureDir, argv) {
   if (typeof config.clearSession !== 'boolean') {
     throw new Error('clearSession must be true or false');
   }
+  config.requires = parseRequires(config.requires);
   return { ...config, rest };
+}
+
+function parseRequires(value) {
+  if (value == null || value === '[]') return [];
+  const names = String(value).split(',').map((name) => name.trim()).filter(Boolean);
+  if (names.some((name) => name === '[]')) {
+    throw new Error('requires must be [] or a comma-separated list of fixture ids');
+  }
+  return names;
 }
 
 /** Flat key: value file. Full-line and trailing comments are skipped. */
@@ -100,10 +110,14 @@ export function applyPack(e2eRoot, baseState) {
   });
 }
 
+export function sharedSessionDir(e2eRoot) {
+  return path.join(e2eRoot, 'shared-session');
+}
+
 export function clearRunState(dir) {
   if (!fs.existsSync(dir)) return;
   for (const entry of fs.readdirSync(dir)) {
-    if (entry === '.gitkeep') continue;
+    if (entry === '.gitkeep' || entry === 'README.md') continue;
     fs.rmSync(path.join(dir, entry), { recursive: true, force: true });
   }
 }

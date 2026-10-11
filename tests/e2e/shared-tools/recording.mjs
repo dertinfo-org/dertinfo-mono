@@ -50,27 +50,33 @@ function stamp(date) {
   return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}-${pad(date.getHours())}${pad(date.getMinutes())}`;
 }
 
-function runFolderRank(name) {
+const RECORDING_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+/** Local time encoded in a YYYYMMDD-HHMM folder name. A suffix after the minute is ignored. */
+function runFolderTime(name) {
   const match = name.match(RUN_FOLDER);
   if (!match) return null;
-  return [match[1], match[2], Number(match[3] || 1)];
+  const date = match[1];
+  const time = match[2];
+  return new Date(
+    Number(date.slice(0, 4)),
+    Number(date.slice(4, 6)) - 1,
+    Number(date.slice(6, 8)),
+    Number(time.slice(0, 2)),
+    Number(time.slice(2, 4)),
+  ).getTime();
 }
 
-/** Keep the three newest YYYYMMDD-HHMM folders. Other names in the directory are left alone. */
-export function pruneTimestampFolders(root) {
+/** Remove YYYYMMDD-HHMM folders older than one day. Other names in the directory are left alone. */
+export function pruneTimestampFolders(root, now = Date.now()) {
   if (!fs.existsSync(root)) return;
-  const names = fs.readdirSync(root, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && runFolderRank(entry.name))
-    .map((entry) => entry.name)
-    .sort((left, right) => {
-      const a = runFolderRank(left);
-      const b = runFolderRank(right);
-      if (a[0] !== b[0]) return a[0] < b[0] ? 1 : -1;
-      if (a[1] !== b[1]) return a[1] < b[1] ? 1 : -1;
-      return b[2] - a[2];
-    });
-  for (const name of names.slice(3)) {
-    fs.rmSync(path.join(root, name), { recursive: true, force: true });
+  for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const recordedAt = runFolderTime(entry.name);
+    if (recordedAt == null) continue;
+    if (now - recordedAt > RECORDING_MAX_AGE_MS) {
+      fs.rmSync(path.join(root, entry.name), { recursive: true, force: true });
+    }
   }
 }
 
@@ -152,7 +158,7 @@ export function finishScenario(passed) {
   }
 }
 
-/** Remove an empty run folder, then keep only the three newest timestamp folders. */
+/** Remove an empty run folder, then remove timestamp folders older than one day. */
 export function finishRun() {
   if (mode === 'none' || !runDir) return null;
   const dir = runDir;

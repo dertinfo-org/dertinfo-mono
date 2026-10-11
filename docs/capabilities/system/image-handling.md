@@ -26,4 +26,4 @@ None at the capability layer (technical implementation may use background proces
 
 - Exact sizes and formats are technical configuration, not product vocabulary here.
 
-See group image management under [Create and manage group](../features/groups-manage.md). Storage paths and which screen requests which size: [Images](../../technical/subsystems/images.md).
+See group image management under [Create and manage group](../features/web/groups-manage.md). Storage paths and which screen requests which size: [Images](../../technical/subsystems/images.md).

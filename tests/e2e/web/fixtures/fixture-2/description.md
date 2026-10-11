@@ -27,7 +27,7 @@ These tests cover authenticated access on the website after a session has been p
 
 ## Synopsis
 
-[run-config.yaml](run-config.yaml) sets `baseState` to `none`, so a run uses the website and API that are already up and does not change the database. [run.mjs](run.mjs) is the entry point. It runs the tests below in investigation order. Runtime files for the run go in [run-state](run-state). A passing run removes them when `clearSession` is true. A failing run leaves them.
+[run-config.yaml](run-config.yaml) sets `baseState` to `none`, so a run uses the website and API that are already up and does not change the database. [run.mjs](run.mjs) is the entry point. It runs the tests below in investigation order.
 
 The planted session comes from [session.mjs](../../../shared-tools/session.mjs). The website must be on `http://localhost:44200` and the API on `http://localhost:44100`.
 

@@ -14,7 +14,7 @@ A person on a [group](group.md)'s list. Members are not permanently assigned to 
 
 ## What can be done
 
-- **Add** — group-admin, via [Create and manage group](../features/groups-manage.md).
+- **Add** — group-admin, via [Create and manage group](../features/web/groups-manage.md).
 - **Update** — group-admin. Change the name, contact details, date of birth, date joined, and whether the person is a member or a guest. Attendances name the event and the ticket types.
 - **Remove** — group-admin.
 - **Include on a registration** — group-admin, while a [registration](registration.md) is still editable. Guests and dancers are both lines on that registration.

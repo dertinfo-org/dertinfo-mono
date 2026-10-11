@@ -8,12 +8,12 @@ import fs from 'fs';
 import path from 'path';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { applyPack, clearRunState, loadRunConfig } from '../../../shared-tools/run-config.mjs';
+import { applyPack, clearRunState, loadRunConfig, sharedSessionDir } from '../../../shared-tools/run-config.mjs';
 
 const fixtureDir = path.dirname(fileURLToPath(import.meta.url));
 const e2eRoot = path.resolve(fixtureDir, '../../..');
 const testsDir = path.resolve(fixtureDir, '../../tests');
-const runStateDir = path.join(fixtureDir, 'run-state');
+const runStateDir = sharedSessionDir(e2eRoot);
 
 const tests = [
   'warmup.signed-in.records-full-flow.mjs',

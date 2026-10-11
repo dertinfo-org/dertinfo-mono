@@ -14,10 +14,10 @@ One team's performance at one [venue](venue.md) in one [competition](competition
 
 ## What can be done
 
-- **Generate** — event-admin, when the competition's dances are built. The competition moves to Generated. See [Competition](competition.md) and [Run competitions](../features/competitions-run.md).
+- **Generate** — event-admin, when the competition's dances are built. The competition moves to Generated. See [Competition](competition.md) and [Run competitions](../features/web/competitions-run.md).
 - **Add ad hoc** — event-admin, when the competition allows extra dances after generation.
-- **Enter scores** — venue-admin or event-admin, via [Venue score capture](../features/venue-score-capture.md). Awaiting scores becomes scores entered. [Scores](score.md) and a photographed [marking sheet](marking-sheet.md) are captured.
-- **Check scores** — event-admin, via [Validate scores](../features/scoring-validate.md). Scores entered becomes scores checked. After that, the venue admin can no longer change the scores or the marking sheet.
+- **Enter scores** — venue-admin or event-admin, via [Venue score capture](../features/app/venue-score-capture.md). Awaiting scores becomes scores entered. [Scores](score.md) and a photographed [marking sheet](marking-sheet.md) are captured.
+- **Check scores** — event-admin, via [Validate scores](../features/web/scoring-validate.md). Scores entered becomes scores checked. After that, the venue admin can no longer change the scores or the marking sheet.
 
 ## States
 

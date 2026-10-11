@@ -10,7 +10,7 @@ id: entity.dod-submission
 
 ## Description
 
-A [group](group.md)'s dance video in the Dert of Derts programme. The public can watch it and score it. The programme is separate from event registration, venue score capture, and competition results. See [Dert of Derts](../features/dod-programme.md).
+A [group](group.md)'s dance video in the Dert of Derts programme. The public can watch it and score it. The programme is separate from event registration, venue score capture, and competition results. See [Dert of Derts](../features/web/dod-programme.md).
 
 ## What can be done
 

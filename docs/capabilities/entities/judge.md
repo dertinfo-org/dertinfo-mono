@@ -14,9 +14,9 @@ A person who marks [dances](dance.md). A venue typically has two judges. The eve
 
 ## What can be done
 
-- **Record** — event-admin, via [Run competitions](../features/competitions-run.md). Name and contact details are kept for the event.
+- **Record** — event-admin, via [Run competitions](../features/web/competitions-run.md). Name and contact details are kept for the event.
 - **Assign** — event-admin. Place the judge at a venue for a competition, with the score set they mark against. That score set decides which [score categories](score-category.md) appear on their paperwork.
-- **Mark** — the judge's marks are entered as [scores](score.md) by a venue admin or event admin, via [Venue score capture](../features/venue-score-capture.md).
+- **Mark** — the judge's marks are entered as [scores](score.md) by a venue admin or event admin, via [Venue score capture](../features/app/venue-score-capture.md).
 
 ## States
 

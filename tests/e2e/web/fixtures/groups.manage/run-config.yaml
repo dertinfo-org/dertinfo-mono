@@ -1,0 +1,15 @@
+# Fixture ids that must already have been run.
+# The runner does not check this list. Fixtures share tests/e2e/shared-session.
+requires: public.cookie-consent
+
+# system-empty | system-basic | none
+baseState: system-empty
+
+# group1 | group2
+groupData: group1
+
+# none | errors | all
+video: none
+
+# true | false
+clearSession: true

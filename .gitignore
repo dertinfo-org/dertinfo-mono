@@ -45,10 +45,10 @@ desktop.ini
 
 # Environment and secrets
 .env
-# Fixture run-state: the folder stays in git. Nothing inside it does.
-tests/e2e/**/fixtures/*/run-state/**
-!tests/e2e/**/fixtures/*/run-state/
-!tests/e2e/**/fixtures/*/run-state/.gitkeep
+# Shared session: the folder and its README stay in git. Runtime files do not.
+tests/e2e/shared-session/**
+!tests/e2e/shared-session/
+!tests/e2e/shared-session/README.md
 tests/e2e/shared-data/logins.env
 
 # Smoke test video recordings (the three newest timestamp folders are kept)

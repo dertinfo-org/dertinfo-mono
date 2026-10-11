@@ -7,46 +7,44 @@ updated: 2026-10-11
 
 # Playwright standards
 
-How a website smoke scenario is built: how large it is, how it calls page objects, how those browsers become videos, and how session state is kept.
+How a fixture is tied to a Gherkin feature, how a test is tied to a Gherkin scenario, and how the website smoke suite and the app fixture record video and keep session state.
 
-Capability pages say what the product does. This page says how a smoke scenario is wired to those pages. It is not a capability description. Commands for running the suite and turning video on are in [Website smoke tests](../../guides/website-smoke-tests.md).
+Capability pages say what the product does. They keep the Gherkin and do not carry a machine-readable scenario list. This page says how a fixture runs. It is not a capability description. Commands for running the suite and turning video on are in [Website smoke tests](../../guides/website-smoke-tests.md). The mapping tables are in [tests/e2e/README.md](../../../../tests/e2e/README.md).
 
 ## Where the pieces live
 
 | Path | Role |
 |------|------|
-| `tests/e2e/web/fixtures/fixture-1/` | The smoke fixture: what the suite covers, and `run.mjs`, the entry point |
-| `tests/e2e/web/fixtures/fixture-2/` | The login warmup fixture: what that suite covers, and `run.mjs`, the entry point |
-| `tests/e2e/web/tests/` | Smoke flows and warmup tests. Each fixture runner loads its own files |
+| `tests/e2e/web/fixtures/<feature-id>/` | One website Gherkin feature. `run.mjs` is the entry point |
+| `tests/e2e/app/fixtures/<feature-id>/` | One app Gherkin feature. `run.mjs` is the entry point |
+| `tests/e2e/web/run-smoke.mjs` | Runs the website feature fixtures that have tests, in dependency order |
+| `tests/e2e/web/fixtures/fixture-2/` | Login warmup. This is not a Gherkin feature |
+| `tests/e2e/web/tests/` | Tests. Each fixture runner loads its own files |
 | `tests/e2e/web/pages/` | Page objects a flow calls. The runner does not load this folder |
-| `tests/e2e/web/fixtures/fixture-1/run.mjs` | Reads feature contracts and runs the tests for this fixture |
 | `tests/e2e/web/utils/helpers.mjs` | Shared mechanics used by more than one flow |
 | `tests/e2e/shared-tools/recording.mjs` | Video flag, run folders, and clip names. Website smoke and the app fixture both use this |
-| `tests/e2e/web/fixtures/fixture-1/run-state/` | Gitignored session files and the chain of provided tokens for this fixture |
-| `_recordings/` | Gitignored videos. The three newest timestamp folders are kept |
+| `tests/e2e/shared-session/` | Cookies, persona sessions, and `chain.json` shared by the fixtures |
+| `_recordings/` | Gitignored videos. Retention is in [Website smoke tests](../../guides/website-smoke-tests.md#video) |
 | `tests/e2e/shared-data/logins.env` | Gitignored persona emails and passwords. `shared-tools/logins.mjs` loads this for the smoke suite and the app |
 | `tests/e2e/shared-data/auth0-personas.json` | `app_metadata` to paste onto Auth0 users. Shared by the website and the app. No passwords |
 
-## How large a scenario is
+## Feature and scenario
+
+A Gherkin feature is one Playwright fixture. A Gherkin scenario is one Playwright test. The fixture runs those tests in order and records one video for the fixture.
+
+`requires` in `run-config.yaml` names the other fixtures that must already have been run. An empty list means the fixture can run on its own. Every fixture reads and writes `tests/e2e/shared-session/`. `requires` is recorded for the order of fixtures. The runner leaves that list unchecked.
+
+Website features live in `docs/capabilities/features/web/`. App features live in `docs/capabilities/features/app/`. The mapping table is in [tests/e2e/README.md](../../../../tests/e2e/README.md).
+
+## How large a website smoke test is
 
 A smoke scenario is one actor job with a useful start and a useful end. It is the whole job, in one module.
 
-`group.groupadmin.createandconfigure-scenario1` starts with the group administrator opening the site and signing in, then creates the group, walks the configuration screens, adds a member, a guest, and a team, and replaces the gallery image. That is one scenario. `event.eventadmin.createandconfigure-scenario1` is the same shape for an event. Registration is its own scenario, so it can run when the group and the event are already in the database. Seeing the registration, amending it, confirming it, and reading the invoices is another scenario, because that job starts from a submitted registration.
+`group.groupadmin.createandconfigure-scenario1` starts with the group administrator opening the site and signing in, then creates the group, walks the configuration screens, adds a member, a guest, and a team, and replaces the gallery image. That one test still covers several Gherkin scenarios in Create and manage group. `event.eventadmin.createandconfigure-scenario1` is the same shape for Create event. Registering for the event is its own test. Amending, confirming, and reviewing invoices are separate tests in their own fixtures.
 
-`scenario1` is the path the smoke command runs. `scenario2` would be a different path through the same job, such as a second way to configure a group. It is a different module. The smoke command runs `scenario1`.
+`scenario1` on the event and group tests is the collated path those fixtures still run. A second path through the same feature is another test in that fixture.
 
-A job that is already one visit stays one scenario. `public.cookie-consent.visitor-accepts` accepts the cookie banner. `public.content.visitor-browses` walks the public pages. `auth.session-continuity.rejected-cache-returns-to-sign-in` stays in the wider set and is left out of the smoke command.
-
-The current smoke scenarios, in run order:
-
-| Scenario | Start | End |
-|----------|-------|-----|
-| `public.cookie-consent.visitor-accepts` | Site launch | Cookie stored |
-| `event.eventadmin.createandconfigure-scenario1` | Event administrator signs in | Event configured, with activities |
-| `group.groupadmin.createandconfigure-scenario1` | Group administrator signs in | Group configured, with people, a team, and a new gallery image |
-| `registration.groupadmin.registerforevent-scenario1` | Saved group-administrator session, group and event already exist | Registration submitted |
-| `registration.groupadmin.checkregistrationandedit-scenario1` | Submitted registration | Amended, confirmed, invoices reviewed |
-| `public.content.visitor-browses` | Public home | Public pages have rendered |
+A job that is already one visit stays one scenario. `public.cookie-consent.visitor-accepts` accepts the cookie banner. `public.content.visitor-browses` walks the public pages. `auth.session-continuity.rejected-cache-returns-to-sign-in` stays in the wider set and is left out of the smoke command. Fixture order is in [Website smoke tests](../../guides/website-smoke-tests.md#run-the-suite).
 
 ## Pages
 
@@ -68,68 +66,29 @@ Add a new check by adding a method on the page that owns that screen, and one `p
 
 ## Scenario id
 
-A collated flow is `<area>.<actor>.<action>-scenarioN`.
+A test that covers one Gherkin scenario is `<area>.<actor>.<action>`.
 
-`group.groupadmin.createandconfigure-scenario1` is the group administrator creating and configuring one group.
+`scoring.venue-admin.signs-in` is the venue administrator signing in.
 
-A flow that is still a single behaviour keeps `<feature id>.<actor>-<verb>`. `public.content.visitor-browses` is a visitor browsing public pages.
+The website smoke tests that still cover several Gherkin scenarios keep their current ids, including `event.eventadmin.createandconfigure-scenario1`. The fixture for that feature is already its own folder. The id stays until the test is split into one file per scenario.
 
-The scenario id is never given a `[n]` suffix. The action name stays the same when a second object is created. The path number is `-scenarioN`. `[n]` on a token is an instance number, described under Contracts.
+A name with no brackets is instance 1. `configuredEventId` and `configuredEventId[1]` are the same value. A second event provides `configuredEventId[2]` and does not replace the first. Omit `[n]` when there is only one.
 
-## Contract
+Tokens the website smoke tests pass through `chain.json`: `cookie-consent`, `session:event-admin`, `session:group-admin`, `createdEventId`, `createdGroupId`, `configuredEventId`, `configuredGroupId`, `addedMemberId`, `addedGuestId`, `addedTeamId`, `addedIndividualActivityId`, `addedTeamActivityId`, `pendingRegistrationId`, `submittedRegistrationId`.
 
-Each feature page that the smoke suite covers has a `## Scenarios` section. Gherkin (Given, When, Then, And, But) stays in one block. The runner does not read those sentences. The behaviour stays written at that grain even when one flow now performs several of those behaviours.
+## Order
 
-The runner reads the YAML contract on that page:
-
-```yaml
-scenarios:
-  - id: event.eventadmin.createandconfigure-scenario1
-    persona: event-admin
-    sequence: 20
-    requires:
-      - public.cookie-consent.visitor-accepts
-    provides:
-      - configuredEventId
-      - addedIndividualActivityId
-      - addedTeamActivityId
-  - id: events.create.event-admin-creates
-    persona: event-admin
-    sequence: 20
-    requires:
-      - auth.login.event-admin
-    provides:
-      - createdEventId
-    coveredBy: event.eventadmin.createandconfigure-scenario1
-```
-
-`persona` must be one of the feature's `roles`. `requires` names other scenario ids. `provides` names the tokens that scenario leaves behind. `sequence` is only a tie-break when `requires` does not decide the order. Lower numbers run first.
-
-`coveredBy` names the flow that now performs that behaviour. The runner does not execute a `coveredBy` entry. The flow's own YAML, without `coveredBy`, is the contract that runs. Capability pages that never had a module stay documentation only.
-
-A name with no brackets is instance 1. `configuredEventId` and `configuredEventId[1]` are the same value. A second event provides `configuredEventId[2]` and does not replace the first. A later scenario requires that second flow when it must use the second event. Omit `[n]` when there is only one.
-
-Provided names in this suite: `cookie-consent`, `session:event-admin`, `session:group-admin`, `createdEventId`, `createdGroupId`, `configuredEventId`, `configuredGroupId`, `addedMemberId`, `addedGuestId`, `addedTeamId`, `addedIndividualActivityId`, `addedTeamActivityId`, `pendingRegistrationId`, `submittedRegistrationId`.
-
-## Prerequisites
-
-On a full smoke run, the first action of a scenario checks that every required scenario has passed in this run and that its tokens are present. The check does nothing else.
-
-When they are present, the scenario continues. When any are missing, the scenario fails immediately with `prerequisites not available` and the missing ids or tokens. Its own page calls do not run.
-
-A named scenario id is the exception. It does not re-run the flows it requires. It continues when those flows' tokens are already in the chain, and it fails the same way when they are not. The database still follows `run-config.yaml` unless the command passes `--base-state none`. When the run passes and `clearSession` is true, the runner removes the files in `run-state`.
-
-Leave a `requires` entry in place when a later scenario needs that token. Fix the scenario that should have provided it.
+The fixture lists its tests and runs them in that order. It stops at the first failure, so a later test does not start. A named test id on the command runs only that test. `baseState` and `clearSession` are in [tests/e2e/README.md](../../../../tests/e2e/README.md#run-configyaml).
 
 ## Session state
 
-Three stores sit under `tests/e2e/web/fixtures/fixture-1/run-state/`. The files are gitignored. The folder stays.
+These files live in `tests/e2e/shared-session/`. Every fixture uses that same folder. The files are gitignored. The README stays.
 
 | Store | What it holds | When it is written |
 |-------|----------------|--------------------|
 | `sessions/cookie-consent.json` | The accepted `cookie-consent` cookie | When the site-launch scenario finishes |
 | `sessions/<persona>.json` | That persona's browser storage, including the Auth0 session | When that persona's browser closes |
-| `chain.json` | Tokens the scenarios provide (`configuredGroupId`, and the rest) | As each scenario calls `provide`, and again when the scenario passes |
+| `chain.json` | Tokens the tests provide (`configuredGroupId`, and the rest) | When a test calls `provide` |
 
 Contexts use locale `en-GB` and timezone `Europe/London`.
 
@@ -141,7 +100,7 @@ A flow that needs a signed-in actor signs in at the start, through Auth0, and st
 
 `auth.session-continuity.rejected-cache-returns-to-sign-in` plants a rejected cache and returns to sign-in. It does not write the persona session files.
 
-A smoke run applies the pack in `run-config.yaml`, then deletes `chain.json` when that pack is not `none`, so the suite does not reuse old ids. That apply leaves SQL running and does not restart the API. Persona files and the cookie file stay for that run, and the create flows sign in again so the tokens match the empty database. When every planned scenario passes and `clearSession` is true, the runner removes the files in `run-state`. A failed run leaves them. `--base-state none` reads the chain already in `run-state`.
+When `baseState` is not `none`, the runner applies that pack and deletes `chain.json`, so the suite does not reuse old ids. The apply leaves SQL running and does not restart the API. Persona files and the cookie file stay, and the create flows sign in again so the tokens match the empty database. `--base-state none` reads the chain already in `shared-session`.
 
 ## Videos and steps
 
@@ -154,8 +113,9 @@ Recording follows the browsers, which follow the actor. It does not cut a new fi
 | The page that then runs that flow's page calls | `02-page.webm` |
 | Sign-in after the page closes, so the saved token includes the new id | `03-login.webm` |
 | Each later browser in the review flow | the next `NN-page.webm` |
+| The app score-capture fixture, one browser for the feature | `01-score-capture.webm` |
 
-Clips for one flow share that flow's folder under `_recordings/YYYYMMDD-HHMM/`. `errors` mode deletes a flow's folder when that flow passes. `all` keeps every clip. Turning recording on, and where the folders go, is in [Website smoke tests](../../guides/website-smoke-tests.md#video).
+Clips for one fixture share that fixture's folder under `_recordings/YYYYMMDD-HHMM/`. The folder name is the feature id, such as `events.create` or `scoring.venue-capture`. Turning recording on, and how long the folders are kept, is in [Website smoke tests](../../guides/website-smoke-tests.md#video).
 
 ## Locators
 

@@ -21,8 +21,14 @@ export const SMOKE_CONTEXT = {
 };
 
 const webDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const runStateDir = path.join(webDir, 'fixtures', 'fixture-1', 'run-state');
-const cookieConsentFile = path.join(runStateDir, 'sessions', 'cookie-consent.json');
+
+function currentRunStateDir() {
+  return path.resolve(webDir, '../shared-session');
+}
+
+function cookieConsentFile() {
+  return path.join(currentRunStateDir(), 'sessions', 'cookie-consent.json');
+}
 
 export const EXIT = {
   ok: 0,
@@ -117,7 +123,7 @@ export async function openContent(page, routePath, expect) {
 }
 
 export function sessionFile(persona) {
-  return path.join(runStateDir, 'sessions', `${persona}.json`);
+  return path.join(currentRunStateDir(), 'sessions', `${persona}.json`);
 }
 
 export { personaCredentials };
@@ -224,18 +230,18 @@ async function persistSession(context, file) {
 
 /** Reuse the cookie stored by the visitor accept scenario. Later contexts do not click the banner. */
 export async function applyCookieConsent(context) {
-  if (!fs.existsSync(cookieConsentFile)) {
+  if (!fs.existsSync(cookieConsentFile())) {
     throw new Error('Cookie consent has not been accepted');
   }
-  const state = JSON.parse(fs.readFileSync(cookieConsentFile, 'utf8'));
+  const state = JSON.parse(fs.readFileSync(cookieConsentFile(), 'utf8'));
   const cookies = (state.cookies || []).filter((cookie) => cookie.name === 'cookie-consent');
   if (cookies.length === 0) throw new Error('Saved cookie consent is missing the cookie-consent cookie');
   await context.addCookies(cookies);
 }
 
 export async function saveCookieConsent(context) {
-  fs.mkdirSync(path.dirname(cookieConsentFile), { recursive: true });
-  await context.storageState({ path: cookieConsentFile });
+  fs.mkdirSync(path.dirname(cookieConsentFile()), { recursive: true });
+  await context.storageState({ path: cookieConsentFile() });
 }
 
 async function acceptGdpr(page) {

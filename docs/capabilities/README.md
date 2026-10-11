@@ -14,7 +14,7 @@ Start with the [Domain glossary](system/domain-glossary.md).
 ## Structure
 
 - [Roles](roles/) — who can act
-- [Features](features/) — user-facing capabilities
+- [Features](features/) — user-facing capabilities. Website features are in [web](features/web/). App features are in [app](features/app/).
 - [Entities](#entities) — objects in the platform, and how features change them
 - [System](system/) — cross-cutting behaviour and glossary
 - Inventory: [`capabilities.yaml`](capabilities.yaml)
@@ -23,13 +23,13 @@ Start with the [Domain glossary](system/domain-glossary.md).
 
 | Area | Features |
 |------|----------|
-| Groups & events | [Create and manage group](features/groups-manage.md), [Create event](features/events-create.md) |
-| Registration & money | [Submit registration](features/registration-submit.md), [Confirm registrations](features/registration-confirm.md), [Invoicing](features/invoicing.md) |
-| Competition day | [Run competitions](features/competitions-run.md), [Venue score capture](features/venue-score-capture.md), [Validate scores](features/scoring-validate.md), [Publish results](features/results-publish.md) |
-| Public & DoD | [Public content](features/public-content.md), [Cookie consent](features/cookie-consent.md), [Dert of Derts](features/dod-programme.md) |
-| Account & consent | [User account and GDPR consent](features/account-gdpr-consent.md) |
-| Messaging | [Send email](features/send-email.md), [In-app notifications](features/in-app-notifications.md) (rarely used) |
-| Auth | [Log in](features/auth-login.md), [Log out](features/auth-logout.md), [Stay signed in](features/auth-session-continuity.md) |
+| Groups & events | [Create and manage group](features/web/groups-manage.md), [Create event](features/web/events-create.md) |
+| Registration & money | [Submit registration](features/web/registration-submit.md), [Confirm registrations](features/web/registration-confirm.md), [Invoicing](features/web/invoicing.md) |
+| Competition day | [Run competitions](features/web/competitions-run.md), [Venue score capture](features/app/venue-score-capture.md), [Validate scores](features/web/scoring-validate.md), [Publish results](features/web/results-publish.md) |
+| Public & DoD | [Public content](features/web/public-content.md), [Cookie consent](features/web/cookie-consent.md), [Dert of Derts](features/web/dod-programme.md) |
+| Account & consent | [User account and GDPR consent](features/web/account-gdpr-consent.md) |
+| Messaging | [Send email](features/web/send-email.md), [In-app notifications](features/web/in-app-notifications.md) (rarely used) |
+| Auth | [Log in](features/web/auth-login.md), [Log out](features/web/auth-logout.md), [Stay signed in](features/web/auth-session-continuity.md) |
 
 ## Entities
 
@@ -51,11 +51,11 @@ Objects in the platform. Each page says what the object is, what can be done to 
 
 ## Additional
 
-- [Registration email templates](features/registration-email-templates.md) — supporting templates for submit / confirm / cancel
+- [Registration email templates](features/web/registration-email-templates.md) — supporting templates for submit / confirm / cancel
 
 ## Deprecated
 
-- [Super administrator](roles/super-admin.md) / [Super-admin privilege](features/super-admin-deprecated.md) — should be removed
+- [Super administrator](roles/super-admin.md) / [Super-admin privilege](features/web/super-admin-deprecated.md) — should be removed
 
 Roles may combine on one account. Auth0 claim mapping: [Authentication](../technical/subsystems/authentication.md).
 

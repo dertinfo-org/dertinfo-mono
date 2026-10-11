@@ -14,13 +14,13 @@ Administers one or more sword-dancing **groups**: members, teams, images, event 
 
 ## Capabilities
 
-- [Create and manage group](../features/groups-manage.md)
-- [Submit event registration](../features/registration-submit.md) — submit and edit while still open (until event admin confirms)
-- [Invoicing and payment status](../features/invoicing.md) — view invoices and paid status
-- [Registration email templates](../features/registration-email-templates.md) — receives submitted/confirmed emails
-- [Send email](../features/send-email.md) — receives platform emails
-- [Publish competition results](../features/results-publish.md) — after publish, own team’s scores and score sheets
-- Auth: [Log out](../features/auth-logout.md), [Stay signed in](../features/auth-session-continuity.md)
+- [Create and manage group](../features/web/groups-manage.md)
+- [Submit event registration](../features/web/registration-submit.md) — submit and edit while still open (until event admin confirms)
+- [Invoicing and payment status](../features/web/invoicing.md) — view invoices and paid status
+- [Registration email templates](../features/web/registration-email-templates.md) — receives submitted/confirmed emails
+- [Send email](../features/web/send-email.md) — receives platform emails
+- [Publish competition results](../features/web/results-publish.md) — after publish, own team’s scores and score sheets
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
 
 ## Limitations
 

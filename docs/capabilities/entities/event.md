@@ -14,7 +14,7 @@ A gathering, notably a Dert, that hosts [activities](activity.md) and [competiti
 
 ## What can be done
 
-- **Create** — event-admin, via [Create event](../features/events-create.md). The wizard asks for an event type. The new event starts not configured.
+- **Create** — event-admin, via [Create event](../features/web/events-create.md). The wizard asks for an event type. The new event starts not configured.
 - **Configure** — event-admin. Finishing setup moves the event to configured, including dates, location, contact, synopsis, and the activities and competitions from the template.
 - **Promote** — event-admin. A promoted, configured event can appear in the public listing.
 - **Open and close registration** — event-admin, by the registration open and close dates. Groups submit [registrations](registration.md) while registration is open.

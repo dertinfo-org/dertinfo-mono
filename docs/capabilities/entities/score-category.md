@@ -14,9 +14,9 @@ One marking criterion on a [competition](competition.md). The usual main-competi
 
 ## What can be done
 
-- **Configure** — event-admin, with the competition, via [Run competitions](../features/competitions-run.md). Set the name, description, maximum marks, and sort order.
+- **Configure** — event-admin, with the competition, via [Run competitions](../features/web/competitions-run.md). Set the name, description, maximum marks, and sort order.
 - **Include in a score set** — event-admin. A [score set](score-set.md) is the subset of categories given to a judge.
-- **Mark** — venue-admin or event-admin. Each entered score is against one category. See [Venue score capture](../features/venue-score-capture.md).
+- **Mark** — venue-admin or event-admin. Each entered score is against one category. See [Venue score capture](../features/app/venue-score-capture.md).
 
 ## States
 

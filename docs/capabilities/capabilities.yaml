@@ -195,122 +195,122 @@
 - id: auth.login
   title: Log in
   status: active
-  path: features/auth-login.md
+  path: features/web/auth-login.md
   roles: [public-user, member, group-admin, event-admin]
 
 - id: auth.logout
   title: Log out
   status: active
-  path: features/auth-logout.md
+  path: features/web/auth-logout.md
   roles: [member, group-member, group-admin, event-admin, venue-admin, dod-admin, super-admin]
 
 - id: auth.session-continuity
   title: Stay signed in
   status: active
-  path: features/auth-session-continuity.md
+  path: features/web/auth-session-continuity.md
   roles: [member, group-member, group-admin, event-admin, venue-admin, dod-admin, super-admin]
 
 # --- Primary features ---
 - id: groups.manage
   title: Create and manage group
   status: active
-  path: features/groups-manage.md
+  path: features/web/groups-manage.md
   roles: [member, group-admin]
 
 - id: events.create
   title: Create event
   status: active
-  path: features/events-create.md
+  path: features/web/events-create.md
   roles: [event-admin]
 
 - id: registration.submit
   title: Submit event registration
   status: active
-  path: features/registration-submit.md
+  path: features/web/registration-submit.md
   roles: [group-admin, group-member]
 
 - id: registration.confirm
   title: Confirm registrations
   status: active
-  path: features/registration-confirm.md
+  path: features/web/registration-confirm.md
   roles: [event-admin]
 
 - id: invoicing.payment-status
   title: Invoicing and payment status
   status: active
-  path: features/invoicing.md
+  path: features/web/invoicing.md
   roles: [event-admin, group-admin]
 
 - id: competitions.run
   title: Run competitions
   status: active
-  path: features/competitions-run.md
+  path: features/web/competitions-run.md
   roles: [event-admin]
 
 - id: scoring.venue-capture
   title: Venue score capture
   status: active
-  path: features/venue-score-capture.md
+  path: features/app/venue-score-capture.md
   roles: [venue-admin, event-admin]
 
 - id: scoring.validate
   title: Validate scores
   status: active
-  path: features/scoring-validate.md
+  path: features/web/scoring-validate.md
   roles: [event-admin]
 
 - id: results.publish
   title: Publish competition results
   status: active
-  path: features/results-publish.md
+  path: features/web/results-publish.md
   roles: [event-admin, group-admin, group-member, member, public-user]
 
 - id: public.content
   title: Public content
   status: active
-  path: features/public-content.md
+  path: features/web/public-content.md
   roles: [public-user]
 
 - id: dod.programme
   title: Dert of Derts
   status: active
-  path: features/dod-programme.md
+  path: features/web/dod-programme.md
   roles: [public-user, dod-admin, member]
 
 - id: messaging.send-email
   title: Send email
   status: active
-  path: features/send-email.md
+  path: features/web/send-email.md
   roles: [event-admin, group-admin]
 
 - id: messaging.in-app-notifications
   title: In-app notifications
   status: active
-  path: features/in-app-notifications.md
+  path: features/web/in-app-notifications.md
   roles: [member, group-admin, event-admin]
 
 - id: account.gdpr-consent
   title: User account and GDPR consent
   status: active
-  path: features/account-gdpr-consent.md
+  path: features/web/account-gdpr-consent.md
   roles: [member, group-admin, event-admin]
 
 - id: public.cookie-consent
   title: Cookie consent
   status: active
-  path: features/cookie-consent.md
+  path: features/web/cookie-consent.md
   roles: [public-user]
 
 # --- Additional ---
 - id: registration.email-templates
   title: Registration email templates
   status: active
-  path: features/registration-email-templates.md
+  path: features/web/registration-email-templates.md
   roles: [event-admin, group-admin]
 
 # --- Deprecated ---
 - id: platform.super-admin-deprecated
   title: Super-admin privilege (deprecated)
   status: deprecated
-  path: features/super-admin-deprecated.md
+  path: features/web/super-admin-deprecated.md
   roles: [super-admin]
