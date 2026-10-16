@@ -50,7 +50,7 @@ A super administrator can log into the website and open a section that only site
 
 ## 7. Site-admin email test
 
-In the site-admin part of the site, a super administrator can test email and confirm that it is working.
+Done on 2026-10-16. System Admin has an Email test page. It sends the from address, from name, to address, subject, and HTML on the page through the configured provider, and shows whether that provider accepted the message.
 
 Related: [Send email](../../capabilities/features/web/send-email.md).
 
@@ -113,3 +113,21 @@ The cookie banner is fixed to the bottom left of the page and has no stacking or
 Keep the banner above the signed-in shell, and keep it in the way until the visitor accepts. The smoke suite does not wait for that layout change. It accepts cookies once when the site opens, then uses the site as if the banner is gone.
 
 Related: [Cookie consent](../../capabilities/features/web/cookie-consent.md).
+
+## 16. Second event ticket copies the first ticket
+
+On an event's activities screen, adding a second ticket submits the first ticket's details again. The second ticket is saved with the same title, and the other fields from the first ticket, instead of what was typed for the new one.
+
+Noted on 2026-10-16. Not yet investigated.
+
+Related: [Create event](../../capabilities/features/web/events-create.md), [Activity](../../capabilities/entities/activity.md).
+
+## 17. Ticket choice is single or multiple
+
+Each activity should say whether a team or person may take only that ticket, or may take it alongside others. The group register page should follow that: a single choice where only one ticket may be selected, and a multiple choice where more than one may be selected.
+
+Today every ticket on that page is a checkbox, so more than one can be ticked.
+
+Noted on 2026-10-16.
+
+Related: [Create event](../../capabilities/features/web/events-create.md), [Submit event registration](../../capabilities/features/web/registration-submit.md), [Activity](../../capabilities/entities/activity.md).

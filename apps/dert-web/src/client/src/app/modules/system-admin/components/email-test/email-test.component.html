@@ -1,0 +1,51 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Email test</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+            Send one message through the configured email provider.
+            A success here means the provider accepted it. It does not confirm that the message arrived in an inbox.
+        </p>
+
+        <form [formGroup]="form" (ngSubmit)="send()">
+            <div class="pb-1">
+                <mat-form-field class="full-width">
+                    <mat-label>From address</mat-label>
+                    <input matInput type="email" formControlName="fromAddress" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="pb-1">
+                <mat-form-field class="full-width">
+                    <mat-label>From name</mat-label>
+                    <input matInput formControlName="fromName" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="pb-1">
+                <mat-form-field class="full-width">
+                    <mat-label>To</mat-label>
+                    <input matInput type="email" formControlName="toAddress" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="pb-1">
+                <mat-form-field class="full-width">
+                    <mat-label>Subject</mat-label>
+                    <input matInput formControlName="subject">
+                </mat-form-field>
+            </div>
+            <div class="pb-1">
+                <mat-form-field class="full-width">
+                    <mat-label>HTML body</mat-label>
+                    <textarea matInput rows="12" formControlName="htmlBody"></textarea>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="submit" [disabled]="sending">
+                {{ sending ? 'Sending' : 'Test' }}
+            </button>
+        </form>
+
+        <p *ngIf="resultMessage" class="email-test-result" [class.ok]="resultOk" [class.error]="!resultOk">
+            {{ resultMessage }}
+        </p>
+    </mat-card-content>
+</mat-card>

@@ -97,7 +97,10 @@ namespace DertInfo.Services
 
             if (!response.IsSuccessful)
             {
-                throw new InvalidOperationException($"Mailgun send failed: {response.StatusCode} - {response.ErrorMessage}");
+                var detail = string.IsNullOrWhiteSpace(response.Content)
+                    ? response.ErrorMessage
+                    : response.Content;
+                throw new InvalidOperationException($"Mailgun send failed: {(int)response.StatusCode} {response.StatusCode} - {detail}");
             }
         }
     }
