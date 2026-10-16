@@ -13,6 +13,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
+using System.Net.Mail;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,7 +51,6 @@ namespace DertInfo.Api.Controllers
         IEmailSendingService _emailSendingService;
         IEmailTemplateService _emailTemplateService;
         bool _mailgunEnabled = true;
-        string _mailgunDefaultFrom = "noreply@dertinfo.co.uk";
 
         public SendEmailController(
             IMapper mapper,
@@ -64,7 +64,6 @@ namespace DertInfo.Api.Controllers
             _emailSendingService = emailSendingService;
             _emailTemplateService = emailTemplateService;
             _mailgunEnabled = configuration.Mailgun_Enabled;
-            _mailgunDefaultFrom = configuration.Mailgun_DefaultFrom;
         }
 
         [Obsolete("This method is no longer used. Was formally used to submit from MVC Web")]
@@ -165,41 +164,102 @@ namespace DertInfo.Api.Controllers
 
         [Route("test-email-send")]
         [HttpPost]
-        public async Task<IActionResult> TestEmailSend()
+        [Authorize(Policy = "SuperAdministratorOnlyPolicy")]
+        public async Task<IActionResult> TestEmailSend([FromBody] EmailTestSendSubmissionDto submission)
         {
-            base.ExtractUser(); // Fill the scoped injected IDertInfoUser
-
-            string _testRecipiant = "dertinfo@gmail.com";
+            base.ExtractUser();
 
             if (!_mailgunEnabled)
             {
-                return BadRequest(new { message = "Emails are not enabled in settings." });
+                return BadRequest(new { message = "Email sending is not enabled in configuration." });
+            }
+
+            if (!ValidEmailTest(submission))
+            {
+                return BadRequest(new { message = this._errorMessage });
             }
 
             try
             {
                 var testEmail = new EmailBase
                 {
-                    ToAddresses = new[] { _testRecipiant },
+                    ToAddresses = new[] { submission.ToAddress.Trim() },
                     CcAddresses = new string[] { },
                     BccAddresses = new string[] { },
-                    FromAddress = this._mailgunDefaultFrom,
-                    FromName = "Email Test",
-                    Subject = "This is a email functionality test.",
+                    FromAddress = submission.FromAddress.Trim(),
+                    FromName = submission.FromName.Trim(),
+                    Subject = submission.Subject.Trim(),
                     EmailTemplateId = 0
                 };
 
-                var testBody = "<html><body><h1>Email Functionality Test</h1><p>This is a test email to verify that the email sending service is configured correctly.</p><p>If you received this email, the Mailgun integration is working properly.</p></body></html>";
+                await this._emailSendingService.SendEmail(testEmail, submission.HtmlBody);
 
-                await this._emailSendingService.SendEmail(testEmail, testBody);
-
-                return Ok(new { message = $"Test email sent successfully to {_testRecipiant}" });
+                return Ok(new { message = "Test email accepted by the provider." });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { error = ex.Message });
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        private bool ValidEmailTest(EmailTestSendSubmissionDto submission)
+        {
+            if (submission == null)
+            {
+                this._errorMessage = "Email test details are required.";
+                return false;
             }
 
+            if (!IsEmailAddress(submission.FromAddress))
+            {
+                this._errorMessage = "A from address is required.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(submission.FromName))
+            {
+                this._errorMessage = "A from name is required.";
+                return false;
+            }
+
+            if (!IsEmailAddress(submission.ToAddress))
+            {
+                this._errorMessage = "A to address is required.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(submission.Subject))
+            {
+                this._errorMessage = "A subject is required.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(submission.HtmlBody))
+            {
+                this._errorMessage = "An HTML body is required.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsEmailAddress(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            var trimmed = value.Trim();
+            try
+            {
+                var address = new MailAddress(trimmed);
+                return string.Equals(address.Address, trimmed, StringComparison.OrdinalIgnoreCase);
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
 
 

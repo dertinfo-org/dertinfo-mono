@@ -2,7 +2,7 @@
 name: Send email
 type: feature
 status: active
-updated: 2026-07-26
+updated: 2026-10-16
 id: messaging.send-email
 roles: [event-admin, group-admin]
 ---
@@ -29,8 +29,10 @@ Either of the following may be used when an active account is configured:
 
 - Outbound email is delivered via the active provider account.
 - Used by registration and related flows — see [Registration email templates](registration-email-templates.md).
+- System Admin includes an email test. The person enters a from address, a from name, a to address, a subject, and an HTML body. The page reports whether the configured provider accepted that message. It is a configuration check, not a compose tool.
 
 ## Limitations
 
 - Requires a working provider account and configuration for the environment.
 - Provider choice and credentials are operational/configuration concerns outside capability narrative detail.
+- The email test reports that the provider accepted the message. It does not confirm that the message arrived in an inbox.
