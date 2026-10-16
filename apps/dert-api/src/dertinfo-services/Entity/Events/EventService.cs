@@ -41,6 +41,8 @@ namespace DertInfo.Services.Entity.Events
         Task<Event> UpdateDates(Event updatedEvent);
         Task<ICollection<Activity>> GetIndividualActivities(int eventId);
         Task<ICollection<Activity>> GetTeamActivities(int eventId);
+        Task<ICollection<Activity>> GetPublishedIndividualActivities(int eventId);
+        Task<ICollection<Activity>> GetPublishedTeamActivities(int eventId);
         Task<Activity> CreateActivity(Activity myActivity);
         Task<Activity> RemoveActivity(int activityId);
         Task<Event> GetForAuthorization(int eventId);
@@ -731,6 +733,16 @@ namespace DertInfo.Services.Entity.Events
             var teamActivities = await this._activityRepository.GetByEventAndTypeWithCounts(eventId, ActivityAudienceType.TEAM);
 
             return teamActivities;
+        }
+
+        public async Task<ICollection<Activity>> GetPublishedIndividualActivities(int eventId)
+        {
+            return await this._activityRepository.GetPublishedByEventAndAudience(eventId, ActivityAudienceType.INDIVIDUAL);
+        }
+
+        public async Task<ICollection<Activity>> GetPublishedTeamActivities(int eventId)
+        {
+            return await this._activityRepository.GetPublishedByEventAndAudience(eventId, ActivityAudienceType.TEAM);
         }
 
         public async Task<Activity> CreateActivity(Activity myActivity)

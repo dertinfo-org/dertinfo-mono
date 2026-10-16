@@ -18,3 +18,159 @@
     cursor: pointer !important;
     color: #8FBE36;
 }
+
+.step-body {
+    padding-top: 1.5rem;
+}
+
+.step-body h3 {
+    margin-top: 0;
+}
+
+.overview {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.overview-copy {
+    flex: 1;
+}
+
+.overview-label {
+    font-weight: 600;
+}
+
+.overview-image {
+    width: 240px;
+    max-width: 40%;
+    height: auto;
+    margin-left: auto;
+    object-fit: contain;
+}
+
+.register-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+}
+
+.register-table th,
+.register-table td {
+    text-align: left;
+    padding: 8px 10px;
+    vertical-align: top;
+}
+
+.register-table tbody tr:nth-child(odd) td {
+    background: rgba(143, 190, 54, 0.12);
+}
+
+.catalogue-table,
+.activity-table {
+    table-layout: fixed;
+}
+
+.catalogue-table .col-ticket {
+    width: 22%;
+}
+
+.catalogue-table .col-description {
+    width: 48%;
+}
+
+.catalogue-table .col-price,
+.catalogue-table .col-availability,
+.activity-table .col-activity-price {
+    width: 15%;
+}
+
+.activity-table .col-who {
+    width: 28%;
+}
+
+.catalogue-table th,
+.catalogue-table td,
+.activity-table th,
+.activity-table td {
+    overflow-wrap: anywhere;
+}
+
+.check-cell {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.register-table .mat-mdc-checkbox {
+    --mat-checkbox-state-layer-size: 18px;
+    --mat-checkbox-touch-target-display: none;
+}
+
+.register-table tbody tr td.who-cell {
+    width: 28%;
+    vertical-align: middle;
+    background: transparent;
+}
+
+.activity-table tbody:nth-of-type(even) tr td {
+    background: transparent;
+}
+
+.activity-table tbody:nth-of-type(odd) tr td {
+    background: rgba(143, 190, 54, 0.12);
+}
+
+.picker-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.picker-meta h3 {
+    margin: 0;
+}
+
+.search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 8px;
+}
+
+.show-more-cell {
+    text-align: right;
+    background: transparent;
+}
+
+.show-more {
+    background: none;
+    border: none;
+    color: #8FBE36;
+    cursor: pointer;
+    padding: 0;
+}
+
+.price-heading,
+.price-cell,
+.total-cell {
+    text-align: right;
+}
+
+.total-label,
+.total-cell {
+    font-weight: 600;
+}
+
+.register-table tfoot td {
+    background: transparent;
+    border-top: 1px solid rgba(143, 190, 54, 0.45);
+}
+
+.ticket-check {
+    margin-bottom: 4px;
+}
+
+.ticket-availability,
+.person-kind {
+    margin-left: 8px;
+}

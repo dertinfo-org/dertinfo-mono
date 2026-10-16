@@ -2,7 +2,7 @@
 name: Submit event registration
 type: feature
 status: active
-updated: 2026-10-03
+updated: 2026-10-12
 id: registration.submit
 roles: [group-admin, group-member]
 ---
@@ -21,7 +21,13 @@ A group secretary or administrator registers their group for an event by choosin
 ## Behaviour
 
 - From the group homepage, **Registrations** then **Available / New** lists configured events whose registration open date is before today and whose registration close date is after today.
-- When a registration is available, the group administrator proceeds to the group registration configuration and leaves the registration **New**.
+- Opening an available event starts registration. The registration is not created until the terms are agreed. The steps are overview, tickets and pricing, teams and people, activities, summary, and terms.
+- **Overview** shows the event name, its dates, and its location. The event picture is shown when the event has one.
+- **Tickets and pricing** lists the published tickets for individuals and the published tickets for teams. Each row shows the ticket name, the description, the price, and whether it is available or sold out. Prices are withheld until registration has opened, and they are withheld again after registration has closed, after the event has started, or when the event is private.
+- **Teams and people** lists the group's existing teams, members, and guests. The administrator ticks who is coming. New people and teams are not created here. Each list shows five rows at first, can be searched, and can show the rest. A tick stays when that row is hidden. The number of selected teams and the number of selected people are shown.
+- **Activities** lists each selected team with the team tickets, and each selected person with the individual tickets. A team or a person can take more than one ticket. A default ticket that is not sold out starts ticked. A sold-out ticket stays visible and cannot be ticked. Teams and people are separate lists.
+- **Summary** lists each ticked ticket: who is attending, whether they are a team, a member, or a guest, the ticket, and the price. The total of the known prices is shown. A price that is still to be confirmed is left out of that total.
+- Agreeing to the terms and submitting creates the registration and opens it. The registration is **New**. A registration can be created with nobody ticked.
 - From the group homepage, **Active** opens that registration. Add a member from the members tab, a guest from the guests tab, and a team from the attending-teams tab.
 - The individual activity is offered to the member and the guest. The team activity is offered to the team.
 - Edit the registration while it is still **New**, and see the change saved.
@@ -52,10 +58,42 @@ Feature: Submit event registration
     Then a configured event is listed when its registration open date is before today
     And its registration close date is after today
 
-  Scenario: Group administrator opens a registration
+  Scenario: Group administrator reviews the event before registering
     Given a registration is available for the group
-    When the group administrator proceeds to the group registration configuration
-    Then the registration is left New
+    When the group administrator opens the event registration
+    Then the event name, dates, and location are shown
+    And the event picture is shown when the event has one
+
+  Scenario: Group administrator sees published tickets
+    Given the group administrator is registering for an event
+    Then tickets for individuals and tickets for teams are listed
+    And each ticket shows its name, description, price, and whether it is available
+
+  Scenario: Group administrator chooses teams and people
+    Given the group has teams, members, and guests
+    When the group administrator ticks a team and a person
+    Then those choices stay ticked
+    And five rows are shown at first
+    And the list can be searched
+    And the number selected is shown
+
+  Scenario: Group administrator chooses tickets
+    Given teams and people have been ticked
+    Then each selected team is offered the team tickets
+    And each selected person is offered the individual tickets
+    And a default ticket that is not sold out starts ticked
+    And a sold-out ticket is shown and cannot be ticked
+
+  Scenario: Group administrator reviews the registration summary
+    Given tickets have been ticked
+    Then the summary names who is attending, whether they are a team, a member, or a guest, the ticket, and the price
+    And the total of the known prices is shown
+
+  Scenario: Group administrator creates the registration
+    Given the group administrator has agreed to the terms
+    When the group administrator submits the registration
+    Then the registration is created
+    And the registration is left New
 
   Scenario: Group administrator adds a member to the registration
     Given the registration is New

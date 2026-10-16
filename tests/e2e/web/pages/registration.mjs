@@ -33,8 +33,9 @@ export class RegistrationPage {
       waitUntil: 'domcontentloaded',
       timeout: 60000,
     });
-    await clickNext(this.page);
-    await clickNext(this.page);
+    for (let step = 0; step < 5; step += 1) {
+      await clickNext(this.page);
+    }
     await clickLabelledCheckbox(this.page, 'I agree to the terms and conditions');
     await this.page.getByRole('button', { name: 'Submit' }).click();
     await this.page.waitForURL(/\/group-registration\/\d+/, { timeout: 120000, waitUntil: 'commit' });
