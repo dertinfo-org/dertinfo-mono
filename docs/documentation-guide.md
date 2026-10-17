@@ -10,7 +10,7 @@ Defines the documentation system for this monorepo: three tracks, templates, met
 | Technical | HOW it is built and operated | `docs/technical/` |
 | Operations | Working history while solving things in-repo | `docs/operations/` |
 
-Docs explain the project in a discoverable way. They are **not** a replacement for GitHub Issues/Projects.
+Docs explain the project in a discoverable way. Open work is a [GitHub issue](https://github.com/dertinfo/dertinfo-mono/issues). These docs are not a ticket backlog.
 
 Per-app **getting started** stays in each app README; shared and estate-level material belongs here, with READMEs linking in.
 
@@ -37,7 +37,6 @@ docs/
     standards/             # Angular, .NET, … technology conventions
   operations/
     changelogs/
-    planned-fixes/
     investigations/
     security/              # Point-in-time operational security reviews
     agents/
@@ -59,6 +58,7 @@ docs/
 | `technical/api/` | OpenAPI / Swagger (`packages/shared-contracts/`, API Swagger UI) is the source of truth |
 | `technical/data-model/` | Same — avoid duplicating schemas |
 | `operations/decisions/` | Outcomes live in changelogs, investigations, and code |
+| `operations/planned-fixes/` | Open work is a GitHub issue. Do not park a backlog next to the code |
 
 ## Technical split
 
@@ -194,9 +194,9 @@ Same shape as features; use for cross-cutting platform behaviour that is not a s
 
 Summary, symptoms, evidence, root cause, resolution, follow-ups.
 
-### Planned fix (`operations/planned-fixes/<topic>.md`)
+### Open work
 
-Problem, proposed approach, status, links to related investigations/changelogs. Prefer a GitHub issue for tracking; keep this file for in-solution notes.
+File a GitHub issue. Include the problem, the current behaviour (paths that stay), why it matters, a suggested approach, what done looks like, and what is out of scope. Use the repository labels `bug`, `enhancement`, or `documentation` when one of those fits. Do not add a page under `docs/operations/` to track it.
 
 ### Changelog
 
@@ -210,7 +210,7 @@ See [operations/changelogs/README.md](operations/changelogs/README.md). Include 
 4. Update indexes when adding or removing documents.
 5. When moving files, fix all links and `.cursor/rules` paths.
 6. Preserve human-written content unless explicitly asked to delete it.
-7. GitHub = tickets; `operations/*` = durable notes next to the code.
+7. Open work is a GitHub issue. `operations/*` keeps changelogs, investigations, and security reviews. Do not add a planned-fixes backlog.
 
 See also: [operations/agents/](operations/agents/).
 

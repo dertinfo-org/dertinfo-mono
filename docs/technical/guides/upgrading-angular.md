@@ -2,7 +2,7 @@
 name: Upgrading Angular
 type: guide
 status: active
-updated: 2026-10-05
+updated: 2026-10-17
 ---
 
 # Upgrading Angular
@@ -400,7 +400,7 @@ Angular 22 defaults a component with no strategy to OnPush, and renames the old 
 
 ### The next major is not released
 
-Angular 22 is the current major. There is no compatibility row yet for a later major, so this hop does not copy an engine requirement forward. The modernisation those hops left for later is [Deferred Angular modernisation](../../operations/planned-fixes/web-angular-deferred-modernisation.md).
+Angular 22 is the current major. There is no compatibility row yet for a later major, so this hop does not copy an engine requirement forward. The modernisation those hops left for later is [issue 96](https://github.com/dertinfo/dertinfo-mono/issues/96).
 
 - RxJS stays at **6.6.7**. `zone.js` stays at **0.15.1**. Node for the website is **22.23.3**.
 - `@ngbracket/ngx-layout` 16.1.3 and `ng2-charts` 5.0.4 peer `>=16`. They installed on Angular 22. Confirm them again before treating a newer major as required.
@@ -415,7 +415,7 @@ Angular 22 is the current major. There is no compatibility row yet for a later m
 - [Angular standards](../standards/angular/README.md)
 - [Configuration](../infra/configuration.md)
 - [Website smoke tests](website-smoke-tests.md)
-- [Deferred Angular modernisation](../../operations/planned-fixes/web-angular-deferred-modernisation.md)
+- [Deferred website Angular modernisation](https://github.com/dertinfo/dertinfo-mono/issues/96)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)

@@ -2,14 +2,14 @@
 name: GitHub workflows security review (subscription OIDC)
 type: security-review
 status: active
-updated: 2026-08-15
+updated: 2026-10-17
 ---
 
 # Security review: GitHub workflows and subscription OIDC
 
 **Scope:** Public monorepo `dertinfo/dertinfo-mono`, **Subscription infra CD**, Entra federated credentials, GitHub Environments `development` / `production`, and operator scripts under [`infra/scripts/`](../../../infra/scripts/).
 
-**Related:** [GitHub Actions OIDC guide](../../technical/guides/github-azure-federated-credentials.md), [agent-safe subscription foundation](../planned-fixes/agent-safe-subscription-foundation.md), [CI/CD](../../technical/infra/cicd.md), [Security (storage / Flex deploy)](../../technical/subsystems/security.md).
+**Related:** [GitHub Actions OIDC guide](../../technical/guides/github-azure-federated-credentials.md), [CI/CD](../../technical/infra/cicd.md), [Security (storage / Flex deploy)](../../technical/subsystems/security.md). A disallowed-SKU deny is still unchecked: [issue 126](https://github.com/dertinfo/dertinfo-mono/issues/126).
 
 **Assumption checked with operators (2026-08-15):** Environments `development` and `production` require approval from either `dertinfo` or `davidsmonkeys` before deploy jobs run. Re-verify in GitHub Settings if this review is reused later.
 

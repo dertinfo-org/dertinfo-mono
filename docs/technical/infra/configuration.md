@@ -9,8 +9,8 @@ How settings are organised across local development, Docker, and Azure-hosted en
 3. **Checked-in values must hold for all consumers of the repo** — shared Auth0 domain/audience (and similar) only if they are correct for every developer. Put secrets **and** per-developer / per-tenant values (SQL connection, SPA Auth0 client IDs) in `infra/secrets/api.env` so empty placeholders make the required replacements obvious.
 4. **Azure-hosted environments use Azure App Configuration** — when `AZURE_APP_CONFIG` is set, the API overlays labelled settings (and Key Vault references) onto `appsettings.json`.
 5. **Local runs without Azure App Configuration** — if `AZURE_APP_CONFIG` is unset, secrets from `[infra/secrets/api.env](../../../infra/secrets/api.env)` are set as **process environment variables** before the API starts (`npm run start` or Compose `env_file`). .NET’s default configuration precedence overlays them on `appsettings.json` (same hierarchical keys as App Configuration; mechanism differs).
-6. **Local durable data** lives under `[infra/data/](../../../infra/data/)` (e.g. Azurite). Native and Docker Compose both use this path; richer sharing across run types is future work.
-7. **Dependencies are per-project** — do not auto-install on start. If `node_modules` (or tooling) is missing, install that project explicitly (`npm run web:install`; `app:install` only if the PWA is enabled). Consolidation across the monorepo is future work.
+6. **Local durable data** lives under `[infra/data/](../../../infra/data/)` (e.g. Azurite). Native and Docker Compose both use this path. Richer sharing across run types is [issue 128](https://github.com/dertinfo/dertinfo-mono/issues/128).
+7. **Dependencies are per-project** — do not auto-install on start. If `node_modules` (or tooling) is missing, install that project explicitly (`npm run web:install`; `app:install` only if the PWA is enabled). Whether those installs consolidate is [issue 129](https://github.com/dertinfo/dertinfo-mono/issues/129).
 
 
 
@@ -233,7 +233,7 @@ Do **not** treat GitHub Environment names as Auth0 tenant names. Today:
 | New-stack Azure **development** | Environment `development` | **`dertinfotest.eu.auth0.com`** ([`app-config.development.json`](../../../infra/configuration/app-config.development.json)) |
 | Live / old production | separate estate | `dertinfo.eu.auth0.com` |
 
-Development SPA login on Azure uses **dertinfotest**. Hosted catalog callbacks are `https://dev.dertinfo.co.uk` (website) and `https://app-dev.dertinfo.co.uk` (PWA). Auth0 application lists need the extra paths (`/callback`, `/auth/callback`) — [Authentication](../subsystems/authentication.md#hosted-development-auth0-application-urls). A later rebuild will rename tenants to match environments — [planned-fix](../../operations/planned-fixes/auth0-tenant-rename-local-dev.md).
+Development SPA login on Azure uses **dertinfotest**. Hosted catalog callbacks are `https://dev.dertinfo.co.uk` (website) and `https://app-dev.dertinfo.co.uk` (PWA). Auth0 application lists need the extra paths (`/callback`, `/auth/callback`) — [Authentication](../subsystems/authentication.md#hosted-development-auth0-application-urls). A later rebuild will rename tenants to match environments — [issue 117](https://github.com/dertinfo/dertinfo-mono/issues/117).
 
 ### Auth0 (local)
 

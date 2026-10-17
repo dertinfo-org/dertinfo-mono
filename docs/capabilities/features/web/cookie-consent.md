@@ -2,7 +2,7 @@
 name: Cookie consent
 type: feature
 status: active
-updated: 2026-10-11
+updated: 2026-10-17
 id: public.cookie-consent
 roles: [public-user]
 ---
@@ -27,7 +27,7 @@ On the public website, visitors are asked for **cookie consent**. This is requir
 
 - Distinct from signed-in [GDPR / terms consent](account-gdpr-consent.md) on the user account.
 - Cookie and privacy policy text is part of [public content](public-content.md) (e.g. cookie policy pages).
-- The banner can sit underneath the signed-in navigation, so the rest of the site can be used without accepting cookies. That layout is future work. The smoke suite accepts cookies once, then continues as if the banner is gone.
+- The banner can sit underneath the signed-in navigation, so the rest of the site can be used without accepting cookies. Keeping it above the signed-in shell is [issue 93](https://github.com/dertinfo/dertinfo-mono/issues/93). The smoke suite accepts cookies once, then continues as if the banner is gone.
 
 ## Scenarios
 

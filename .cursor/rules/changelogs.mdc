@@ -25,7 +25,7 @@ To pick `NNN`, list existing files for that date and use the next number after t
 
 1. Create the detail page using the sections below (in this order).
 2. Add a row at the **top** of the index table in `docs/operations/changelogs/README.md` (newest first).
-3. Link to wider docs (`docs/technical/infra/cicd.md`, `docs/technical/infra/configuration.md`, `docs/operations/planned-fixes/…`) instead of copying them.
+3. Link to wider docs (`docs/technical/infra/cicd.md`, `docs/technical/infra/configuration.md`, and so on) instead of copying them. Follow-ups that are still open are GitHub issues, not pages under `docs/operations/`.
 4. List merged PR URLs and important Actions run links where useful.
 5. Put the detail page and index row in the same PR as the work. A later docs PR is only for an entry missed after merge.
 

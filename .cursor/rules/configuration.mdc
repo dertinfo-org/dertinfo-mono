@@ -23,7 +23,7 @@ Read `docs/technical/infra/configuration.md` for full detail. Apply these rules 
 
 - **Secrets:** [`infra/secrets/`](infra/secrets/) — gitignored files beside `*.example` (e.g. `api.env` / `api.env.example`). Hosted Key Vault values: gitignored `infra/configuration/kv-secrets.<environment>.json` beside `*.example`. Not under `infra/docker/`.
 - **Local overlay:** when `AZURE_APP_CONFIG` is unset, inject `infra/secrets/api.env` into the process environment before start (`.NET` default precedence), **or** use .NET user secrets when debugging the API in Visual Studio (same keys, `:` form — set manually). When App Config is set, App Configuration + Key Vault only.
-- **Data:** [`infra/data/`](infra/data/) (e.g. Azurite). Compose and native share this path name; deeper sharing is future work.
+- **Data:** [`infra/data/`](infra/data/) (e.g. Azurite). Compose and native share this path name. Deeper sharing is [issue 128](https://github.com/dertinfo/dertinfo-mono/issues/128).
 - **Do not duplicate non-secrets** in secrets files if already in `appsettings.json`.
 
 ## Azure vs local

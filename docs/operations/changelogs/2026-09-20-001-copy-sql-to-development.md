@@ -2,7 +2,7 @@
 
 ## Summary of the work completed
 
-[`Copy-DertInfoSqlToDevelopment.ps1`](../../../infra/scripts/Copy-DertInfoSqlToDevelopment.ps1) ARM-copies a production Azure SQL database onto `sql-dev-dertinfo-storage-uks`, swaps it to the Bicep name `sqldb-dev-dertinfo-storage-uks`, binds DEV Entra users, and pauses for **Continue** (delete the previous DEV database) or **Revert** (swap back). How-to: [`infra/scripts/README.md`](../../../infra/scripts/README.md). Future SQL network bar (not applied here): [SQL firewall — App Service IPs and admin IP](../planned-fixes/sql-firewall-app-service-and-admin.md).
+[`Copy-DertInfoSqlToDevelopment.ps1`](../../../infra/scripts/Copy-DertInfoSqlToDevelopment.ps1) ARM-copies a production Azure SQL database onto `sql-dev-dertinfo-storage-uks`, swaps it to the Bicep name `sqldb-dev-dertinfo-storage-uks`, binds DEV Entra users, and pauses for **Continue** (delete the previous DEV database) or **Revert** (swap back). How-to: [`infra/scripts/README.md`](../../../infra/scripts/README.md). Future SQL network bar (not applied here): [issue 118](https://github.com/dertinfo/dertinfo-mono/issues/118).
 
 ## Why the work was completed
 
@@ -30,7 +30,7 @@ Development needs a repeatable refresh from production data before the same proc
 
 ## Any remaining issues that we may wish to address
 
-- Apply the agreed SQL firewall bar (drop Allow Azure services; App Service outbound IPs plus administrator IP) — [planned-fix](../planned-fixes/sql-firewall-app-service-and-admin.md).
+- Apply the agreed SQL firewall bar (drop Allow Azure services; App Service outbound IPs plus administrator IP) — [issue 118](https://github.com/dertinfo/dertinfo-mono/issues/118).
 - Finish hosted testing of the restored development database (API, web, app) before using the same process to cut over production.
 - `-Source production` needs the new-stack PRD database. Until then use `-Source live` with the old-stack names.
 - Auth0 user ids on a copied live database will not match the development tenant (`dertinfotest`); this refresh is data/schema, not a full identity dry-run.

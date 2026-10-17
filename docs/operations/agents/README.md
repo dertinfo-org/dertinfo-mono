@@ -2,7 +2,7 @@
 name: Agent documentation guidance
 type: agents
 status: active
-updated: 2026-09-27
+updated: 2026-10-17
 ---
 
 # Agents
@@ -23,8 +23,7 @@ Guidance for AI agents working in this monorepo’s documentation library.
 
 | Place | Use for |
 |-------|---------|
-| GitHub Issues / Projects | Tickets, prioritisation, assignment |
-| `operations/planned-fixes/` | Working notes while implementing in this repo |
+| [GitHub Issues](https://github.com/dertinfo/dertinfo-mono/issues) | Open work. File an issue when a discussion identifies something still to do. Do not add a backlog page under `docs/operations/`. |
 | `operations/investigations/` | Finished deep-dives and historical write-ups |
 | `operations/changelogs/` | Completed workstreams (include one in the pull request in nearly all cases; ask first if unsure about leaving it off) |
 

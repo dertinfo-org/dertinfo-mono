@@ -8,7 +8,7 @@ Aligned branching with [GitHub Flow](https://docs.github.com/en/get-started/usin
 
 Changelog detail pages are `YYYY-MM-DD-NNN-short-slug.md` so several entries on one day sort in the file list. House guidance: [changelogs.mdc](../../../.cursor/rules/changelogs.mdc), [changelog index](./README.md), [documentation guide](../../documentation-guide.md).
 
-Bicep house rules: [docs/technical/standards/bicep/](../../technical/standards/bicep/). CI/CD: [cicd.md](../../technical/infra/cicd.md). Contributing: [contributing workflow](../../technical/guides/contributing-workflow.md). A future Linux App Service move is recorded in [cicd-future-phase.md](../planned-fixes/cicd-future-phase.md).
+Bicep house rules: [docs/technical/standards/bicep/](../../technical/standards/bicep/). CI/CD: [cicd.md](../../technical/infra/cicd.md). Contributing: [contributing workflow](../../technical/guides/contributing-workflow.md). A future Linux App Service move is [issue 124](https://github.com/dertinfo/dertinfo-mono/issues/124).
 
 ## Why the work was completed
 
@@ -51,6 +51,6 @@ We wanted infra deploys to succeed even when an upstream part is missing (`prere
 - Populate App Configuration labelled keys (Auth0, SQL connection shape, and so on) so the API can start against the new stack.
 - Re-run subscription foundation CD so the `monitoring` RGs and config-RG extra roles exist.
 - Web / app / functions src CD will fail until those Azure resources and tokens exist.
-- Linux App Service migration (see [cicd-future-phase.md](../planned-fixes/cicd-future-phase.md)).
+- Linux App Service migration ([issue 124](https://github.com/dertinfo/dertinfo-mono/issues/124)).
 - Image blob storage public access is enabled to match the current API; tighten later if the app moves to private blobs.
 - Turn on branch protection / a ruleset on `main`: require a PR, require up-to-date branches, and require the CI job names that should gate merge. This cannot be done from workflow YAML alone.

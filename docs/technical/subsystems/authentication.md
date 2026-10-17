@@ -2,7 +2,7 @@
 name: Authentication
 type: subsystem
 status: active
-updated: 2026-09-20
+updated: 2026-10-17
 ---
 
 # Subsystem: Authentication (Auth0)
@@ -194,7 +194,7 @@ Do not put website hosts on the PWA application or the reverse. Optional PWA ext
 
 App Configuration (API) uses the **origins only** (`WebClient:Auth0:CallbackUrl` / `PwaClient:Auth0:CallbackUrl` / `Cors:AllowedOrigins`). The `/callback` and `/auth/callback` suffixes are Auth0 application settings, not catalog keys.
 
-A later rebuild will rename tenants so names match environments (`dertinfolocal` / `dertinfodev`) — [planned-fix](../../operations/planned-fixes/auth0-tenant-rename-local-dev.md).
+A later rebuild will rename tenants so names match environments (`dertinfolocal` / `dertinfodev`) — [issue 117](https://github.com/dertinfo/dertinfo-mono/issues/117).
 
 ## Related
 

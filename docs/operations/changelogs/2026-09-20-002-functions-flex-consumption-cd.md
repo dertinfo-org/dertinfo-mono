@@ -37,6 +37,6 @@ Src CD for Functions existed but there was no new-stack Function App. DEV API al
 
 - Operator must still run the [DEV sequence](../../technical/infra/cicd.md#first-development-functions-deploy-operator) after merge (subscription CD → Functions infra → Storage data-plane → Src CD → Event Grid → blob smoke test). This changelog records the in-repo work, not a live DEV proof.
 - Confirm `AZURE_ENTRA_OIDC_PRINCIPALID_WORKLOAD_FUNCTIONS` on GitHub Environment `development`; set `AZURE_MONITOR_FUNCTIONS_EXCESSIVEUSE_EMAIL` before Functions infra CD; confirm Flex in uksouth (`az functionapp list-flexconsumption-locations`).
-- Rename leaf `main.prod.bicepparam` → `main.prd.bicepparam` across all workloads — [planned-fix](../planned-fixes/rename-bicepparam-prod-to-prd.md).
-- App Configuration / Key Vault / GitHub leftover cleanup after DEV Functions are proven — [storage managed identity § C](../planned-fixes/storage-managed-identity.md#c-cleanup-inventory-next-step). Do not remove `az-storage-images-accountkey` until API identity is done.
+- Rename leaf `main.prod.bicepparam` → `main.prd.bicepparam` across all workloads — [issue 119](https://github.com/dertinfo/dertinfo-mono/issues/119).
+- App Configuration / Key Vault / GitHub leftover cleanup after DEV Functions are proven — [issue 115](https://github.com/dertinfo/dertinfo-mono/issues/115). Do not remove `az-storage-images-accountkey` until API identity is done.
 - Production image copy and traffic switchover remain operator steps; old Functions stay on the old images account until then.

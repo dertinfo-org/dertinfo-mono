@@ -171,7 +171,7 @@ The script copies to `sqldb-dev-dertinfo-storage-uks-copy`, stops the DEV API, r
 
 Smoke-test Swagger (`https://app-dev-dertinfo-api-uks.azurewebsites.net/swagger/index.html`), then type **Continue** (delete `…-old`) or **Revert** (swap back and delete the copy). There is no default. Copied live Auth0 user ids will not match the development tenant (`dertinfotest`); treat this as a data/schema check.
 
-Copy does not need Allow Azure services. User bind comes from your machine, so keep an administrator firewall rule. Future network lock-down: [SQL firewall — App Service IPs and admin IP](../../docs/operations/planned-fixes/sql-firewall-app-service-and-admin.md).
+Copy does not need Allow Azure services. User bind comes from your machine, so keep an administrator firewall rule. Future network lock-down: [issue 118](https://github.com/dertinfo/dertinfo-mono/issues/118).
 
 ## Copy live SQL onto production
 
@@ -220,5 +220,5 @@ Optional: import a dump first with `-Path` (gitignored exports; do not commit ac
 Related artefacts:
 
 - Federated credential JSON: [`infra/configuration/`](../configuration/)
-- Subscription foundation: [agent-safe-subscription-foundation.md](../../docs/operations/planned-fixes/agent-safe-subscription-foundation.md)
+- Subscription foundation: [CI/CD](../../docs/technical/infra/cicd.md) and [GitHub Actions OIDC](../../docs/technical/guides/github-azure-federated-credentials.md). A disallowed-SKU deny is still unchecked: [issue 126](https://github.com/dertinfo/dertinfo-mono/issues/126).
 - Security review: [github-workflows-security-review.md](../../docs/operations/security/github-workflows-security-review.md)

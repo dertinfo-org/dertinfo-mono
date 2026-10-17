@@ -2,12 +2,12 @@
 name: Investigations
 type: index
 status: active
-updated: 2026-07-26
+updated: 2026-10-17
 ---
 
 # Investigations
 
-Resolved or historical deep-dives (symptoms, root cause, resolution). Open work notes live under [planned-fixes/](../planned-fixes/).
+Resolved or historical deep-dives (symptoms, root cause, resolution). Open work is a [GitHub issue](https://github.com/dertinfo/dertinfo-mono/issues).
 
 | Topic | File |
 |-------|------|

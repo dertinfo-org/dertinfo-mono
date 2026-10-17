@@ -2,7 +2,7 @@
 name: Bicep standards
 type: standards
 status: active
-updated: 2026-09-20
+updated: 2026-10-17
 ---
 
 # Bicep standards
@@ -167,4 +167,4 @@ az deployment group create \
 
 API: leave `prerequisitesExist` false until the prerequisites listed on that param in `main.bicep` exist, then set it true in the param file. Storage: flip `flagSqlServerIsReady` (Entra admin group ids from the pipeline), then `flagImagesFunctionAppReady` after the Function App exists, then `flagImagesEventGridReady` after Src CD.
 
-Related: [CI/CD](../../infra/cicd.md), [configuration](../../infra/configuration.md), [Azure estate planned fix](../../../operations/planned-fixes/azure-estate-dev-prd.md).
+Related: [CI/CD](../../infra/cicd.md), [configuration](../../infra/configuration.md), [hosting and cost](../../architecture/hosting-and-cost.md).

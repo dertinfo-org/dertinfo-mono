@@ -2,7 +2,7 @@
 name: Security
 type: subsystem
 status: active
-updated: 2026-09-20
+updated: 2026-10-17
 ---
 
 # Subsystem: Security notes
@@ -34,13 +34,13 @@ The new stack has two Azure Storage accounts with **different** bars. Do not cop
 | Account | Names | What it holds | Anonymous blobs | Who authenticates |
 |---------|-------|---------------|-----------------|-------------------|
 | Functions **host** | `stdevdertinfofuncuks` / `stprddertinfofuncuks` | Deployment zip, Functions `AzureWebJobsStorage` (blobs / queues / tables) | **No** (`allowBlobPublicAccess: false`, container `publicAccess: None`). Shared keys **disabled**. | Function App **system-assigned MI** |
-| **Images** | `stdevdertinfoimagesuks` / `stprddertinfoimagesuks` | Competition images (`originals`, `100x100`, `480x360`) | **Yes** on those containers (`publicAccess: Blob`) so the web can display them | Function App MI for resize writes (Blob Data Contributor, assigned by **storage** Bicep). Hosted **API still uses account keys** until [storage managed identity](../../operations/planned-fixes/storage-managed-identity.md) B.1 |
+| **Images** | `stdevdertinfoimagesuks` / `stprddertinfoimagesuks` | Competition images (`originals`, `100x100`, `480x360`) | **Yes** on those containers (`publicAccess: Blob`) so the web can display them | Function App MI for resize writes (Blob Data Contributor, assigned by **storage** Bicep). Hosted **API still uses account keys** until [API image identity](https://github.com/dertinfo/dertinfo-mono/issues/115) is done. |
 
 ### Firewall `Allow` is not public blobs
 
 AVM `storage-account` **0.33.0** sets `networkAcls.defaultAction: Deny` with an empty allow-list even when the caller passes `publicNetworkAccess: Enabled`. That is “selected networks” with nothing selected. Flex One Deploy and the Functions runtime then get `403 This request is not authorized to perform this operation` (firewall wording — **not** the RBAC wording `…using this permission`).
 
-This estate has **no VNet** (see [hosting and cost](../../operations/planned-fixes/hosting-cost-decisions.md)). Flex SCM zip upload has no small stable IP list, and it is **not** covered by storage `AzureServices` bypass. So both accounts pass:
+This estate has **no VNet** (see [hosting and cost](../architecture/hosting-and-cost.md)). Flex SCM zip upload has no small stable IP list, and it is **not** covered by storage `AzureServices` bypass. So both accounts pass:
 
 ```bicep
 networkAcls: {
@@ -78,7 +78,7 @@ Built-in role GUIDs must match the Azure catalog. A wrong GUID fails Functions i
 
 | Residual | Why it remains | Follow-up |
 |----------|----------------|-----------|
-| Images shared key access still enabled | Hosted API still builds the images connection from `StorageAccount:Images:Key` | Do **not** set `allowSharedKeyAccess: false` on the images account until [storage managed identity](../../operations/planned-fixes/storage-managed-identity.md) B.1. Host storage already disables keys. |
+| Images shared key access still enabled | Hosted API still builds the images connection from `StorageAccount:Images:Key` | Do **not** set `allowSharedKeyAccess: false` on the images account until [API image identity](https://github.com/dertinfo/dertinfo-mono/issues/115) is done. Host storage already disables keys. |
 | No private endpoints / Flex VNet | Hosting bar is FC1 without VNet; F1/D1 API cannot join a VNet either | Not in current cost decisions. Revisit only with a deliberate SKU change. |
 | Images anonymous read | Web display without SAS | Keep public only on image containers; never on host storage. |
 | API images access is still a key | Legacy connection shape | Grant the App Service MI Blob Data Contributor on images, then drop the key. |
@@ -88,4 +88,4 @@ Built-in role GUIDs must match the Azure catalog. A wrong GUID fails Functions i
 - [CI/CD — First development Functions deploy](../infra/cicd.md#first-development-functions-deploy-operator)
 - [Bicep standards](../standards/bicep/README.md)
 - [Secrets and rotation](../infra/secrets-and-rotation.md)
-- [Agent-safe subscription foundation](../../operations/planned-fixes/agent-safe-subscription-foundation.md) (workload SP RBAC)
+- [GitHub Actions OIDC](../guides/github-azure-federated-credentials.md) (workload SP RBAC). A disallowed-SKU deny has not been shown yet: [issue 126](https://github.com/dertinfo/dertinfo-mono/issues/126).

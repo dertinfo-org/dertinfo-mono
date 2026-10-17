@@ -32,6 +32,6 @@ People with a stale Auth0 session could not get past `/session/warmup`. Home, th
 
 ## Any remaining issues that we may wish to address
 
-- Scenarios M1–M5 and S1–S7 in [website auth integration tests](../planned-fixes/web-auth-integration-tests.md) are still unscheduled, including refresh-token lifetime, rotation, and upload after access-token expiry.
+- Scenarios M1–M5 and S1–S7 are [issue 114](https://github.com/dertinfo/dertinfo-mono/issues/114), including refresh-token lifetime, rotation, and upload after access-token expiry.
 - `AuthGuard`, the `/session/401` page, Auth0 tenant lifetime settings, and the PWA auth SDK were not changed.
 - Hosted `dev.dertinfo.co.uk` keeps the old Warmup behaviour until this website build is deployed.

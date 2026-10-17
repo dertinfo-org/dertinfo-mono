@@ -2,7 +2,7 @@
 name: Contributing workflow
 type: guide
 status: active
-updated: 2026-08-30
+updated: 2026-10-17
 ---
 
 # Contributing workflow (branches and PRs)
@@ -32,7 +32,7 @@ A merge to `main` is a **push**, which starts **CD**. See [CI/CD](../infra/cicd.
 
 | Concern | Today |
 |---------|--------|
-| Src CI | Path-filtered `*-src-ci.yml` on pull requests into `main`. Temporary: `workflow_dispatch` ([remove later](../../operations/planned-fixes/remove-src-workflow-dispatch.md)). |
+| Src CI | Path-filtered `*-src-ci.yml` on pull requests into `main`. Temporary: `workflow_dispatch` ([remove later](https://github.com/dertinfo/dertinfo-mono/issues/116)). |
 | Src CD | `*-src-cd.yml` on push to `main` → Environment `development`, then gated `production`. Temporary: `workflow_dispatch` (`dev-only` / `full`). |
 | Infra CD | `*-infra-cd.yml` on push to `main` or `workflow_dispatch` → same Environments |
 

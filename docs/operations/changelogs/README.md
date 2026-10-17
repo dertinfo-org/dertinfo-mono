@@ -2,12 +2,13 @@
 
 Chronological record of completed workstreams in this monorepo. Each entry links to a detail page describing what was done, why, issues encountered, practices adopted, and any follow-up work.
 
-For operational how-to (CI/CD setup, configuration, planned fixes), see the wider docs under [`docs/`](../../).
+For operational how-to (CI/CD setup, configuration), see the wider docs under [`docs/`](../../). Open work is a [GitHub issue](https://github.com/dertinfo/dertinfo-mono/issues).
 
 ## Index
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-10-17 | Open work moved from the repo onto GitHub Issues | [2026-10-17-001-github-issues-backlog.md](./2026-10-17-001-github-issues-backlog.md) |
 | 2026-10-16 | System Admin can send one email to check the provider | [2026-10-16-001-systemadmin-email-test.md](./2026-10-16-001-systemadmin-email-test.md) |
 | 2026-10-12 | Group registration collects teams, people, and tickets before it is created | [2026-10-12-001-group-register-stepper.md](./2026-10-12-001-group-register-stepper.md) |
 | 2026-10-11 | Homepage account shows a signed-in visitor | [2026-10-11-004-homepage-account.md](./2026-10-11-004-homepage-account.md) |
@@ -65,7 +66,7 @@ When opening a pull request, add a change log for that work in the same PR in ne
    - `NNN` is a three-digit sequence **for that date** (`001`, `002`, …). The first entry on a day is `001` — never omit the number. Take the next number after the highest existing file for that date so the folder sorts in completion order.
 2. A row at the **top** of the index table above (newest first; on the same date, higher `NNN` above lower `NNN`).
 
-Use the [detail page template](#detail-page-template) below. Prefer linking to existing docs (`docs/technical/infra/cicd.md`, `docs/technical/infra/configuration.md`, planned-fixes, etc.) rather than duplicating them.
+Use the [detail page template](#detail-page-template) below. Prefer linking to existing docs (`docs/technical/infra/cicd.md`, `docs/technical/infra/configuration.md`, and so on) rather than duplicating them. Follow-ups that are still open belong on GitHub Issues.
 
 ### Detail page template
 
@@ -98,5 +99,5 @@ YYYY-MM-DD
 
 ## Any remaining issues that we may wish to address
 
-- Follow-ups (link to `docs/operations/planned-fixes/` when applicable)
+- Follow-ups (link to a GitHub issue; do not add a backlog page under `docs/operations/`)
 ```

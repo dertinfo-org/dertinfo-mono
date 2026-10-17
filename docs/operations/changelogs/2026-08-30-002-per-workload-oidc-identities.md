@@ -6,7 +6,7 @@ Workload infra CD and API / Functions Src CD no longer log in as the subscriptio
 
 The shared tenant variable is `AZURE_ENTRA_OIDC_TENANTID` (was `AZURE_ENTRA_OIDC_TENANTID_SUBSCRIPTION`). `AZURE_ENTRA_OIDC_CLIENTID_SUBSCRIPTION` remains for subscription foundation CD only.
 
-Operator scripts: [`New-DertInfoWorkloadOidcIdentity.ps1`](../../../infra/scripts/New-DertInfoWorkloadOidcIdentity.ps1), [`Remove-DertInfoWorkloadOidcIdentity.ps1`](../../../infra/scripts/Remove-DertInfoWorkloadOidcIdentity.ps1), and master [`New-DertInfoWorkloadOidcIdentities.ps1`](../../../infra/scripts/New-DertInfoWorkloadOidcIdentities.ps1) (one Environment at a time; copy-paste GitHub variable output). House docs: [CI/CD](../../technical/infra/cicd.md), [GitHub Actions OIDC](../../technical/guides/github-azure-federated-credentials.md), [scripts README](../../../infra/scripts/README.md), [subscription foundation](../planned-fixes/agent-safe-subscription-foundation.md).
+Operator scripts: [`New-DertInfoWorkloadOidcIdentity.ps1`](../../../infra/scripts/New-DertInfoWorkloadOidcIdentity.ps1), [`Remove-DertInfoWorkloadOidcIdentity.ps1`](../../../infra/scripts/Remove-DertInfoWorkloadOidcIdentity.ps1), and master [`New-DertInfoWorkloadOidcIdentities.ps1`](../../../infra/scripts/New-DertInfoWorkloadOidcIdentities.ps1) (one Environment at a time; copy-paste GitHub variable output). House docs: [CI/CD](../../technical/infra/cicd.md), [GitHub Actions OIDC](../../technical/guides/github-azure-federated-credentials.md), [scripts README](../../../infra/scripts/README.md).
 
 Open PR: https://github.com/dertinfo/dertinfo-mono/pull/22
 

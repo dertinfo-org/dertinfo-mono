@@ -51,4 +51,4 @@ Branch: `feature/web-auth-refresh-warmup` (uncommitted at changelog write time; 
 - Optional: Auth0 “Allow Skipping User Consent” / reduce repeated consent screens during local testing.
 - Playwright warmup e2e under `tests/e2e/web/fixtures/fixture-2/` may need updates for `WarmupGuard` behaviour.
 - Staging/prod smoke of login + group create after deploy.
-- **Integration / e2e coverage for auth behaviours** (refresh, logout, long-session token renew, etc.) — see [`docs/operations/planned-fixes/web-auth-integration-tests.md`](../planned-fixes/web-auth-integration-tests.md).
+- **Integration / e2e coverage for auth behaviours** (refresh, logout, long-session token renew, etc.) — [issue 114](https://github.com/dertinfo/dertinfo-mono/issues/114).
