@@ -20,7 +20,7 @@ Follow [GitHub Flow](https://docs.github.com/en/get-started/using-github/github-
 5. Do not push secrets; use user secrets, GitHub secrets, or env vars
 
 ## CI / CD
-- **Src CI** (`*-src-ci.yml`) runs on pull requests **into `main`**, using the PR head (path-filtered). Required checks on `main` must pass before merge. Temporary: also `workflow_dispatch` — remove when Azure settings testing is done ([planned-fix](../../docs/operations/planned-fixes/remove-src-workflow-dispatch.md)).
+- **Src CI** (`*-src-ci.yml`) runs on pull requests **into `main`**, using the PR head (path-filtered). Required checks on `main` must pass before merge. Temporary: also `workflow_dispatch` — remove when Azure settings testing is done ([issue 116](https://github.com/dertinfo/dertinfo-mono/issues/116)).
 - **Src CD** (`*-src-cd.yml`) and **infra CD** (`*-infra-cd.yml`) run on **push to `main`** after merge. App/infra CD uses GitHub Environments `development` then gated `production`. Src CD also has temporary `workflow_dispatch` (`dev-only` / `full`); infra CD keeps `workflow_dispatch` for Bicep re-runs.
 
 ## Agent workflow

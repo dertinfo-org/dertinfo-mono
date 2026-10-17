@@ -2,7 +2,7 @@
 
 **Status:** Resolved (2026-07-26) — `WarmupGuard` owns cold→warmup redirect (no navigate-from-resolver); `WarmupComponent` recovers if already warm / kicks on init; `RepositoryBase.processApiError` fixed. See changelog [`2026-07-26-001-web-auth-refresh-warmup.md`](../changelogs/2026-07-26-001-web-auth-refresh-warmup.md). This page remains as the historical investigation.
 
-**Follow-up (2026-09-26):** A dead Auth0 cache no longer stays on `/session/warmup`. Warmup asks for an access token before it continues, and clears the saved session and redirects to sign-in when renewal fails or times out. [Changelog](../changelogs/2026-09-26-002-warmup-stale-session.md). Scenario C4 on [`web-auth-integration-tests.md`](../planned-fixes/web-auth-integration-tests.md).
+**Follow-up (2026-09-26):** A dead Auth0 cache no longer stays on `/session/warmup`. Warmup asks for an access token before it continues, and clears the saved session and redirects to sign-in when renewal fails or times out. [Changelog](../changelogs/2026-09-26-002-warmup-stale-session.md). Scenario C4 is covered. The remaining authentication scenarios are [issue 114](https://github.com/dertinfo/dertinfo-mono/issues/114).
 
 **App:** `apps/dert-web/src/client/`  
 **Symptom:** User lands on `/session/warmup` (“Warming up”) and never reaches `/dashboard`, even when `/api/status` returns 200 in the network tab.
@@ -133,4 +133,4 @@ docker-compose.yml                      # env_file: ./infra/docker/api.env
 |------|----------|
 | 2026-07-01 | Defer race-condition refactor; unblock dashboard by fixing Docker `api.env` Auth0 management secret |
 | 2026-07-01 | Dashboard reachable with `Auth0__ManagementClientSecret` in `api.env`; configuration policy documented in `docs/technical/infra/configuration.md` |
-| 2026-09-26 | Stale-session Warmup stuck on hosted dev logged as planned-fix scenario C4; July race fix left in place |
+| 2026-09-26 | Stale-session Warmup stuck on hosted dev logged as scenario C4; July race fix left in place |

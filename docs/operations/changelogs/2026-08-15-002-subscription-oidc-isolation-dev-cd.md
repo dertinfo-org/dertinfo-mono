@@ -9,7 +9,7 @@ Hardened and verified the **agent-safe subscription foundation** after the initi
 - **Operator scripts** — [`New-DertInfoSubscriptionOidcIdentities.ps1`](../../../infra/scripts/New-DertInfoSubscriptionOidcIdentities.ps1) (create both identities + federated credentials + RBAC) and [`Remove-DertInfoSubscriptionOidcIdentity.ps1`](../../../infra/scripts/Remove-DertInfoSubscriptionOidcIdentity.ps1) (tear down one client id). Documented in [`infra/scripts/README.md`](../../../infra/scripts/README.md) and the [OIDC guide](../../technical/guides/github-azure-federated-credentials.md).
 - **Production subscription** — DertInfo Production created; GitHub **`production`** Environment variables pointed at it (SP role assignment on that subscription before first prod CD run).
 - **Development CD verified** — **Subscription infra CD** ran successfully from `main` against **development** (after follow-up fixes for `id-token` permissions and the Allowed resource types policy GUID).
-- **Docs** — foundation planned-fix, OIDC guide, and CI/CD notes aligned with isolation; security review recorded under [`operations/security/`](../security/).
+- **Docs** — OIDC guide and CI/CD notes aligned with isolation; security review recorded under [`operations/security/`](../security/).
 
 ### Pull requests
 
@@ -48,6 +48,6 @@ Hardened and verified the **agent-safe subscription foundation** after the initi
 ## Any remaining issues that we may wish to address
 
 - **Production subscription CD** — confirm Production SP RBAC, then first `workflow_dispatch` target `prod`
-- **Policy deny smoke test** and optional RG deploy identity (`AZURE_ENTRA_OIDC_PRINCIPALID_RG`)
+- **Policy deny smoke test** — [issue 126](https://github.com/dertinfo/dertinfo-mono/issues/126). Workload identities later replaced the optional RG deploy identity (`AZURE_ENTRA_OIDC_PRINCIPALID_RG`).
 - **Branch protection on `main`** — strengthen “project people” merge gate alongside Environment reviewers (called out in the security review)
-- **Unpark** estate / workload Bicep planned-fixes when foundation verification (including prod as needed) is enough
+- Estate layout and workload Bicep were later built. See [CI/CD](../../technical/infra/cicd.md) and [Bicep standards](../../technical/standards/bicep/README.md).

@@ -19,7 +19,7 @@ Reusable workflows live at the top level of `.github/workflows/`:
 | `reusable-src-deploy-dotnet-appservice.yml` | OIDC + App Service / Function App zip deploy |
 | `reusable-src-deploy-static-web-app.yml` | SWA deploy with inherited secrets |
 
-Operational setup (variables, secrets, OIDC, naming) is documented in [`docs/technical/infra/cicd.md`](../../technical/infra/cicd.md). Agent GitHub access is documented in [`docs/technical/infra/github-mcp-setup.md`](../../technical/infra/github-mcp-setup.md). Deferred work remains in [`docs/operations/planned-fixes/cicd-future-phase.md`](../planned-fixes/cicd-future-phase.md).
+Operational setup (variables, secrets, OIDC, naming) is documented in [`docs/technical/infra/cicd.md`](../../technical/infra/cicd.md). Agent GitHub access is documented in [`docs/technical/infra/github-mcp-setup.md`](../../technical/infra/github-mcp-setup.md). What is still open from that later list is on GitHub: [API integration tests](https://github.com/dertinfo/dertinfo-mono/issues/122), [Ionic app Angular](https://github.com/dertinfo/dertinfo-mono/issues/123), [Linux API App Service](https://github.com/dertinfo/dertinfo-mono/issues/124), and [ADO decommission](https://github.com/dertinfo/dertinfo-mono/issues/125).
 
 ### Pull requests
 
@@ -87,9 +87,9 @@ Operational setup (variables, secrets, OIDC, naming) is documented in [`docs/tec
 
 ## Any remaining issues that we may wish to address
 
-- **Production CD** — Wire `prod` jobs, `*_PRD` variables/secrets, and Entra federated credentials for environment `prod`. See [`docs/operations/planned-fixes/cicd-future-phase.md`](../planned-fixes/cicd-future-phase.md).
-- **API integration tests** — Still disabled (`if: false`) until SQL Server is available in CI.
-- **Functions IaC** — Bicep infra pipeline not yet migrated to GitHub Actions.
-- **ADO decommission** — Leave ADO pipelines disabled only after a full release cycle on GitHub Actions.
+- **Production CD** — Wire `prod` jobs, `*_PRD` variables/secrets, and Entra federated credentials for environment `prod`. That later landed; the current shape is [CI/CD](../../technical/infra/cicd.md).
+- **API integration tests** — Still disabled (`if: false`) until SQL Server is available in CI. [Issue 122](https://github.com/dertinfo/dertinfo-mono/issues/122).
+- **Functions IaC** — Bicep infra pipeline not yet migrated to GitHub Actions. That later landed; see [CI/CD](../../technical/infra/cicd.md).
+- **ADO decommission** — Leave ADO pipelines disabled only after a full release cycle on GitHub Actions. [Issue 125](https://github.com/dertinfo/dertinfo-mono/issues/125).
 - **Optional:** Make Docker push non-blocking for CD (deploy is the release path; Docker is for local/dev images), or fail the workflow only on deploy failure.
 - **Optional:** Align API deploy `app_type` documentation with Functions (`functionApp` vs `webApp`) in runbooks.

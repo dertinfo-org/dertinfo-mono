@@ -2,7 +2,7 @@
 name: Create and manage group
 type: feature
 status: active
-updated: 2026-10-04
+updated: 2026-10-17
 id: groups.manage
 roles: [member, group-admin]
 ---
@@ -42,7 +42,7 @@ A signed-in user can **create** a **group** (sword-dancing club). Only **group a
 
 - Group members without admin rights cannot manage members, teams, images, or registrations.
 - Confirmed registrations are no longer editable by the group admin.
-- A group that is not set up can still be registered. Stopping that is future work and is not a smoke check.
+- A group that is not set up can still be registered. Stopping that is [issue 127](https://github.com/dertinfo/dertinfo-mono/issues/127) and is not a smoke check.
 
 See [Domain glossary](../../system/domain-glossary.md).
 

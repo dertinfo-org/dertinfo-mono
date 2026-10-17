@@ -2,7 +2,7 @@
 name: GitHub Azure federated credentials
 type: guide
 status: active
-updated: 2026-08-30
+updated: 2026-10-17
 ---
 
 # GitHub Actions OIDC to Azure (federated credentials)
@@ -81,7 +81,7 @@ Then assign Contributor and User Access Administrator on the matching subscripti
 
 Do **not** attach both federated JSON files to one subscription-foundation SP. Workload apps reuse the **same Environment’s** JSON only.
 
-Grant Azure RBAC on the **service principal** (not only the app registration): subscription-scope Contributor + User Access Administrator for [subscription infra CD](../../operations/planned-fixes/agent-safe-subscription-foundation.md) only. Workload SPs get RG-scoped roles from subscription Bicep — never subscription UAA. Apply the matching environment JSON to every Entra app that Actions should impersonate for that Environment.
+Grant Azure RBAC on the **service principal** (not only the app registration): subscription-scope Contributor + User Access Administrator for subscription infra CD only. Workload SPs get RG-scoped roles from subscription Bicep — never subscription UAA. Apply the matching environment JSON to every Entra app that Actions should impersonate for that Environment.
 
 ### Workload identities (one Environment at a time)
 
@@ -146,5 +146,4 @@ MSYS_NO_PATHCONV=1 az role assignment create \
 - Security review: [GitHub workflows — subscription OIDC](../../operations/security/github-workflows-security-review.md)
 - Folder README: [`infra/configuration/README.md`](../../../infra/configuration/README.md)
 - [CI/CD](../infra/cicd.md) — workflow inventory and existing `test` / `prod` app CD OIDC
-- [Agent-safe subscription foundation](../../operations/planned-fixes/agent-safe-subscription-foundation.md)
 - Microsoft: [Connect GitHub and Azure with OpenID Connect](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect)

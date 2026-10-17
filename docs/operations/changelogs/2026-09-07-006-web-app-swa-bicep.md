@@ -29,5 +29,5 @@ Src CD already writes `assets/app.config.json` at deploy time. The missing piece
 ## Any remaining issues that we may wish to address
 
 - Development first hosted pass is complete — [2026-09-19-002](./2026-09-19-002-dev-swa-first-pass.md). First uksouth deploy failed; SWA location is westeurope — [2026-09-07-007](./2026-09-07-007-swa-location-westeurope.md).
-- Rebuild Auth0 tenants so names match environments — [planned-fix](../planned-fixes/auth0-tenant-rename-local-dev.md).
+- Rebuild Auth0 tenants so names match environments — [issue 117](https://github.com/dertinfo/dertinfo-mono/issues/117).
 - Production custom domains and production src deploy are a later pass.

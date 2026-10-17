@@ -6,7 +6,7 @@ Platform documentation for humans and AI agents. Organised in three tracks:
 |-------|---------|
 | [Capabilities](capabilities/) | **WHAT** the platform does (roles, features, entities, system behaviour) — implementation-free |
 | [Technical](technical/) | **HOW** the platform is built and run (architecture, guides, infra) |
-| [Operations](operations/) | Working notes, investigations, changelogs — not a ticket system |
+| [Operations](operations/) | Investigations and changelogs. Open work is a [GitHub issue](https://github.com/dertinfo/dertinfo-mono/issues) |
 
 **How we maintain this library:** [Documentation guide](documentation-guide.md).
 
@@ -33,7 +33,8 @@ Platform documentation for humans and AI agents. Organised in three tracks:
 | Entities | [capabilities/README.md](capabilities/README.md#entities) |
 | Domain glossary | [capabilities/system/domain-glossary.md](capabilities/system/domain-glossary.md) |
 | Change logs | [operations/changelogs/](operations/changelogs/) |
-| Planned fixes | [operations/planned-fixes/](operations/planned-fixes/) |
+| Open work | [GitHub Issues](https://github.com/dertinfo/dertinfo-mono/issues) |
+| Hosting and cost | [technical/architecture/hosting-and-cost.md](technical/architecture/hosting-and-cost.md) |
 | Investigations | [operations/investigations/](operations/investigations/) |
 | Security reviews | [operations/security/](operations/security/) |
 | Infra operator scripts (OIDC identities) | [infra/scripts/](../infra/scripts/) |

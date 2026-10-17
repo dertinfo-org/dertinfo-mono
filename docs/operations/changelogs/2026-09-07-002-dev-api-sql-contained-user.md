@@ -33,4 +33,4 @@ API Src CD can zip-deploy the site, but Azure SQL does not treat a **managed ide
 - Production: after PRD API infra exists, run `New-DertInfoSqlAppServiceUser.ps1 -GitHubEnvironment production`, then API Src CD `target: full` (or a production-only path).
 - Functions (and any other app identities) will need the same pattern: a contained user per MI, not group membership.
 - Carry this order into the Azure bring-up guide: API infra CD → KV secrets + App Config import → **App Service SQL user** → then Src CD → restart if 18456 persists.
-- Remove temporary src `workflow_dispatch` when Azure settings testing is done ([planned-fix](../planned-fixes/remove-src-workflow-dispatch.md)).
+- Remove temporary src `workflow_dispatch` when Azure settings testing is done ([issue 116](https://github.com/dertinfo/dertinfo-mono/issues/116)).

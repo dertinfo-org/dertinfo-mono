@@ -34,6 +34,6 @@ The first smoke pass worked and was brittle: repeated runs found duplicate group
 
 ## Any remaining issues that we may wish to address
 
-- The cookie banner can sit under the signed-in navigation, so the site can be used without accepting it. Noted in [smoke walkthrough future work](../planned-fixes/smoke-walkthrough-future-work.md). The suite accepts the banner on launch and carries that cookie forward.
+- The cookie banner can sit under the signed-in navigation, so the site can be used without accepting it. Noted in [issue 93](https://github.com/dertinfo/dertinfo-mono/issues/93). The suite accepts the banner on launch and carries that cookie forward.
 - `auth.session-continuity.rejected-cache-returns-to-sign-in` stays out of the default smoke command. Pass its id to run it.
 - Capability scenarios that never had a module remain documentation. A `coveredBy` entry records which flow now performs a behaviour the suite used to run as its own scenario.

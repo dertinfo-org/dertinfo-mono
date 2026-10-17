@@ -2,7 +2,7 @@
 
 ## Summary of the work completed
 
-New-stack production is serving `https://www.dertinfo.co.uk` and `https://app.dertinfo.co.uk`. The milestone guide was followed from workload identities through infrastructure, configuration, the SQL and image copies, and public DNS. Notes from that first run are annotations on [Set up the production environment](../../technical/guides/production-environment-setup.md). Cleanup of the old live and test estates is [Retire the old Azure estate](../planned-fixes/retire-old-azure-estate.md).
+New-stack production is serving `https://www.dertinfo.co.uk` and `https://app.dertinfo.co.uk`. The milestone guide was followed from workload identities through infrastructure, configuration, the SQL and image copies, and public DNS. Notes from that first run are annotations on [Set up the production environment](../../technical/guides/production-environment-setup.md). Cleanup of the old live and test estates is [issue 120](https://github.com/dertinfo/dertinfo-mono/issues/120).
 
 ## Why the work was completed
 
@@ -30,5 +30,5 @@ The new production website, API, and PWA had to replace the previous live site, 
 
 ## Any remaining issues that we may wish to address
 
-- Retire the old live and test infrastructure and the subscriptions that only hold them: [retire-old-azure-estate.md](../planned-fixes/retire-old-azure-estate.md).
+- Retire the old live and test infrastructure and the subscriptions that only hold them: [issue 120](https://github.com/dertinfo/dertinfo-mono/issues/120).
 - Number the stages in `Copy-DertInfoSqlToProduction.ps1` so the cleanup step matches the other operator scripts.

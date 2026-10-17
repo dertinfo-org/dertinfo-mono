@@ -38,5 +38,3 @@ main.prod.bicepparam        # using 'main.bicep' + extends './main.shared.bicepp
 - **Never** commit secrets or identifiable estate ids (subscription ids, principal ids, passwords). Declare empty `// SECRET` / `// PLACEHOLDER` values; inject via pipeline or CLI.
 - Prefer not duplicating full param lists across env files — that is what `extends` is for.
 - Workloads that read another part (`existing` / `getSecret()`) or need operator-supplied Entra ids take `prerequisitesExist` (default false in the param file). Flip it by hand after the listed prerequisites exist; do not detect them in workflows. Put those references in a local module that is `if (prerequisitesExist)` so ARM does not resolve missing resources. Storage uses named `flag` + PascalCase bools instead (`flagSqlServerIsReady`, `flagImagesFunctionAppReady`, `flagImagesEventGridReady`) because that template has several independent gates. See [Bicep standards](../../docs/technical/standards/bicep/).
-
-See `docs/operations/planned-fixes/bicep-avm-infra-pipelines.md`.

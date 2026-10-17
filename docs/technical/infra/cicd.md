@@ -8,8 +8,8 @@ Completed CD migration work is recorded in the [change log](changelogs/README.md
 
 | Concern | Workflows | Trigger |
 |---------|-----------|---------|
-| **CI** (build, test, lint) | `*-src-ci.yml` | Pull requests **into `main`** (path-filtered). GitHub Flow — no `develop` branch. Temporary: `workflow_dispatch` ([remove later](../../operations/planned-fixes/remove-src-workflow-dispatch.md)). |
-| **Src CD** (app deploy + Docker Hub) | `*-src-cd.yml` | Push to **`main`** after merge (path-filtered). Temporary: `workflow_dispatch` with `target` `full` or `dev-only` (default **`dev-only`**) so we can deploy while testing Azure settings ([remove later](../../operations/planned-fixes/remove-src-workflow-dispatch.md)). |
+| **CI** (build, test, lint) | `*-src-ci.yml` | Pull requests **into `main`** (path-filtered). GitHub Flow — no `develop` branch. Temporary: `workflow_dispatch` ([remove later](https://github.com/dertinfo/dertinfo-mono/issues/116)). |
+| **Src CD** (app deploy + Docker Hub) | `*-src-cd.yml` | Push to **`main`** after merge (path-filtered). Temporary: `workflow_dispatch` with `target` `full` or `dev-only` (default **`dev-only`**) so we can deploy while testing Azure settings ([remove later](https://github.com/dertinfo/dertinfo-mono/issues/116)). |
 | **Infra CD** (Bicep) | `*-infra-cd.yml`, `subscription-infra-cd.yml` | Push to **`main`** after merge (path-filtered), plus `workflow_dispatch` (`full` / `dev-only`, default **`full`**) for Bicep re-runs without template diffs. |
 
 Src CD workflows replace the per-app Azure DevOps pipelines under `apps/*/pipelines/`. Each `*-src-cd.yml` merges the former **source deploy** and **Docker Hub** pipelines into one workflow.
@@ -75,7 +75,7 @@ GitHub requires reusable workflows at the **top level** of `.github/workflows/` 
 
 | Workflow | Scope | Notes |
 |----------|-------|-------|
-| `subscription-infra-cd.yml` | Subscription | Privileged SP **per Environment**; **this pipeline registers resource providers on the subscription**, then deploys RGs + policy + RBAC — [agent-safe subscription foundation](../../operations/planned-fixes/agent-safe-subscription-foundation.md) |
+| `subscription-infra-cd.yml` | Subscription | Privileged SP **per Environment**; **this pipeline registers resource providers on the subscription**, then deploys RGs + policy + RBAC. Identity setup is [GitHub Actions OIDC](../guides/github-azure-federated-credentials.md). Showing that policy denies a disallowed SKU is [issue 126](https://github.com/dertinfo/dertinfo-mono/issues/126). |
 | `config-infra-cd.yml` | `rg-<env>-dertinfo-config-uks` | Key Vault + App Configuration (including labelled Key Vault references for four API secrets) |
 | `monitoring-infra-cd.yml` | `rg-<env>-dertinfo-monitoring-uks` | Log Analytics (1 GB/day) + Application Insights |
 | `storage-infra-cd.yml` | `rg-<env>-dertinfo-storage-uks` | Images SA always; Entra-only SQL when `flagSqlServerIsReady` is true (passes `AZURE_ENTRA_SQL_ADMIN_GROUP_*` and tenant id). Images Blob Data Contributor when `flagImagesFunctionAppReady` (pipeline looks up the Function App site MI from `AZURE_FUNCTIONAPP_FUNCTIONS_RESOURCENAME`). Event Grid system topic + blob webhooks when `flagImagesEventGridReady` after Src CD. After subscription CD, delete leftover storage-SP Reader and Key Vault Secrets User on the config RG, and leftover FUNCTIONS Reader / EventGrid Contributor / nested-deploy / UAA on the storage RG (incremental ARM will not drop them). |
@@ -155,7 +155,7 @@ Do **web and app in parallel**. Production custom domains and production src dep
 
 **Development first-pass status (2026-09-19):** steps 1–7 are **done**. Website (`https://dev.dertinfo.co.uk`) and PWA (`https://app-dev.dertinfo.co.uk`) serve from Src CD; login, page refresh, and sign-out work on both. Changelog: [2026-09-19-002](../../operations/changelogs/2026-09-19-002-dev-swa-first-pass.md). Custom-domain bind needed the subscription role in [2026-09-19-001](../../operations/changelogs/2026-09-19-001-swa-operation-status-rbac.md).
 
-Auth0 tenant names vs GitHub Environments: [Authentication](../subsystems/authentication.md). Tenant rename is a [planned-fix](../../operations/planned-fixes/auth0-tenant-rename-local-dev.md), not this deploy.
+Auth0 tenant names vs GitHub Environments: [Authentication](../subsystems/authentication.md). Tenant rename is [issue 117](https://github.com/dertinfo/dertinfo-mono/issues/117), not this deploy.
 
 ### First development Functions deploy (operator)
 
@@ -183,7 +183,7 @@ Templates and workflows are in the repo. You run Azure and GitHub. Do this in or
 
 Production order — identities, pipelines, configuration, SQL and image data, the Azure-hostname test, then DNS — is [Set up the production environment](../guides/production-environment-setup.md). Follow that guide rather than a shorter list here.
 
-Cleanup of leftover App Configuration / Key Vault / GitHub items is a **next** step: [storage managed identity](../../operations/planned-fixes/storage-managed-identity.md#c-cleanup-inventory-next-step).
+Cleanup of leftover App Configuration / Key Vault / GitHub items is a **next** step: [issue 115](https://github.com/dertinfo/dertinfo-mono/issues/115).
 
 ## Functions infrastructure reference (`test`)
 

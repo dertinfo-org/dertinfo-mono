@@ -2,7 +2,7 @@
 name: Secrets and rotation
 type: infra
 status: active
-updated: 2026-09-20
+updated: 2026-10-17
 ---
 
 # Secrets inventory and rotation
@@ -20,7 +20,7 @@ Operational / management access to third-party dashboards is typically via the o
 | Secret | Purpose |
 |--------|---------|
 | Images storage account access key | API writes original images to blob storage (`az-storage-images-accountkey`) |
-| Function app storage account access key | **Leftover catalog** (`az-storage-functions-accountkey` / `StorageAccount:Functions:Key`). New-stack Flex host storage is identity-only (`allowSharedKeyAccess: false`); the API does not read this key. Remove with [storage managed identity](../../operations/planned-fixes/storage-managed-identity.md) cleanup. |
+| Function app storage account access key | **Leftover catalog** (`az-storage-functions-accountkey` / `StorageAccount:Functions:Key`). New-stack Flex host storage is identity-only (`allowSharedKeyAccess: false`); the API does not read this key. Remove with [issue 115](https://github.com/dertinfo/dertinfo-mono/issues/115). |
 | Application Insights instrumentation key | Web and PWA telemetry (`appinsights-telemetryid`; not a credential, stored in Key Vault for obfuscation) |
 | Auth0 Management Client ID | M2M client id (`auth0-managementclientid`; obfuscated in Key Vault) |
 | Web Auth0 Client ID | Website SPA client id (`webclient-auth0-clientid`; obfuscated in Key Vault) |
@@ -87,7 +87,7 @@ New-stack Functions **host** storage (`st<env>dertinfofuncuks`) has shared keys 
 3. Update `az-storage-images-accountkey` in `kv-secrets.<environment>.json` and re-run [`New-DertInfoConfigKeyVaultSecrets.ps1`](../../../infra/scripts/Configuration/New-DertInfoConfigKeyVaultSecrets.ps1) `-Force`, or `az keyvault secret set`.
 4. Restart the API.
 
-Follow-up: Entra for images and App Configuration cleanup — [Storage managed identity](../../operations/planned-fixes/storage-managed-identity.md).
+Follow-up: Entra for images and App Configuration cleanup — [issue 115](https://github.com/dertinfo/dertinfo-mono/issues/115).
 
 ### Auth0 Management Client secret
 

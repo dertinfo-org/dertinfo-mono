@@ -30,5 +30,5 @@ The SWA Bicep and infra CD work ([2026-09-07-006](./2026-09-07-006-web-app-swa-b
 ## Any remaining issues that we may wish to address
 
 - Trim CORS origins in API `Startup.cs` so catalog values with spaces after commas keep working.
-- Rebuild Auth0 tenants so names match environments — [planned-fix](../planned-fixes/auth0-tenant-rename-local-dev.md).
+- Rebuild Auth0 tenants so names match environments — [issue 117](https://github.com/dertinfo/dertinfo-mono/issues/117).
 - Production custom domains and production src deploy are a later pass.

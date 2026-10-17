@@ -2,7 +2,7 @@
 
 ## Summary of the work completed
 
-Src CI (`api` / `web` / `app` / `functions-src-ci.yml`) and src CD (`*-src-cd.yml`) can be run from the Actions tab. Src CD uses the same `target` input as infra CD (`full` | `dev-only`), default **`dev-only`**, so a manual run deploys development only. Production src CD jobs still run on push to `main`, or on dispatch with `target: full`. Infra CD already had `workflow_dispatch` and was not changed. Follow-up to remove the src triggers: [remove-src-workflow-dispatch](../planned-fixes/remove-src-workflow-dispatch.md). Overview: [CI/CD](../../technical/infra/cicd.md).
+Src CI (`api` / `web` / `app` / `functions-src-ci.yml`) and src CD (`*-src-cd.yml`) can be run from the Actions tab. Src CD uses the same `target` input as infra CD (`full` | `dev-only`), default **`dev-only`**, so a manual run deploys development only. Production src CD jobs still run on push to `main`, or on dispatch with `target: full`. Infra CD already had `workflow_dispatch` and was not changed. Follow-up to remove the src triggers: [issue 116](https://github.com/dertinfo/dertinfo-mono/issues/116). Overview: [CI/CD](../../technical/infra/cicd.md).
 
 ## Why the work was completed
 
@@ -28,5 +28,5 @@ New-stack Azure settings (App Service names, OIDC, App Configuration) needed a r
 
 ## Any remaining issues that we may wish to address
 
-- Remove src `workflow_dispatch` and the job `if:` conditions once hosted settings are confirmed ([planned-fix](../planned-fixes/remove-src-workflow-dispatch.md)). Keep infra CD dispatch for Bicep re-runs without template diffs.
+- Remove src `workflow_dispatch` and the job `if:` conditions once hosted settings are confirmed ([issue 116](https://github.com/dertinfo/dertinfo-mono/issues/116)). Keep infra CD dispatch for Bicep re-runs without template diffs.
 - First development API src deploy and the App Service SQL contained user: [2026-09-07-002](./2026-09-07-002-dev-api-sql-contained-user.md).
