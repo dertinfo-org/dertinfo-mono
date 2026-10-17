@@ -8,6 +8,7 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-10-17 | A pull request that fixes a bug names the issue so GitHub closes it | [2026-10-17-005-pr-fixes-issue.md](./2026-10-17-005-pr-fixes-issue.md) |
 | 2026-10-17 | An unset group cannot be registered for an event | [2026-10-17-004-unconfigured-group-registration.md](./2026-10-17-004-unconfigured-group-registration.md) |
 | 2026-10-17 | Docker estate collapsed to the root Compose file; Azure DevOps YAML removed | [2026-10-17-003-docker-estate-cleanup.md](./2026-10-17-003-docker-estate-cleanup.md) |
 | 2026-10-17 | Group registration opens with a note to prepare members and guests | [2026-10-17-002-group-register-info-banner.md](./2026-10-17-002-group-register-info-banner.md) |
