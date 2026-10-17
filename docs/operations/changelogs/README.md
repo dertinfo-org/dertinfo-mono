@@ -8,6 +8,7 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-10-17 | Group registration opens with a note to prepare members and guests | [2026-10-17-002-group-register-info-banner.md](./2026-10-17-002-group-register-info-banner.md) |
 | 2026-10-17 | Open work moved from the repo onto GitHub Issues | [2026-10-17-001-github-issues-backlog.md](./2026-10-17-001-github-issues-backlog.md) |
 | 2026-10-16 | System Admin can send one email to check the provider | [2026-10-16-001-systemadmin-email-test.md](./2026-10-16-001-systemadmin-email-test.md) |
 | 2026-10-12 | Group registration collects teams, people, and tickets before it is created | [2026-10-12-001-group-register-stepper.md](./2026-10-12-001-group-register-stepper.md) |

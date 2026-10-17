@@ -6,6 +6,10 @@
     <mat-divider></mat-divider>
   </mat-card-title-group>
   <mat-card-content>
+    <div class="mat-bg-primary p-1 mb-1 register-info-banner">
+      <mat-icon>info</mat-icon>
+      <p class="register-info-text">For the easiest registration experience, please ensure your group members and guests have been added to your group profile in advance. This form will let you select from those existing records, with the option to add new members or guests on the next page.</p>
+    </div>
     <mat-vertical-stepper [linear]="false" (selectionChange)="onStepperStepChange($event)">
       <mat-step>
         <ng-template matStepLabel>Overview</ng-template>
