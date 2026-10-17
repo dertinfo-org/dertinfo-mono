@@ -65,8 +65,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       environment: development
-      dockerfile: apps/dert-functions/src/dertinfo-image-resize/Dockerfile
-      context: apps/dert-functions/src/dertinfo-image-resize
+      dockerfile: apps/dert-functions/Dockerfile
+      context: apps/dert-functions
       image_repository: dertinfo/dertinfo-imageresizev4
 
   deploy-dev:
@@ -90,8 +90,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       environment: production
-      dockerfile: apps/dert-functions/src/dertinfo-image-resize/Dockerfile
-      context: apps/dert-functions/src/dertinfo-image-resize
+      dockerfile: apps/dert-functions/Dockerfile
+      context: apps/dert-functions
       image_repository: dertinfo/dertinfo-imageresizev4
 
   deploy-prod:

@@ -41,7 +41,7 @@ export const COMPOSE_SERVICES = {
   api: 'dertinfo-api',
   web: 'web-frontend',
   app: 'app-frontend',
-  imageResize: 'image-resize',
+  imageResize: 'functions',
   azurite: 'azstorage',
   sql: 'sqlserver',
 };

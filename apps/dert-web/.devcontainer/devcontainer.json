@@ -14,11 +14,6 @@
                 "ms-mssql.mssql",
                 "github.copilot"
             ]
-        },
-        "codespaces": {
-            "openFiles": [
-                "codespace.md"
-            ]
         }
     },
     "postCreateCommand": "sh .devcontainer/setup-devcontainer.sh",

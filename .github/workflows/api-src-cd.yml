@@ -105,8 +105,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       environment: development
-      dockerfile: apps/dert-api/src/dertinfo-api/Dockerfile
-      context: apps/dert-api/src
+      dockerfile: apps/dert-api/Dockerfile
+      context: apps/dert-api
       image_repository: dertinfo/dertinfo-api
 
   deploy-dev:
@@ -132,8 +132,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       environment: production
-      dockerfile: apps/dert-api/src/dertinfo-api/Dockerfile
-      context: apps/dert-api/src
+      dockerfile: apps/dert-api/Dockerfile
+      context: apps/dert-api
       image_repository: dertinfo/dertinfo-api
 
   deploy-prod:

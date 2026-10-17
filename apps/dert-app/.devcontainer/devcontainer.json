@@ -14,14 +14,9 @@
           "ms-mssql.mssql",
           "github.copilot"
         ]
-      },
-      "codespaces": {
-        "openFiles": [
-          "codespace.md"
-        ]
       }
     },
-    "postCreateCommand": "npm install -g typescript @azure/static-web-apps-cli @angular/cli@13 && sh infra/docker/setup-codespace.sh && echo '# Writing code upon codespace creation!'  >> codespace.md",
+    "postCreateCommand": "npm install -g typescript @azure/static-web-apps-cli @angular/cli@13 && sh .devcontainer/setup-codespace.sh",
     "forwardPorts": [44100,44300],
     "portsAttributes": {
       "44100": {

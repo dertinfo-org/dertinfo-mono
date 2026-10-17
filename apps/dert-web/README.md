@@ -94,7 +94,7 @@ swa start http://localhost:4200 --port 44200
 
 At this point (if running locally) you should be able to proceed to http://localhost:44200 and you will see the running application there. If running in codespaces please see forwarded ports and you should be able to see the app running there. 
 
-Also note that if you are running the app locally in codespaces and not via docker you must update the assets/app.config.json file with the paths in the generated infra/docker/web/env file as the urls need to be those of the codespace instead of the localhost. 
+Also note that if you are running the app locally in codespaces and not via docker you must update the assets/app.config.json file with the paths in the generated infra/secrets/web.env file as the urls need to be those of the codespace instead of the localhost. 
 
 ### Running the Web In Docker
 
@@ -119,10 +119,9 @@ In order to run the dependencies for the app the you will need to be running mos
 In both codespaces and local you can spin up the other services using their public images using the following commands from the root of the repository. Either in the VS Code terminal or separate. 
 
 ```
-cd infra/docker
-docker-compose up
+docker compose up --build
 ```
-This will spin up all the dependant services. Note that it'll also try and run the workload. If you do not want to also run the current workload (dertinfo-app) please comment it out in the docker-compose file before running the "up" command. 
+From the repository root. This starts the API, SQL Server, Azurite, functions, website, and PWA. Copy `infra/secrets/web.env.example` to `infra/secrets/web.env` first. 
 
 Please note that on first run this can take anything between 2-10 mins depending on connectivity and environment configuration as it's downloading the base images for the containers and then may be doing installs of packages etc. After the first run the time should be significantly reduced.
 

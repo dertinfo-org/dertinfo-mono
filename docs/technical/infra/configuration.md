@@ -253,7 +253,7 @@ Development SPA login on Azure uses **dertinfotest**. Hosted catalog callbacks a
 | Environment                        | API URL & Auth0 callback |
 | ---------------------------------- | ------------------------ |
 | Local `ng serve` / `npm run start` | `apps/*/src/client/src/assets/app.config.json` (localhost ports) |
-| Docker                             | Same JSON in `dist/assets`; `docker-launch.sh` substitutes `API_URL` / `AUTH_CALLBACK_URL` / `ALLOWED_DOMAINS` from `infra/docker/web.env` or `app.env` |
+| Docker                             | Same JSON in `dist/assets`; `docker-launch.sh` substitutes `API_URL` / `AUTH_CALLBACK_URL` / `ALLOWED_DOMAINS` from `infra/secrets/web.env` or `app.env` |
 | Azure Static Web Apps              | CD writes `dist/assets/app.config.json` from GitHub Environment variables (`AZURE_WEBAPP_API_RESOURCENAME`, `AZURE_STATICWEBAPP_WEB_CALLBACKURL` / `AZURE_STATICWEBAPP_APP_CALLBACKURL`). See [CI/CD](cicd.md). |
 
 
@@ -278,6 +278,9 @@ Compose remains available for full-stack containers. Azurite data uses `./infra/
 
 ```bash
 cp infra/secrets/api.env.example infra/secrets/api.env
+cp infra/secrets/web.env.example infra/secrets/web.env
+cp infra/secrets/app.env.example infra/secrets/app.env
+cp infra/secrets/functions.env.example infra/secrets/functions.env
 # fill secrets
 docker compose up --build
 ```
@@ -287,7 +290,7 @@ docker compose up --build
 ## What not to do
 
 - Do not hardcode machine-specific SQL connection details in `appsettings.json` — use `infra/secrets/api.env`.
-- Do not put secrets under `infra/docker/` for local API runs — use `infra/secrets/`.
+- Do not store local env files outside `infra/secrets/` (`api.env`, `web.env`, `app.env`, `functions.env`).
 - Do not add shared non-secret Auth0 identifiers to `api.env` if they already exist in `appsettings.json`.
 - Do not commit secrets; do not require Azure App Configuration for local runs.
 - Do not auto-download npm/dotnet dependencies on every `start` — install per project when needed.

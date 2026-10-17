@@ -6,9 +6,15 @@ Gitignored secret files live **beside** their checked-in `*.example` siblings.
 |------|---------|---------|
 | `api.env.example` | (template) | Required keys for the API when running without Azure App Configuration |
 | `api.env` | `npm run start` (process env); Compose `env_file` | Real values — copy from the example and fill in |
+| `web.env.example` / `web.env` | Compose website container | `API_URL`, `AUTH_CALLBACK_URL`, `ALLOWED_DOMAINS` written into `app.config.json` at start |
+| `app.env.example` / `app.env` | Compose PWA container | Same three values for the app |
+| `functions.env.example` / `functions.env` | Compose `functions` service | Turns the Event Grid resize triggers off for local Docker |
 
 ```bash
 cp infra/secrets/api.env.example infra/secrets/api.env
+cp infra/secrets/web.env.example infra/secrets/web.env
+cp infra/secrets/app.env.example infra/secrets/app.env
+cp infra/secrets/functions.env.example infra/secrets/functions.env
 # Edit api.env — see below
 ```
 
@@ -20,7 +26,7 @@ cp infra/secrets/api.env.example infra/secrets/api.env
 | `Auth0__*` and SPA `*ClientId` | **Shared team dev tenant** — get domain, audience, client IDs, and Management API secret from a teammate or your team vault. Do not invent a new tenant unless you also configure Auth0 callbacks for `http://localhost:44200` / `44300`. |
 | `StorageAccount__Images__Key` | Keep the example **Azurite** well-known key for local. |
 
-Never commit `api.env`.
+Never commit `api.env`, `web.env`, `app.env`, or `functions.env`.
 
 ## Behaviour vs Azure App Configuration
 

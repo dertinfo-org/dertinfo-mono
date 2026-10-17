@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dertinfo-repository.utests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dertinfo-services.utests", "dertinfo-services.utests\dertinfo-services.utests.csproj", "{31D89D58-4520-4FC2-81EB-44BB9E14A43F}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1B7B0288-8B74-438C-863E-6356393C46AE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,12 +82,6 @@ Global
 		{31D89D58-4520-4FC2-81EB-44BB9E14A43F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31D89D58-4520-4FC2-81EB-44BB9E14A43F}.Staging|Any CPU.ActiveCfg = Debug|Any CPU
 		{31D89D58-4520-4FC2-81EB-44BB9E14A43F}.Staging|Any CPU.Build.0 = Debug|Any CPU
-		{1B7B0288-8B74-438C-863E-6356393C46AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B7B0288-8B74-438C-863E-6356393C46AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B7B0288-8B74-438C-863E-6356393C46AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B7B0288-8B74-438C-863E-6356393C46AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B7B0288-8B74-438C-863E-6356393C46AE}.Staging|Any CPU.ActiveCfg = Release|Any CPU
-		{1B7B0288-8B74-438C-863E-6356393C46AE}.Staging|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

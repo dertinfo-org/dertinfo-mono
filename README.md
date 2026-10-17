@@ -107,8 +107,9 @@ Full tool matrix and Azurite/Functions notes: [`docs/technical/infra/configurati
 
 ```bash
 cp infra/secrets/api.env.example infra/secrets/api.env
-cp infra/docker/web.env.example infra/docker/web.env
-cp infra/docker/app.env.example infra/docker/app.env
+cp infra/secrets/web.env.example infra/secrets/web.env
+cp infra/secrets/app.env.example infra/secrets/app.env
+cp infra/secrets/functions.env.example infra/secrets/functions.env
 docker compose up --build
 ```
 
