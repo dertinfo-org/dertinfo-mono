@@ -174,3 +174,22 @@
 .person-kind {
     margin-left: 8px;
 }
+
+.register-info-banner {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    column-gap: 10px;
+    align-items: center;
+}
+
+.register-info-banner mat-icon {
+    width: 24px;
+    height: 24px;
+    grid-column: 1;
+}
+
+.register-info-text {
+    grid-column: 2;
+    width: auto;
+    margin: 0;
+}
