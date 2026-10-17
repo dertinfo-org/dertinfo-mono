@@ -21,6 +21,7 @@ A signed-in user can **create** a **group** (sword-dancing club). Only **group a
 ## Behaviour (group admin)
 
 - A new group is not set up. Its dashboard card shows **Needs more information**. The card menu offers **Configure**, and opening the card starts group setup.
+- On the group admin screen, a group that is not set up says it still needs contact details, and offers **Set up now**. It does not list events under **Available / New** or as promoted events, and it cannot be registered.
 - After setup, that overlay is gone and the menu offers **Admin**.
 - Creating a group already produces a team with the group's name. The group admin does not create that first team.
 - View registrations for the group. See [Submit event registration](registration-submit.md). Each registration names the event, how many people and teams are on it, and whether it is still open.
@@ -42,7 +43,6 @@ A signed-in user can **create** a **group** (sword-dancing club). Only **group a
 
 - Group members without admin rights cannot manage members, teams, images, or registrations.
 - Confirmed registrations are no longer editable by the group admin.
-- A group that is not set up can still be registered. Stopping that is [issue 127](https://github.com/dertinfo/dertinfo-mono/issues/127) and is not a smoke check.
 
 See [Domain glossary](../../system/domain-glossary.md).
 

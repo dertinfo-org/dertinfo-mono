@@ -8,6 +8,7 @@ import { GroupAdminTracker } from './services/group-admin.tracker';
 @Component({
     selector: 'app-group-admin',
     templateUrl: './group-admin.component.html',
+    styleUrls: ['./group-admin.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
@@ -25,6 +26,7 @@ export class GroupAdminComponent implements OnInit, OnDestroy {
   public contactName;
   public contactTelephone;
   public originTown;
+  public isConfigured = true;
   public showDertOfDertsMenu = false;
   public showDertOfDertsMenuRoute;
 
@@ -64,6 +66,7 @@ export class GroupAdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private groupConductor: GroupAdminConductor,
     private _groupTracker: GroupAdminTracker,
 
@@ -96,9 +99,14 @@ export class GroupAdminComponent implements OnInit, OnDestroy {
         this.contactName = groupOverview.contactName;
         this.contactTelephone = groupOverview.contactTelephone;
         this.originTown = groupOverview.originTown;
+        this.isConfigured = groupOverview.isConfigured;
       }
     }));
 
+  }
+
+  public configureGroup(): void {
+    this.router.navigate(['/group-configure', this.groupName, this.groupId, 'start']);
   }
 
   ngOnDestroy() {

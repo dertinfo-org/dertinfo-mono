@@ -19,6 +19,7 @@
       </mat-card-content>
     </mat-tab>
     <mat-tab label="Available / New">
+      <ng-container *ngIf="isConfigured">
       <mat-card-content class="mt-1">
           <mat-list class="compact-list mb-1">
               <mat-list-item class="" *ngFor="let event of eventsAvailable$ | async" routerLink="/group-register/{{_groupId}}/{{event.id}}">
@@ -35,6 +36,7 @@
       <mat-card-content class="mt-1" *ngIf="(eventsAvailable$ | async)?.length === 0">
           No events currently available.
         </mat-card-content>
+      </ng-container>
     </mat-tab>
     <mat-tab label="Other">
       <mat-card-content class="mt-1">

@@ -50,6 +50,7 @@
       </mat-card-content>
     </mat-card>
 
+    <ng-container *ngIf="vm.isConfigured">
     <div *ngFor="let promotedEvent of vm.promotedEvents" fxFlex="100">
       <mat-card appearance="outlined" class="p-0 primary" fxFlex>
         <mat-card-title class="mat-bg-primary m-0">
@@ -73,5 +74,6 @@
         </div>
       </mat-card>
     </div>
+    </ng-container>
   </div>
 </div>

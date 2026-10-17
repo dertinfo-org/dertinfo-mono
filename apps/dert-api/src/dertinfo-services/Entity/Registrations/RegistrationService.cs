@@ -50,6 +50,7 @@ namespace DertInfo.Services
         IMemberAttendanceRepository _memberAttendanceRepository;
         IRegistrationEmailDataService _registrationEmailDataService;
         IEventRepository _eventRepository;
+        IGroupRepository _groupRepository;
         IRegistrationRepository _registrationRepository;
         ITeamAttendanceRepository _teamAttendanceRepository;
         ITeamRepository _teamRepository;
@@ -66,6 +67,7 @@ namespace DertInfo.Services
             IGroupMemberRepository groupMemberRepository,
             IMemberAttendanceRepository memberAttendanceRepository,
             IEventRepository eventRepository,
+            IGroupRepository groupRepository,
             IRegistrationEmailDataService registrationEmailDataService,
             IRegistrationRepository registrationRepository,
             ITeamAttendanceRepository teamAttendanceRepository,
@@ -80,6 +82,7 @@ namespace DertInfo.Services
             _groupMemberRepository = groupMemberRepository;
             _memberAttendanceRepository = memberAttendanceRepository;
             _eventRepository = eventRepository;
+            _groupRepository = groupRepository;
             _registrationEmailDataService = registrationEmailDataService;
             _registrationRepository = registrationRepository;
             _teamAttendanceRepository = teamAttendanceRepository;
@@ -221,6 +224,12 @@ namespace DertInfo.Services
             if (targetEvent == null || !targetEvent.IsConfigured)
             {
                 throw new InvalidOperationException("Cannot register for an event that is not configured");
+            }
+
+            var targetGroup = await _groupRepository.GetById(registration.GroupId);
+            if (targetGroup == null || !targetGroup.IsConfigured)
+            {
+                throw new InvalidOperationException("Cannot register a group that is not configured");
             }
 
             // Check for existance of group and event registration
