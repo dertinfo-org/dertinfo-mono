@@ -1,0 +1,26 @@
+{
+  "GroupName": "The Lovejoys",
+  "Image": "family.jpg",
+  "GroupBio": "The minister and his family from Springfield",
+  "OriginTown": "Springfield",
+  "OriginPostcode": "SP1 4DD",
+  "PrimaryContactName": "Helen Lovejoy",
+  "PrimaryContactEmail": "helen.lovejoy@dertinfo.co.uk",
+  "PrimaryContactNumber": "01234567894",
+  "GroupMembers": [
+    {
+      "Name": "Helen Lovejoy",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Timothy Lovejoy",
+      "MemberType": "guest"
+    }
+  ],
+  "Teams": [
+    {
+      "TeamName": "Church",
+      "TeamBio": "The church team from Springfield"
+    }
+  ]
+}

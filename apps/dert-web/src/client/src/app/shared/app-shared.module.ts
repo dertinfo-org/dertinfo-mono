@@ -34,6 +34,7 @@ import { ScoreCardComponent } from './components/scorecard/scorecard.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SwitchHeaderComponent } from './components/switch-header/switch-header.component';
 // todo - Teams Select As Component
+import { SessionAccountMenuComponent } from './components/session-account-menu/session-account-menu.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { YouTubeEmbedComponent } from './components/youtube-embed/youtube-embed.component';
 
@@ -93,6 +94,7 @@ import { TimeFormatPipe } from './pipes/time-format.pipe';
     ScoreCardComponent,
     SpinnerComponent,
     SwitchHeaderComponent,
+    SessionAccountMenuComponent,
     TopbarComponent,
     YouTubeEmbedComponent,
     AppAccordionDirective,
@@ -131,6 +133,7 @@ import { TimeFormatPipe } from './pipes/time-format.pipe';
     ScoreCardComponent,
     SpinnerComponent,
     SwitchHeaderComponent,
+    SessionAccountMenuComponent,
     TopbarComponent,
     YouTubeEmbedComponent,
     AppAccordionDirective,

@@ -1,0 +1,86 @@
+:host {
+    .home-intro-section {
+        border-top: solid 1px #ccc;
+        background-image: none !important;
+        background-color: #fff;
+        padding: 50px 0px 30px 0;
+    }
+
+    .home-intro-title {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 5rem !important;
+        color: #000;
+
+    }
+
+    .home-intro-desc,
+    .intro-list {
+        color: #000;
+        font-size: 1.75rem;
+        line-height: 1.45;
+        margin-bottom: 2.75rem;
+    }
+
+    .intro-product-link {
+        position: absolute;
+        top: -20px;
+        left: auto;
+        right: -80px;
+        color: #fff;
+    }
+
+    .now {
+        background-color: #0BA7F3;
+    }
+
+    .soon {
+        background-color: #ddda16;
+        color: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 16px;
+    }
+
+    .soon .price {
+        font-size: 17px;
+        line-height: 1.15;
+    }
+
+    .intro-product {
+        position: relative;
+        right: 80px;
+        top: 0; /*Override default*/
+        left: 0; /*Override default*/
+    }
+
+    .mat-mdc-raised-button {
+        font-family: "Kalam", cursive;
+        font-size: 1.2rem;
+        border: 3px solid #000;
+        border-radius: 255px 15px 255px 15px / 15px 255px 15px 255px;
+    }
+
+    .mat-mdc-raised-button:hover {
+        border: 3px solid #000;
+        border-radius: 15px 255px 15px 255px / 255px 15px 255px 15px;
+    }
+
+    .price {
+        font-family: "Kalam", cursive;
+        font-size: 27px;
+    }
+
+    .price-position {
+        position:relative;
+        top:0;
+    }
+
+    .price-position-v2 {
+        position:relative;
+        top:-10px;
+    }
+}

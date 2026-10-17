@@ -2,7 +2,7 @@
 name: Event administrator
 type: role
 status: active
-updated: 2026-07-26
+updated: 2026-10-11
 id: event-admin
 ---
 
@@ -24,7 +24,7 @@ Administers one or more **events** (e.g. Dert): create event, registrations, inv
 - [Publish competition results](../features/web/results-publish.md)
 - [Send email](../features/web/send-email.md) — registration and related outbound mail
 - [In-app notifications](../features/web/in-app-notifications.md) — rarely used
-- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md), [Homepage account](../features/web/homepage-account.md)
 
 ## Limitations
 

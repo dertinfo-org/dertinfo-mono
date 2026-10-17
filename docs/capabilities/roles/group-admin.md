@@ -2,7 +2,7 @@
 name: Group administrator
 type: role
 status: active
-updated: 2026-07-26
+updated: 2026-10-11
 id: group-admin
 ---
 
@@ -20,7 +20,7 @@ Administers one or more sword-dancing **groups**: members, teams, images, event 
 - [Registration email templates](../features/web/registration-email-templates.md) — receives submitted/confirmed emails
 - [Send email](../features/web/send-email.md) — receives platform emails
 - [Publish competition results](../features/web/results-publish.md) — after publish, own team’s scores and score sheets
-- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md)
+- Auth: [Log out](../features/web/auth-logout.md), [Stay signed in](../features/web/auth-session-continuity.md), [Homepage account](../features/web/homepage-account.md)
 
 ## Limitations
 

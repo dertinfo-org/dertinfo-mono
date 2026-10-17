@@ -2,7 +2,7 @@
 name: Registration
 type: entity
 status: active
-updated: 2026-09-27
+updated: 2026-10-12
 id: entity.registration
 ---
 
@@ -16,7 +16,7 @@ Submission is not confirmation. The registration stays unconfirmed until an even
 
 ## What can be done
 
-- **Create / edit** — group-admin, while the registration is New or Submitted, via [Create and manage group](../features/web/groups-manage.md) and [Submit event registration](../features/web/registration-submit.md). Choose team activities, member activities, and guests.
+- **Create / edit** — group-admin, while the registration is New or Submitted, via [Submit event registration](../features/web/registration-submit.md). Creation walks the event overview, the published tickets, the group's teams and people, the chosen tickets, a summary, and the terms. The registration starts **New**. Team activities, member activities, and guests can still be changed afterwards.
 - **Submit** — group-admin, via [Submit event registration](../features/web/registration-submit.md). New or Submitted becomes Submitted. The registration becomes visible to the event admin. A registration-submitted [email](email.md) is sent, with the team and member activities requested.
 - **Confirm** — event-admin, via [Confirm registrations](../features/web/registration-confirm.md). Submitted becomes Confirmed. An [invoice](invoice.md) is created. A registration-confirmed [email](email.md) is sent, with pricing and how to pay. The group admin can no longer edit the registration.
 - **Close** — when the event closes. Confirmed becomes Closed. New or Submitted becomes Cancelled.

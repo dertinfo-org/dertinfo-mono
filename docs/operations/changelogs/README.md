@@ -9,6 +9,10 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 | Completed | Title | Detail |
 |-----------|--------|--------|
 | 2026-10-17 | Open work moved from the repo onto GitHub Issues | [2026-10-17-001-github-issues-backlog.md](./2026-10-17-001-github-issues-backlog.md) |
+| 2026-10-16 | System Admin can send one email to check the provider | [2026-10-16-001-systemadmin-email-test.md](./2026-10-16-001-systemadmin-email-test.md) |
+| 2026-10-12 | Group registration collects teams, people, and tickets before it is created | [2026-10-12-001-group-register-stepper.md](./2026-10-12-001-group-register-stepper.md) |
+| 2026-10-11 | Homepage account shows a signed-in visitor | [2026-10-11-004-homepage-account.md](./2026-10-11-004-homepage-account.md) |
+| 2026-10-11 | Website homepage announces DERT 2027 in Bath | [2026-10-11-003-dert-2027-homepage.md](./2026-10-11-003-dert-2027-homepage.md) |
 | 2026-10-11 | Smoke runners keep the video mode, and the app has its own smoke command | [2026-10-11-002-smoke-video-arg.md](./2026-10-11-002-smoke-video-arg.md) |
 | 2026-10-11 | End-to-end fixtures share a session and match Gherkin features | [2026-10-11-001-e2e-shared-session.md](./2026-10-11-001-e2e-shared-session.md) |
 | 2026-10-05 | Website upgraded from Angular 21 to Angular 22 | [2026-10-05-002-web-angular-22.md](./2026-10-05-002-web-angular-22.md) |

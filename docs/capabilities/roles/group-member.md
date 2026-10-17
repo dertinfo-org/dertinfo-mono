@@ -2,7 +2,7 @@
 name: Group member
 type: role
 status: active
-updated: 2026-10-04
+updated: 2026-10-11
 id: group-member
 ---
 
@@ -14,7 +14,7 @@ A signed-in user associated with one or more groups as a member (not necessarily
 
 ## Capabilities
 
-- [Log out](../features/web/auth-logout.md) / [Stay signed in](../features/web/auth-session-continuity.md)
+- [Log out](../features/web/auth-logout.md) / [Stay signed in](../features/web/auth-session-continuity.md) / [Homepage account](../features/web/homepage-account.md)
 - [Create and manage group](../features/web/groups-manage.md) — from the dashboard, **View** opens the group and the events it is registered for. Changing the group stays with the group administrator.
 - [Submit event registration](../features/web/registration-submit.md) — from the group homepage, see **Available / New** events that are open for registration
 - [Publish competition results](../features/web/results-publish.md) — after publish, may view own team’s scores and score sheets when associated with that team

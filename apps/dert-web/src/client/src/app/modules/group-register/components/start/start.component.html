@@ -3,41 +3,276 @@
     <mat-card-title>
       <div class="card-title-text">Registration Information</div>
     </mat-card-title>
-    <!--
-    <span fxFlex fxLayout="row-reverse">
-      <span class="avatar-tag md mr-1 mt-1">
-        <img [src]="eventPictureUrl | imageDimension:'100x100'" alt="" />
-      </span>
-      <span class="avatar-tag md mr-1 mt-1">
-        <img [src]="groupPictureUrl | imageDimension:'100x100'" alt="" />
-      </span>
-    </span>
-    -->
     <mat-divider></mat-divider>
   </mat-card-title-group>
   <mat-card-content>
     <mat-vertical-stepper [linear]="false" (selectionChange)="onStepperStepChange($event)">
       <mat-step>
-        <form>
-          <ng-template matStepLabel>Overview</ng-template>
-          <p>{{eventSynopsis}}</p>
-          <div class="pt-1">
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+        <ng-template matStepLabel>Overview</ng-template>
+        <div class="step-body">
+        <div class="overview">
+          <div class="overview-copy">
+            <p>{{eventSynopsis}}</p>
+            <p><span class="overview-label">Event:</span> {{eventName}}</p>
+            <p *ngIf="eventStartDate || eventEndDate">
+              <span class="overview-label">Dates:</span>
+              <span *ngIf="eventStartDate">{{eventStartDate | date:'d MMMM yyyy'}}</span>
+              <span *ngIf="eventStartDate && eventEndDate"> – </span>
+              <span *ngIf="eventEndDate">{{eventEndDate | date:'d MMMM yyyy'}}</span>
+            </p>
+            <p *ngIf="locationTown || locationPostcode">
+              <span class="overview-label">Location:</span>
+              {{locationTown}}<span *ngIf="locationTown && locationPostcode"> </span>{{locationPostcode}}
+            </p>
           </div>
-        </form>
+          <img *ngIf="eventPictureUrl" class="overview-image" [src]="eventPictureUrl | imageDimension:'480x360'" [alt]="eventName">
+        </div>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </div>
       </mat-step>
       <mat-step>
-        <form>
-          <ng-template matStepLabel>Tickets And Pricing</ng-template>
-          <p>Functionality to show the tickets available here is still under development.</p>
-          <div class="pt-1">
-            <button mat-raised-button color="primary" matStepperNext>Next</button>
+        <ng-template matStepLabel>Tickets And Pricing</ng-template>
+        <div class="step-body">
+        <h3>Tickets for individuals</h3>
+        <p *ngIf="!individualActivities.length">No individual tickets have been published.</p>
+        <table *ngIf="individualActivities.length" class="register-table catalogue-table">
+          <colgroup>
+            <col class="col-ticket">
+            <col class="col-description">
+            <col class="col-price">
+            <col class="col-availability">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Ticket</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Availability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let activity of individualActivities; trackBy: trackActivity">
+              <td>{{activity.title}}</td>
+              <td>{{activity.description}}</td>
+              <td><span [price]="activity.price" [tbc]="activity.priceTBC"></span></td>
+              <td>{{activity.soldOut ? 'Sold out' : 'Available'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Tickets for teams</h3>
+        <p *ngIf="!teamActivities.length">No team tickets have been published.</p>
+        <table *ngIf="teamActivities.length" class="register-table catalogue-table">
+          <colgroup>
+            <col class="col-ticket">
+            <col class="col-description">
+            <col class="col-price">
+            <col class="col-availability">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Ticket</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Availability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let activity of teamActivities; trackBy: trackActivity">
+              <td>{{activity.title}}</td>
+              <td>{{activity.description}}</td>
+              <td><span [price]="activity.price" [tbc]="activity.priceTBC"></span></td>
+              <td>{{activity.soldOut ? 'Sold out' : 'Available'}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Teams And People</ng-template>
+        <div class="step-body">
+        <p *ngIf="!teams.length">This group has no teams.</p>
+        <ng-container *ngIf="teams.length">
+          <div class="picker-meta">
+            <h3>Teams</h3>
+            <span class="selected-count">{{selectedTeamCountLabel()}}</span>
           </div>
-        </form>
+          <table class="register-table">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <input class="search-input" type="search" placeholder="Search teams" [value]="teamSearch" (input)="onTeamSearch($event)">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!filteredTeams.length">
+                <td colspan="2">No teams match.</td>
+              </tr>
+              <tr *ngFor="let team of visibleTeams; trackBy: trackTeam">
+                <td class="check-cell">
+                  <mat-checkbox [checked]="isTeamSelected(team.teamId)" (change)="onTeamToggle(team.teamId)"></mat-checkbox>
+                </td>
+                <td>{{team.teamName}}</td>
+              </tr>
+            </tbody>
+            <tfoot *ngIf="teamsHaveMore">
+              <tr>
+                <td colspan="2" class="show-more-cell">
+                  <button type="button" class="show-more" (click)="showMoreTeams()">Show more</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </ng-container>
+        <p *ngIf="!members.length">This group has no members or guests.</p>
+        <ng-container *ngIf="members.length">
+          <div class="picker-meta">
+            <h3>People</h3>
+            <span class="selected-count">{{selectedPersonCountLabel()}}</span>
+          </div>
+          <table class="register-table">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <input class="search-input" type="search" placeholder="Search people" [value]="personSearch" (input)="onPersonSearch($event)">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!filteredPeople.length">
+                <td colspan="2">No people match.</td>
+              </tr>
+              <tr *ngFor="let person of visiblePeople; trackBy: trackPerson">
+                <td class="check-cell">
+                  <mat-checkbox [checked]="isPersonSelected(person.groupMemberId)" (change)="onPersonToggle(person.groupMemberId)"></mat-checkbox>
+                </td>
+                <td>{{person.name}} <span class="person-kind">({{personKind(person)}})</span></td>
+              </tr>
+            </tbody>
+            <tfoot *ngIf="peopleHaveMore">
+              <tr>
+                <td colspan="2" class="show-more-cell">
+                  <button type="button" class="show-more" (click)="showMorePeople()">Show more</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </ng-container>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Activities</ng-template>
+        <div class="step-body">
+        <p *ngIf="!selectedTeams.length && !selectedPeople.length">Select teams and people on the previous step to choose their tickets.</p>
+        <h3 *ngIf="selectedTeams.length">Teams</h3>
+        <table *ngIf="selectedTeams.length" class="register-table activity-table">
+          <colgroup>
+            <col class="col-who">
+            <col class="col-ticket-name">
+            <col class="col-activity-price">
+          </colgroup>
+          <tbody *ngFor="let team of selectedTeams; trackBy: trackTeam">
+            <tr *ngIf="!teamActivities.length">
+              <td class="who-cell">{{team.teamName}}</td>
+              <td colspan="2">No team tickets have been published.</td>
+            </tr>
+            <tr *ngFor="let activity of teamActivities; let first = first; trackBy: trackActivity">
+              <td *ngIf="first" class="who-cell" [attr.rowspan]="teamActivities.length">{{team.teamName}}</td>
+              <td>
+                <mat-checkbox
+                  [checked]="isTeamActivitySelected(team.teamId, activity.id)"
+                  [disabled]="activity.soldOut"
+                  (change)="onTeamActivityToggle(team.teamId, activity.id)">
+                  {{activity.title}}
+                  <span *ngIf="activity.soldOut" class="ticket-availability">Sold out</span>
+                </mat-checkbox>
+              </td>
+              <td class="price-cell"><span [price]="activity.price" [tbc]="activity.priceTBC"></span></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 *ngIf="selectedPeople.length">People</h3>
+        <table *ngIf="selectedPeople.length" class="register-table activity-table">
+          <colgroup>
+            <col class="col-who">
+            <col class="col-ticket-name">
+            <col class="col-activity-price">
+          </colgroup>
+          <tbody *ngFor="let person of selectedPeople; trackBy: trackPerson">
+            <tr *ngIf="!individualActivities.length">
+              <td class="who-cell">{{person.name}} <span class="person-kind">({{personKind(person)}})</span></td>
+              <td colspan="2">No individual tickets have been published.</td>
+            </tr>
+            <tr *ngFor="let activity of individualActivities; let first = first; trackBy: trackActivity">
+              <td *ngIf="first" class="who-cell" [attr.rowspan]="individualActivities.length">{{person.name}} <span class="person-kind">({{personKind(person)}})</span></td>
+              <td>
+                <mat-checkbox
+                  [checked]="isPersonActivitySelected(person.groupMemberId, activity.id)"
+                  [disabled]="activity.soldOut"
+                  (change)="onPersonActivityToggle(person.groupMemberId, activity.id)">
+                  {{activity.title}}
+                  <span *ngIf="activity.soldOut" class="ticket-availability">Sold out</span>
+                </mat-checkbox>
+              </td>
+              <td class="price-cell"><span [price]="activity.price" [tbc]="activity.priceTBC"></span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Summary</ng-template>
+        <div class="step-body">
+        <p *ngIf="!selectedTeams.length && !selectedPeople.length">No teams or people have been selected. You can still create the registration and add them afterwards.</p>
+        <p *ngIf="(selectedTeams.length || selectedPeople.length) && !summaryLines.length">No ticket ticked.</p>
+        <table *ngIf="summaryLines.length" class="register-table">
+          <thead>
+            <tr>
+              <th>Attending</th>
+              <th>Role</th>
+              <th>Ticket</th>
+              <th class="price-heading">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of summaryLines">
+              <td>{{line.name}}</td>
+              <td>{{line.role}}</td>
+              <td>{{line.ticket}}</td>
+              <td class="price-cell"><span [price]="line.price" [tbc]="line.priceTBC"></span></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2"></td>
+              <td class="total-label">Total</td>
+              <td class="total-cell">
+                <span *ngIf="summaryTotalIsTbc">TBC</span>
+                <span *ngIf="!summaryTotalIsTbc">£{{summaryTotal}}</span>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        <div class="pt-1">
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </div>
       </mat-step>
       <mat-step [stepControl]="termsAndConditionsFormGroup">
         <form [formGroup]="termsAndConditionsFormGroup">
           <ng-template matStepLabel>Terms &amp; Conditions</ng-template>
+          <div class="step-body">
           <p>By continuing with this registration to {{eventName}}, attendance and group contact information will be made available
             to them and they will be informed of your potential interest.</p>
           <p>You accept that {{eventName}} is permitted to contact you with regard to this registration and that they can edit
@@ -50,7 +285,8 @@
             I agree to the terms and conditions
           </mat-checkbox>
           <div class="pt-1">
-            <button mat-raised-button color="primary" (click)="submit()" [disabled]="!termsAndConditionsFormGroup.valid">Submit</button>
+            <button mat-raised-button color="primary" (click)="submit()" [disabled]="!termsAndConditionsFormGroup.valid || submitting">Submit</button>
+          </div>
           </div>
         </form>
       </mat-step>

@@ -1,0 +1,17 @@
+textarea {
+    font-family: Consolas, "Courier New", monospace;
+    min-height: 12rem;
+}
+
+.email-test-result {
+    margin-top: 1rem;
+    white-space: pre-wrap;
+}
+
+.email-test-result.ok {
+    color: #1b5e20;
+}
+
+.email-test-result.error {
+    color: #b00020;
+}

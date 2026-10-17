@@ -53,8 +53,8 @@ The planned-fixes folder had become a second backlog. A person picking up the wo
 ## Issues that were encountered on the way
 
 - Issue types are an organisation feature. `dertinfo` is a user account, so the type field cannot be set. Labels are the tag that exists on the repository.
-- The site-admin email test is implemented on `feature/systemadmin-email-test`, which is not merged and has no pull request. On `main` the note was still open, so it was filed as [issue 130](https://github.com/dertinfo/dertinfo-mono/issues/130). That branch should close the issue if it already does the work.
-- Two smoke notes (a second ticket copying the first, and single versus multiple ticket choice) were on that same branch and not yet on `main`. They are [issue 94](https://github.com/dertinfo/dertinfo-mono/issues/94) and [issue 95](https://github.com/dertinfo/dertinfo-mono/issues/95), so deleting the page on `main` does not drop them.
+- The site-admin email test was still an open note when this branch was cut. It was filed as [issue 130](https://github.com/dertinfo/dertinfo-mono/issues/130). Merging `main` brought [pull request 77](https://github.com/dertinfo/dertinfo-mono/pull/77), which does that work, so the issue is closed.
+- Two smoke notes (a second ticket copying the first, and single versus multiple ticket choice) arrived on `main` in that same pull request. They are [issue 94](https://github.com/dertinfo/dertinfo-mono/issues/94) and [issue 95](https://github.com/dertinfo/dertinfo-mono/issues/95). The walkthrough page stays deleted.
 
 ## References to any best practices that we found
 

@@ -63,6 +63,7 @@ namespace DertInfo.Api.Start
                 options.AddPolicy(GroupMemberPolicy.PolicyName, policy => policy.Requirements.Add(new GroupMemberRequirement()));
                 options.AddPolicy(EventAdministratorOnlyPolicy.PolicyName, policy => policy.Requirements.Add(new EventAdministratorOnlyRequirement()));
                 options.AddPolicy(EventGetActivitiesPolicy.PolicyName, policy => policy.Requirements.Add(new EventGetActivitiesRequirement()));
+                options.AddPolicy(EventGetPublishedActivitiesPolicy.PolicyName, policy => policy.Requirements.Add(new EventGetPublishedActivitiesRequirement()));
                 options.AddPolicy(InvoiceGetHistoryPolicy.PolicyName, policy => policy.Requirements.Add(new InvoiceGetHistoryRequirement()));
                 options.AddPolicy(InvoiceSetPaidPolicy.PolicyName, policy => policy.Requirements.Add(new InvoiceSetPaidRequirement()));
                 options.AddPolicy(LookupJudgesPolicy.PolicyName, policy => policy.Requirements.Add(new LookupJudgesRequirement()));
@@ -117,6 +118,7 @@ namespace DertInfo.Api.Start
             services.AddSingleton<IAuthorizationHandler, GroupMemberHandler>();
             services.AddSingleton<IAuthorizationHandler, EventAdministratorOnlyHandler>();
             services.AddSingleton<IAuthorizationHandler, EventGetActivitiesHandler>();
+            services.AddSingleton<IAuthorizationHandler, EventGetPublishedActivitiesHandler>();
             services.AddSingleton<IAuthorizationHandler, InvoiceGetHistoryHandler>();
             services.AddSingleton<IAuthorizationHandler, InvoiceSetPaidHandler>();
             services.AddSingleton<IAuthorizationHandler, LookupJudgesHandler>();

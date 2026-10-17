@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
+import { EmailTestComponent } from './components/email-test/email-test.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { SystemAdminComponent } from './system-admin.component';
 
@@ -17,6 +18,11 @@ const routes: Routes = [
                 path: 'overview',
                 component: OverviewComponent,
                 data: { title: 'Overview', breadcrumb: 'OVERVIEW' }
+            },
+            {
+                path: 'email-test',
+                component: EmailTestComponent,
+                data: { title: 'Email test', breadcrumb: 'EMAIL TEST' }
             },
             {
                 path: 'notifications',

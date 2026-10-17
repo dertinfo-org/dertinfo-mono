@@ -2,7 +2,7 @@
 name: Platform capability catalogue
 type: index
 status: active
-updated: 2026-09-27
+updated: 2026-10-11
 ---
 
 # Platform capability catalogue
@@ -29,7 +29,7 @@ Start with the [Domain glossary](system/domain-glossary.md).
 | Public & DoD | [Public content](features/web/public-content.md), [Cookie consent](features/web/cookie-consent.md), [Dert of Derts](features/web/dod-programme.md) |
 | Account & consent | [User account and GDPR consent](features/web/account-gdpr-consent.md) |
 | Messaging | [Send email](features/web/send-email.md), [In-app notifications](features/web/in-app-notifications.md) (rarely used) |
-| Auth | [Log in](features/web/auth-login.md), [Log out](features/web/auth-logout.md), [Stay signed in](features/web/auth-session-continuity.md) |
+| Auth | [Log in](features/web/auth-login.md), [Log out](features/web/auth-logout.md), [Stay signed in](features/web/auth-session-continuity.md), [Homepage account](features/web/homepage-account.md) |
 
 ## Entities
 

@@ -1,0 +1,54 @@
+{
+  "GroupName": "Springfield Elementary",
+  "Image": "family.jpg",
+  "GroupBio": "The children from Springfield Elementary",
+  "OriginTown": "Springfield",
+  "OriginPostcode": "SP1 5EE",
+  "PrimaryContactName": "Seymour Skinner",
+  "PrimaryContactEmail": "seymour.skinner@dertinfo.co.uk",
+  "PrimaryContactNumber": "01234567895",
+  "GroupMembers": [
+    {
+      "Name": "Bart Simpson",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Lisa Simpson",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Ralph Wiggum",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Milhouse Van Houten",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Nelson Muntz",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Martin Prince",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Sherri Mackleberry",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Terri Mackleberry",
+      "MemberType": "activeMember"
+    },
+    {
+      "Name": "Edna Krabappel",
+      "MemberType": "guest"
+    }
+  ],
+  "Teams": [
+    {
+      "TeamName": "4th Grade",
+      "TeamBio": "The fourth grade class from Springfield Elementary"
+    }
+  ]
+}

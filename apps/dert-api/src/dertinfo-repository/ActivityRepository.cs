@@ -13,6 +13,7 @@ namespace DertInfo.Repository
     public interface IActivityRepository : IRepository<Activity, int>
     {
         Task<ICollection<Activity>> GetByEventAndTypeWithCounts(int eventId, ActivityAudienceType audienceType);
+        Task<ICollection<Activity>> GetPublishedByEventAndAudience(int eventId, ActivityAudienceType audienceType);
         Task<Activity> MarkDeleted(int activityId);
         Task<Activity> GetActivityDetail(int activityId);
         Task<ICollection<Activity>> GetDefaultsByEventAndAudience(int eventId, ActivityAudienceType audienceType);
@@ -60,6 +61,19 @@ namespace DertInfo.Repository
                 IQueryable<Activity> query = _context.Activities
                 .Include(a => a.ParticipatingTeams).ThenInclude(pt => pt.TeamAttendance).ThenInclude(ta => ta.Registration)
                 .Where(a => a.EventId == eventId && a.CompetitionId != null && !a.IsDeleted);
+
+                return query.ToList();
+            });
+
+            return await task;
+        }
+
+        public async Task<ICollection<Activity>> GetPublishedByEventAndAudience(int eventId, ActivityAudienceType audienceType)
+        {
+            var task = Task.Run(() =>
+            {
+                IQueryable<Activity> query = _context.Activities
+                .Where(a => a.EventId == eventId && a.AudienceTypeId == (int)audienceType && !a.IsDeleted);
 
                 return query.ToList();
             });
