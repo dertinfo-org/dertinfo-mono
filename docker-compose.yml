@@ -3,8 +3,8 @@ services:
     container_name: api
     image: dertinfo/dertinfo-api
     build:
-      context: ./apps/dert-api/src
-      dockerfile: dertinfo-api/Dockerfile
+      context: ./apps/dert-api
+      dockerfile: Dockerfile
     ports:
       - "44100:80"
     env_file:
@@ -13,17 +13,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80;
       - SqlConnection__ServerName=${SQL_SERVER_HOST:-sqlserver}
-      - SqlConnection__ServerAdminPassword=${SQL_SA_PASSWORD:-myUn53cur3Pa55w0rd!}
-      - SqlConnection__ServerAdminName=${SQL_SA_USER:-sa}
-      - SqlConnection__DatabaseName=${SQL_DATABASE:-DertInfoDb}
       - SendGrid__Enabled=false
-      - Auth0__Domain=dertinfodev.eu.auth0.com
-      - StorageAccount__Images__Protocol=http
-      - StorageAccount__Images__Name=devstoreaccount1
-      - StorageAccount__Images__Key=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
       - StorageAccount__Images__BlobEndpoint=${AZURITE_BLOB_ENDPOINT:-http://azstorage:10000/devstoreaccount1}
-      - PwaClient__Auth0__ClientId=AGFfa2R7jsYA7vmhBRjU4tl6htgI4Yvh
-      - WebClient__Auth0__ClientId=JREkJwdUbZmUs7d983uBXnrZu9UOWbd9
     depends_on:
       sqlserver:
         condition: service_healthy
@@ -73,19 +64,17 @@ services:
       - ./infra/data/azurite:/data
     command: "azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0"
 
-  image-resize:
-    container_name: image-resize
+  functions:
+    container_name: functions
     image: dertinfo/dertinfo-imageresizev4
     build:
-      context: ./apps/dert-functions/src/dertinfo-image-resize
+      context: ./apps/dert-functions
       dockerfile: Dockerfile
     ports:
       - "44400:80"
+    env_file:
+      - ./infra/secrets/functions.env
     environment:
-      - AzureWebJobs.ResizeDefaultImages.Disabled=true
-      - AzureWebJobs.ResizeEventImages.Disabled=true
-      - AzureWebJobs.ResizeGroupImages.Disabled=true
-      - AzureWebJobs.ResizeSheetImages.Disabled=true
       - AzureWebJobsStorage=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=${AZURITE_BLOB_ENDPOINT:-http://azstorage:10000/devstoreaccount1};QueueEndpoint=${AZURITE_QUEUE_ENDPOINT:-http://azstorage:10001/devstoreaccount1};
       - StorageConnection__Images=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=${AZURITE_BLOB_ENDPOINT:-http://azstorage:10000/devstoreaccount1};QueueEndpoint=${AZURITE_QUEUE_ENDPOINT:-http://azstorage:10001/devstoreaccount1};
     depends_on:
@@ -99,7 +88,7 @@ services:
       context: ./apps/dert-web
       dockerfile: Dockerfile
     env_file:
-      - ./infra/docker/web.env
+      - ./infra/secrets/web.env
     ports:
       - "44200:4280"
     depends_on:
@@ -112,7 +101,7 @@ services:
       context: ./apps/dert-app
       dockerfile: Dockerfile
     env_file:
-      - ./infra/docker/app.env
+      - ./infra/secrets/app.env
     ports:
       - "44300:4280"
     depends_on:

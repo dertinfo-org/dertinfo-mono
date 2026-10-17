@@ -40,7 +40,7 @@ Hosted apps use Azure Static Web Apps (SPAs) and App Service / Function App (.NE
 
 ### Historical (wiki / pre-monorepo)
 
-Separate repos used Azure DevOps YAML under `/pipelines` for Docker Hub publish, staging release (with a manual prod gate), and Bicep infra. Those pipelines may still exist under `apps/*/pipelines/` as reference; do not treat them as the primary monorepo path.
+Separate repos used Azure DevOps YAML under `/pipelines` for Docker Hub publish, staging release (with a manual prod gate), and Bicep infra. That YAML is no longer in this repo. GitHub Actions is the deploy path.
 
 ## Related
 

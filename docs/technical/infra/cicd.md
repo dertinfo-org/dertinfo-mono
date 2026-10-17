@@ -12,9 +12,7 @@ Completed CD migration work is recorded in the [change log](changelogs/README.md
 | **Src CD** (app deploy + Docker Hub) | `*-src-cd.yml` | Push to **`main`** after merge (path-filtered). Temporary: `workflow_dispatch` with `target` `full` or `dev-only` (default **`dev-only`**) so we can deploy while testing Azure settings ([remove later](https://github.com/dertinfo/dertinfo-mono/issues/116)). |
 | **Infra CD** (Bicep) | `*-infra-cd.yml`, `subscription-infra-cd.yml` | Push to **`main`** after merge (path-filtered), plus `workflow_dispatch` (`full` / `dev-only`, default **`full`**) for Bicep re-runs without template diffs. |
 
-Src CD workflows replace the per-app Azure DevOps pipelines under `apps/*/pipelines/`. Each `*-src-cd.yml` merges the former **source deploy** and **Docker Hub** pipelines into one workflow.
-
-Legacy ADO definitions remain in the repo as reference until GitHub Actions is validated in production use.
+Each `*-src-cd.yml` builds and deploys that app, and publishes its local Docker image. GitHub Actions is the deploy path. The old Azure DevOps YAML has been removed from this repo.
 
 ## Environments
 
@@ -296,13 +294,3 @@ Legacy ADO variable group `DertInfoImageResizeV4_Infrastucture_Staging_Variables
 | `applicationInsightsResourceGroupName` | `di-rg-monitoring-stg` |
 | `excessiveUseActionGroupName` | `di-agrp-excessiveuse-stg` |
 | `excessiveUseActionGroupResourceGroupName` | `di-rg-monitoring-stg` |
-
-## ADO pipeline inventory (legacy)
-
-| App | Source deploy | Docker |
-|-----|---------------|--------|
-| API | `apps/dert-api/pipelines/azure-pipelines-api-cicd.yml` | `azure-pipelines-docker.yml` |
-| Web | `apps/dert-web/pipelines/azure-pipelines-swa-cicd.yml` | `azure-pipelines-docker.yml` |
-| App | `apps/dert-app/pipelines/ado-application-pipeline-cicd.yml` | `azure-pipelines-docker.yml` |
-| Functions | `apps/dert-functions/pipelines/azure-pipelines-functions-cicd.yml` | `azure-pipelines-docker.yml` |
-| Functions IaC (retired) | `apps/dert-functions/pipelines/azure-pipelines-infra.yml` — trigger disabled; use `functions-infra-cd.yml` | — |

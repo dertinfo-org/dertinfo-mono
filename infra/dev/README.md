@@ -64,7 +64,7 @@ Uses root [`docker-compose.yml`](../../docker-compose.yml) with `--no-deps` so m
 | api | `dertinfo-api` | 44100 |
 | web | `web-frontend` | 44200 |
 | app | `app-frontend` | 44300 |
-| imageResize | `image-resize` | 44400 |
+| imageResize | `functions` | 44400 |
 | azurite | `azstorage` | 10000–10002 |
 | sql | `sqlserver` | 44000 |
 

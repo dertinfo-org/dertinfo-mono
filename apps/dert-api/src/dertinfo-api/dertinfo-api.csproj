@@ -12,7 +12,6 @@
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <UserSecretsId>bbbef35d-1f3c-4b15-a99a-c3e6818f6b81</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Staging|AnyCPU'" />

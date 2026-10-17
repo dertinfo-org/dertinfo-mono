@@ -1,8 +1,0 @@
-# version: '3.4'
-
-services:
-  dertinfo-api:
-   # environment:
-   #   - Auth0:ManagementClientSecret=REDACTED
-   volumes:
-     - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

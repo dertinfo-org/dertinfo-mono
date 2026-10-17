@@ -54,7 +54,7 @@ RUN ng build
 #      - the SWA build instuction supplies the flag. 
 
 # Copy the startup script
-COPY ./infra/docker/docker-launch.sh .
+COPY ./docker-launch.sh .
 
 # Final Stage
 FROM base AS final

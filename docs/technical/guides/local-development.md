@@ -37,12 +37,13 @@ Details, timings, and recommended day-to-day matrix: [`infra/dev/README.md`](../
 
 Optional “everything in containers” path — useful to validate the estate with latest images / built Dockerfiles without installing every host tool. Feedback loop for editing API/web is slower than native hot reload.
 
-Root Compose file: [`docker-compose.yml`](../../../docker-compose.yml) (env templates under [`infra/docker/`](../../../infra/docker/) and [`infra/secrets/`](../../../infra/secrets/)).
+Root Compose file: [`docker-compose.yml`](../../../docker-compose.yml). Env templates are under [`infra/secrets/`](../../../infra/secrets/).
 
 ```bash
 cp infra/secrets/api.env.example infra/secrets/api.env
-cp infra/docker/web.env.example infra/docker/web.env
-cp infra/docker/app.env.example infra/docker/app.env
+cp infra/secrets/web.env.example infra/secrets/web.env
+cp infra/secrets/app.env.example infra/secrets/app.env
+cp infra/secrets/functions.env.example infra/secrets/functions.env
 docker compose up --build
 ```
 

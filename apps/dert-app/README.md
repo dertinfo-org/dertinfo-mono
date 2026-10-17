@@ -96,10 +96,9 @@ In order to run the dependencies for the app the you will need to be running mos
 In both codespaces and local you can spin up the other services using their public images using the following commands from the root of the repository. Either in the VS Code terminal or separate. 
 
 ```
-cd infra/docker
-docker-compose up
+docker compose up --build
 ```
-This will spin up all the dependant services. Note that it'll also try and run the workload. If you do not want to also run the current workload (dertinfo-app) please comment it out in the docker-compose file before running the "up" command. 
+From the repository root. This starts the API, SQL Server, Azurite, functions, website, and PWA. Copy `infra/secrets/app.env.example` to `infra/secrets/app.env` first. 
 
 Please note that on first run this can take anything between 2-10 mins depending on connectivity and environment configuration as it's downloading the base images for the containers and then may be doing installs of packages etc. After the first run the time should be significantly reduced.
 

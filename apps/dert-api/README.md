@@ -100,7 +100,7 @@ Compose uses `env_file: ./infra/secrets/api.env` for the API container (same fil
 ### Other / legacy run methods
 
 - Docker image only: `docker run dertinfo/dertinfo-api:latest`
-- Build Dockerfile from `apps/dert-api/src`: `docker build -t dertinfo/dertinfo-api -f dertinfo-api/Dockerfile .`
+- Build the image from `apps/dert-api`: `docker build -t dertinfo/dertinfo-api -f Dockerfile .`
 - Devcontainer + compose: start dependencies via compose, set user secrets or env, then launch the API from VS Code.
 
 ### Secrets checklist (`api.env`)

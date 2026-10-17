@@ -52,7 +52,7 @@ Tooling
 ### Local Development
 
 1) Launch the applciation using the docker-compose file
-2) Stop the container running the "DertInfo Image REsize" service
+2) Stop the container running the functions service
 3) Launch the service from what tooling you prefer for C# function app development. (Visual Studio Recommended)
 
 
@@ -61,13 +61,13 @@ Tooling
 To run this function in docker then you can:
 
 
-From the root of the repository execute the folowing command to run the file located at infra/docker/docker-compose.yml: 
+From the root of the repository:
 
 ```
-docker-compose -f infra/docker/docker-compose.yml up
-
+docker compose up --build
 ```
-This will create 2 containers. One with Azurite and one with the Image Resize Function App. It will also bind a docker volume for the persistance of the iamge data. 
+
+Copy `infra/secrets/functions.env.example` to `infra/secrets/functions.env` first. The Compose service is `functions`. It runs beside Azurite and the rest of the estate. Azurite data is stored under `infra/data/azurite`. 
 
 # How To Use 
 
@@ -83,9 +83,7 @@ Once you have the solution running:
 
 Hosted Function App is [`infra/bicep/functions/`](../../infra/bicep/functions/) (Linux Flex Consumption, managed identity). Images Blob Data Contributor and Event Grid live in [`infra/bicep/storage/`](../../infra/bicep/storage/). GitHub Actions: [`functions-infra-cd.yml`](../../.github/workflows/functions-infra-cd.yml), [`storage-infra-cd.yml`](../../.github/workflows/storage-infra-cd.yml), and [`functions-src-cd.yml`](../../.github/workflows/functions-src-cd.yml). Operator sequence: [CI/CD — First development Functions deploy](../../docs/technical/infra/cicd.md#first-development-functions-deploy-operator).
 
-Azure DevOps [`pipelines/azure-pipelines-infra.yml`](pipelines/azure-pipelines-infra.yml) is retired. Src ADO YAML can remain until production traffic leaves the old Function App.
-
-Local / Docker: `infra/docker/docker-compose.yml` at repo root (Azurite + this worker). Do not deploy the removed `apps/dert-functions/infra/bicep/` templates.
+Local / Docker: root [`docker-compose.yml`](../../docker-compose.yml) (Azurite and the `functions` service). Do not deploy the removed `apps/dert-functions/infra/bicep/` templates.
 
 ## Running The Project
 

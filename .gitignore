@@ -57,9 +57,6 @@ tests/e2e/_recordings/
 .env.*
 !.env.example
 .cursor/mcp.json
-infra/docker/api.env
-infra/docker/web.env
-infra/docker/app.env
 infra/secrets/*
 !infra/secrets/*.example
 !infra/secrets/README.md

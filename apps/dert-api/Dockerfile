@@ -7,13 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["dertinfo-api/dertinfo-api.csproj", "dertinfo-api/"]
-COPY ["dertinfo-models/dertinfo-models.csproj", "dertinfo-models/"]
-COPY ["dertinfo-repository/dertinfo-repository.csproj", "dertinfo-repository/"]
-COPY ["dertinfo-crosscutting/dertinfo-crosscutting.csproj", "dertinfo-crosscutting/"]
-COPY ["dertinfo-services/dertinfo-services.csproj", "dertinfo-services/"]
+COPY ["src/dertinfo-api/dertinfo-api.csproj", "dertinfo-api/"]
+COPY ["src/dertinfo-models/dertinfo-models.csproj", "dertinfo-models/"]
+COPY ["src/dertinfo-repository/dertinfo-repository.csproj", "dertinfo-repository/"]
+COPY ["src/dertinfo-crosscutting/dertinfo-crosscutting.csproj", "dertinfo-crosscutting/"]
+COPY ["src/dertinfo-services/dertinfo-services.csproj", "dertinfo-services/"]
 RUN dotnet restore "dertinfo-api/dertinfo-api.csproj"
-COPY . .
+COPY src/ .
 WORKDIR "/src/dertinfo-api"
 RUN dotnet build "dertinfo-api.csproj" -c Release -o /app/build
 

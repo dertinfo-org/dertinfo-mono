@@ -24,20 +24,20 @@ echo "Starting setting up the configuration & secrets for the codespace."
 # ##################
 
 # For each of the secrets coming in from the codespace environment, add it to the api.env file.
-echo "PwaClient__Auth0__ClientId=$AUTH0_APP_CLIENT_ID" > infra/docker/api.env # replace the whole file
-echo "Auth0__ManagementClientId=$AUTH0_MANAGEMENT_CLIENT_ID" >> infra/docker/api.env # append to the file from now on
+echo "PwaClient__Auth0__ClientId=$AUTH0_APP_CLIENT_ID" > ../../../infra/secrets/api.env # replace the whole file
+echo "Auth0__ManagementClientId=$AUTH0_MANAGEMENT_CLIENT_ID" >> ../../../infra/secrets/api.env # append to the file from now on
 echo "Auth0__ManagementClientSecret=REDACTED
-echo "WebClient__Auth0__ClientId=$AUTH0_WEB_CLIENT_ID" >> infra/docker/api.env
-echo "SendGrid__ApiKey=$SENDGRID_API_KEY" >> infra/docker/api.env
+echo "WebClient__Auth0__ClientId=$AUTH0_WEB_CLIENT_ID" >> ../../../infra/secrets/api.env
+echo "SendGrid__ApiKey=$SENDGRID_API_KEY" >> ../../../infra/secrets/api.env
 
 # ##################
 # Setup for the App
 # ##################
 
 # As the codespace needs special urls to access forwarded ports then we need to accomodate that for the API and the Auth0 callback url
-echo "API_URL=https://$CODESPACE_NAME-44100.app.github.dev/api" > infra/docker/app.env
-echo "AUTH_CALLBACK_URL=https://$CODESPACE_NAME-44300.app.github.dev" >> infra/docker/app.env
-echo "ALLOWED_DOMAINS=$CODESPACE_NAME-44100.app.github.dev" >> infra/docker/app.env
+echo "API_URL=https://$CODESPACE_NAME-44100.app.github.dev/api" > ../../../infra/secrets/app.env
+echo "AUTH_CALLBACK_URL=https://$CODESPACE_NAME-44300.app.github.dev" >> ../../../infra/secrets/app.env
+echo "ALLOWED_DOMAINS=$CODESPACE_NAME-44100.app.github.dev" >> ../../../infra/secrets/app.env
 
 # Notify the user that the script has completed
 echo "Completed setting up the configuration & secrets for the codespace."
