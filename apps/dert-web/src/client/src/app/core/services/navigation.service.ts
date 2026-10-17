@@ -205,7 +205,8 @@ export class NavigationService {
   private loadGroupsForUser() {
     this.groupListCache.list().subscribe(
       data => {
-        this.groupsForUser = data || [];
+        // Copy the cached list. The dashboard keeps that array, and both sides append a new group.
+        this.groupsForUser = [...(data || [])];
         this.applyGroupsForUserToMenu();
       },
       error => {
@@ -217,7 +218,8 @@ export class NavigationService {
   private loadEventsForUser() {
     this.eventlistCache.list().subscribe(
       data => {
-        this.eventsForUser = data || [];
+        // Copy the cached list. The dashboard keeps that array, and both sides append a new event.
+        this.eventsForUser = [...(data || [])];
         this.applyEventsForUserToMenu();
       },
       error => {

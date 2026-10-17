@@ -38,15 +38,11 @@ export class DashboardConductor {
   }
 
   public pinNewGroup(newGroup: GroupDto) {
-    const currentSet = this.groupsSubject.getValue();
-    currentSet.push(newGroup);
-    this.groupsSubject.next(currentSet);
+    this.groupsSubject.next([...this.groupsSubject.getValue(), newGroup]);
   }
 
   public pinNewEvent(newEvent: EventDto) {
-    const currentSet = this.eventsSubject.getValue();
-    currentSet.push(newEvent);
-    this.eventsSubject.next(currentSet);
+    this.eventsSubject.next([...this.eventsSubject.getValue(), newEvent]);
   }
 
   public addGroup(groupMinimalSubmissionDto: GroupMinimalSubmissionDto): Promise<GroupDto> {
