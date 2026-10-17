@@ -2,7 +2,7 @@
 name: Submit event registration
 type: feature
 status: active
-updated: 2026-10-12
+updated: 2026-10-17
 id: registration.submit
 roles: [group-admin, group-member]
 ---
@@ -39,7 +39,7 @@ A group secretary or administrator registers their group for an event by choosin
 ## Limitations
 
 - Confirmation, invoicing, and capacity decisions are event-admin capabilities — see [Confirm registrations](registration-confirm.md).
-- A group that is not set up can still register. An event that is not set up is not listed under **Available / New** and cannot be registered for.
+- A group that is not set up cannot register. An event that is not set up is not listed under **Available / New** and cannot be registered for.
 - There is no local mailbox in this estate. Submission is checked on the registration screen. The registration-submitted emails are not checked from the website.
 
 See [Domain glossary](../../system/domain-glossary.md).

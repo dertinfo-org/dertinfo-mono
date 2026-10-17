@@ -25,7 +25,8 @@ export class GroupOverviewComponent implements OnInit, OnDestroy {
     teamsCount: 0,
     unpaidInvoicesCount: 0,
     activeRegistrations: [],
-    promotedEvents: []
+    promotedEvents: [],
+    isConfigured: true
   };
 
   constructor(
@@ -48,7 +49,8 @@ export class GroupOverviewComponent implements OnInit, OnDestroy {
           teamsCount: groupOverview.teamsCount,
           unpaidInvoicesCount: groupOverview.unpaidInvoicesCount,
           activeRegistrations: [],
-          promotedEvents: []
+          promotedEvents: [],
+          isConfigured: groupOverview.isConfigured
         };
 
         // Init Registrations if not already recieved

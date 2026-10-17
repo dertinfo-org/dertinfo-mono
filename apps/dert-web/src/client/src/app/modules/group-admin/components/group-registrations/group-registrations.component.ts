@@ -26,6 +26,8 @@ export class GroupRegistrationsComponent implements OnInit, OnDestroy {
   private _previousFlowStates;
   private _groupId;
 
+  public isConfigured = true;
+
   get groupActiveRegistrations$(): Observable<GroupRegistrationDto[]> {
     return this.activeRegistrationsSubject.asObservable();
   }
@@ -49,6 +51,10 @@ export class GroupRegistrationsComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+
+    if (this._groupTracker.overview) {
+      this.isConfigured = this._groupTracker.overview.isConfigured;
+    }
 
     this._activeFlowStates = this.groupConductor.registrationActiveFlowStates();
     this._previousFlowStates = this.groupConductor.registrationInActiveFlowStates();
@@ -79,7 +85,16 @@ export class GroupRegistrationsComponent implements OnInit, OnDestroy {
     );
 
     const eventsAvailableSubscription = this._groupTracker.availableEvents$.subscribe((allEventsAvailable) => {
-      this.eventsAvailableSubject.next(allEventsAvailable);
+      this.eventsAvailableSubject.next(this.isConfigured ? allEventsAvailable : []);
+    });
+
+    const groupOverviewSubscription = this._groupTracker.groupOverview$.subscribe((groupOverview) => {
+      if (groupOverview) {
+        this.isConfigured = groupOverview.isConfigured;
+        if (!this.isConfigured) {
+          this.eventsAvailableSubject.next([]);
+        }
+      }
     });
 
     const routeParamsSubscription = this.router.parent.params.subscribe(params => {
@@ -90,6 +105,7 @@ export class GroupRegistrationsComponent implements OnInit, OnDestroy {
 
     this._subscriptions.push(groupRegistrationsSubscription);
     this._subscriptions.push(eventsAvailableSubscription);
+    this._subscriptions.push(groupOverviewSubscription);
     this._subscriptions.push(routeParamsSubscription);
   }
 
