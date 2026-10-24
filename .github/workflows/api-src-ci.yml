@@ -12,7 +12,29 @@ on:
       - '.github/workflows/api-src-ci.yml'
 
 jobs:
+  up-to-date:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Require the pull request branch to contain main
+        run: |
+          git fetch origin main
+          behind="$(git rev-list --count HEAD..origin/main)"
+          if [ "$behind" -ne 0 ]; then
+            echo "This pull request is ${behind} commit(s) behind main. Update the branch so it contains every commit on main."
+            git log --oneline HEAD..origin/main
+            exit 1
+          fi
+          echo "This pull request contains every commit on main."
+
   build:
+    needs: up-to-date
+    if: ${{ !cancelled() && (needs.up-to-date.result == 'success' || needs.up-to-date.result == 'skipped') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -97,5 +119,7 @@ jobs:
           name: api-build-output
           path: apps/dert-api/src
 
+      # Environment check only: boot the API, migrate SQL Server, and GET /api/status.
+      # The group fixtures are not part of this job.
       - name: Run integration tests
-        run: dotnet test apps/dert-api/src/dertinfo-api.itests/dertinfo-api.itests.csproj --no-build --configuration Release --verbosity normal
+        run: dotnet test apps/dert-api/src/dertinfo-api.itests/dertinfo-api.itests.csproj --no-build --configuration Release --verbosity normal --filter "FullyQualifiedName=DertInfo.Api.ITests.StatusController_Fixture_CheckStatus.Check_Status_Controller_Returns_Response"
