@@ -2,7 +2,7 @@
 name: GitHub Azure federated credentials
 type: guide
 status: active
-updated: 2026-10-17
+updated: 2026-10-24
 ---
 
 # GitHub Actions OIDC to Azure (federated credentials)
@@ -23,7 +23,7 @@ Each file is the body for `az ad app federated-credential create --parameters`. 
 | Field | Meaning |
 |-------|---------|
 | `issuer` | GitHub Actions OIDC issuer (`https://token.actions.githubusercontent.com`) |
-| `subject` | Exact token subject GitHub will present. Must match `repo:dertinfo/dertinfo-mono:environment:<environment-name>` |
+| `subject` | Exact token subject GitHub will present. After the transfer this is `repo:dertinfo-org@347463852/dertinfo-mono@1286253466:environment:<environment-name>` |
 | `audiences` | Always `api://AzureADTokenExchange` for Azure login |
 | `name` / `description` | Labels on the Entra federated credential |
 
@@ -34,7 +34,7 @@ These files contain **no secrets**. Do not put client secrets, certificates, ten
 ## How GitHub uses them
 
 1. A workflow job sets `environment: development` (or `production`) and `permissions: id-token: write`.
-2. `azure/login` requests an OIDC token from GitHub. The token’s subject is `repo:dertinfo/dertinfo-mono:environment:development` (or `…:environment:production`).
+2. `azure/login` requests an OIDC token from GitHub. The token’s subject is `repo:dertinfo-org@347463852/dertinfo-mono@1286253466:environment:development` (or `…:environment:production`). The `@` numbers are the GitHub owner id and repository id.
 3. Entra accepts that token **only if** a federated credential on the target app matches issuer + subject + audience.
 4. Entra issues an Azure AD access token for that app’s service principal. GitHub never stores an Azure client secret.
 
@@ -100,6 +100,30 @@ Confirm:
 az ad app federated-credential list --id "$APP_ID" -o table
 ```
 
+## Add the organization repository
+
+The repository is `dertinfo-org/dertinfo-mono`. Each JSON file keeps the credential name `github-development` or `github-production`. That name is already on the apps for the previous owner `dertinfo`. The create scripts skip a credential when its name exists, so they do not apply a changed subject.
+
+The update scripts add the JSON subject onto the existing app. Each run is one GitHub Environment. Run **development**, confirm `azure/login` from `dertinfo-org/dertinfo-mono`, then run **production**. Start from [`Start-DertInfoControlPlane.ps1`](../../../infra/scripts/Start-DertInfoControlPlane.ps1), or:
+
+```powershell
+cd infra\scripts
+.\Entra\Update-DertInfoSubscriptionOidcIdentities.ps1 -GitHubEnvironment development
+.\Entra\Update-DertInfoWorkloadOidcIdentities.ps1 -GitHubEnvironment development
+```
+
+Repeat both with `-GitHubEnvironment production` after development login works. One workload:
+
+```powershell
+.\Entra\Update-DertInfoWorkloadOidcIdentity.ps1 `
+  -GitHubEnvironment development `
+  -Workload api
+```
+
+The script finds the app by display name. It does not create an app, a service principal, or a role assignment, and it does not change GitHub Environment variables. It prints the subjects already on the app and the subject it will add, then prompts. `-Force` skips the prompt.
+
+When the JSON subject is already present, it does nothing. When `github-development` or `github-production` belongs to another subject, it adds a second credential. The name suffix is the owner. The immutable subject `repo:dertinfo-org@347463852/dertinfo-mono@1286253466:environment:development` is stored in full, and the credential is named `github-development-dertinfo-org-347463852` because an Entra name cannot contain `@`. Production uses `github-production-dertinfo-org-347463852`. Leave the old credential in place until a workflow from `dertinfo-org/dertinfo-mono` signs in. Remove that old credential later with `az ad app federated-credential delete`. The `Remove-*` scripts delete the whole app.
+
 ## GitHub Environment variables
 
 Create GitHub Environments named **`development`** and **`production`**. On each, set variables (not secrets):
@@ -142,7 +166,7 @@ MSYS_NO_PATHCONV=1 az role assignment create \
 
 ## Related
 
-- Operator scripts: [`infra/scripts/README.md`](../../../infra/scripts/README.md) — subscription pair plus [`New-DertInfoWorkloadOidcIdentities.ps1`](../../../infra/scripts/Entra/New-DertInfoWorkloadOidcIdentities.ps1) / [`Remove-DertInfoWorkloadOidcIdentity.ps1`](../../../infra/scripts/Entra/Remove-DertInfoWorkloadOidcIdentity.ps1)
+- Operator scripts: [`infra/scripts/README.md`](../../../infra/scripts/README.md) — subscription pair plus [`New-DertInfoWorkloadOidcIdentities.ps1`](../../../infra/scripts/Entra/New-DertInfoWorkloadOidcIdentities.ps1) / [`Update-DertInfoSubscriptionOidcIdentities.ps1`](../../../infra/scripts/Entra/Update-DertInfoSubscriptionOidcIdentities.ps1) / [`Update-DertInfoWorkloadOidcIdentities.ps1`](../../../infra/scripts/Entra/Update-DertInfoWorkloadOidcIdentities.ps1) / [`Remove-DertInfoWorkloadOidcIdentity.ps1`](../../../infra/scripts/Entra/Remove-DertInfoWorkloadOidcIdentity.ps1)
 - Security review: [GitHub workflows — subscription OIDC](../../operations/security/github-workflows-security-review.md)
 - Folder README: [`infra/configuration/README.md`](../../../infra/configuration/README.md)
 - [CI/CD](../infra/cicd.md) — workflow inventory and existing `test` / `prod` app CD OIDC
