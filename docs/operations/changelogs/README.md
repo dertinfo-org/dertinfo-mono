@@ -8,6 +8,7 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-10-24 | Existing OIDC apps can trust the organisation repository | [2026-10-24-005-oidc-org-federated-credentials.md](./2026-10-24-005-oidc-org-federated-credentials.md) |
 | 2026-10-24 | Source workflows grant the GitHub token read access to contents | [2026-10-24-004-workflow-token-read.md](./2026-10-24-004-workflow-token-read.md) |
 | 2026-10-24 | API CI seeds its own database and accepts a token only in the test host | [2026-10-24-003-api-integration-tests-ci.md](./2026-10-24-003-api-integration-tests-ci.md) |
 | 2026-10-24 | Homepage GitHub link opens the organisation page | [2026-10-24-002-homepage-github-org-page.md](./2026-10-24-002-homepage-github-org-page.md) |
