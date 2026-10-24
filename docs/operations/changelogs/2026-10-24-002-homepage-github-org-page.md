@@ -2,7 +2,7 @@
 
 ## Summary of the work completed
 
-The website homepage **View on GitHub** button now opens [https://github.com/dertinfo-org](https://github.com/dertinfo-org), the organisation page whose welcome README introduces the organisation. [Pull request 139](https://github.com/dertinfo-org/dertinfo-mono/pull/139) had pointed that button at [https://github.com/dertinfo-org/dertinfo-mono](https://github.com/dertinfo-org/dertinfo-mono). This follow-up leaves that merged change log entry as it was and only changes the button destination.
+The website homepage **View on GitHub** button now opens [https://github.com/dertinfo-org](https://github.com/dertinfo-org), the organisation page whose welcome README introduces the organisation. [Pull request 139](https://github.com/dertinfo-org/dertinfo-mono/pull/139) had pointed that button at [https://github.com/dertinfo-org/dertinfo-mono](https://github.com/dertinfo-org/dertinfo-mono). This follow-up leaves that merged change log entry as it was and only changes the button destination. [Pull request 141](https://github.com/dertinfo-org/dertinfo-mono/pull/141).
 
 ## Why the work was completed
 
