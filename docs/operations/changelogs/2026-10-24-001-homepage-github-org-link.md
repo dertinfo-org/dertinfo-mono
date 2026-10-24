@@ -2,7 +2,7 @@
 
 ## Summary of the work completed
 
-The website homepage **View on GitHub** button now opens [https://github.com/dertinfo-org/dertinfo-mono](https://github.com/dertinfo-org/dertinfo-mono). It previously opened `https://github.com/dertinfo`, the personal account the repository left when it moved to the `dertinfo-org` organisation. The footer and other public pages in `apps/dert-web` have no second link to this repository.
+The website homepage **View on GitHub** button now opens [https://github.com/dertinfo-org/dertinfo-mono](https://github.com/dertinfo-org/dertinfo-mono). It previously opened `https://github.com/dertinfo`, the personal account the repository left when it moved to the `dertinfo-org` organisation. The footer and other public pages in `apps/dert-web` have no second link to this repository. [Pull request 139](https://github.com/dertinfo-org/dertinfo-mono/pull/139).
 
 ## Why the work was completed
 
