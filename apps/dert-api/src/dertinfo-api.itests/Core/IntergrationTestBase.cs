@@ -19,8 +19,8 @@ namespace DertInfo.Api.ITests.Core
 {
     public class IntergrationTestBase<O>
     {
-        protected HttpClient _client;
-        protected IHost _server;
+        protected HttpClient? _client;
+        protected IHost? _server;
 
 
         public IntergrationTestBase()
@@ -125,8 +125,6 @@ namespace DertInfo.Api.ITests.Core
 
             services.PostConfigure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
             {
-                options.Authority = null;
-                options.MetadataAddress = null;
                 options.RequireHttpsMetadata = false;
                 options.Audience = audience;
                 options.MapInboundClaims = false;

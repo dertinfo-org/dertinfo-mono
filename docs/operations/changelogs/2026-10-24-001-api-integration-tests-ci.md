@@ -1,8 +1,8 @@
-# API CI seeds the end-to-end pack and accepts a token only in the test host
+# API CI seeds its own database and accepts a token only in the test host
 
 ## Summary of the work completed
 
-API source CI runs the `dertinfo-api.itests` assembly against a SQL Server service container. The suite migrates on launch, then applies the end-to-end `system-basic` pack (events, groups, competitions, and the image files that pack names). Authenticated cases send a token built from the end-to-end Auth0 personas. The integration-test host trusts that token’s signing key. The API outside that host still validates Auth0. The job does not call Auth0. A failure fails the workflow. API source CD does not run integration tests. On a pull request, CI fails unless the pull request head already contains every commit on `main`.
+API source CI runs the `dertinfo-api.itests` assembly against a SQL Server service container. The suite migrates on launch, then inserts the event, groups, and image rows that ship in that test project. Authenticated cases send a token signed from the persona claims in that project. The integration-test host trusts that token’s signing key. The API outside that host still validates Auth0. The job does not call Auth0, and it does not run the website or app Playwright suite. A failure fails the workflow. API source CD does not run integration tests. On a pull request, CI fails unless the pull request head already contains every commit on `main`.
 
 Pull request: https://github.com/dertinfo-org/dertinfo-mono/pull/138
 
@@ -12,7 +12,7 @@ The integration-test job existed and was switched off (`if: false`). [Issue 122]
 
 CI on a pull request that already contains `main` is enough to validate the change. CD deploys that same commit after merge, so it does not start SQL Server again. `deploy-dev` still waits for `build` and `unit-test`.
 
-A status check proves SQL and migration. It does not prove an authenticated request. The group fixtures needed a bearer token and rows at the ids in the persona claims. Calling Auth0 from CI would need tenant credentials. The test host instead signs a token from `tests/e2e/shared-data/auth0-personas.json` and accepts that signature only there. `tests/e2e/shared-state/apply.mjs system-basic` inserts the matching events and groups, and records `tests/e2e/shared-data/images`. Those files stay in the end-to-end tree for this change. A later move can put them where both suites read them.
+A status check proves SQL and migration. It does not prove an authenticated request. The group fixtures needed a bearer token and rows at the ids in the persona claims. Calling Auth0 from CI would need tenant credentials. The test host signs a token from persona claims that live in `dertinfo-api.itests`, and accepts that signature only there. The same project inserts “The Simpsons” at group id 1, “The Flanders” at group id 2, and “City Zoo Gathering” at event id 1, with image rows whose names are `family.jpg` and `giraffe.jpg`. Those values match the website and app personas. The Playwright tree is left unchanged, so removing it would leave the API tests able to migrate, seed, and sign a token.
 
 The container `sa` password is a throwaway value in the workflow. It authenticates only to a SQL Server container that the job creates and destroys. It is not a hosted credential, so it is not a GitHub secret. The image tag is the same as `sqlserver` in root `docker-compose.yml`.
 
@@ -29,9 +29,7 @@ The container `sa` password is a throwaway value in the workflow. It authenticat
 - The integration test host was a bare `HostBuilder`. That host does not load `appsettings.json` or environment variables, so a service container alone would not supply `SqlConnection__*`. The host now loads the test `appsettings.json` and process environment variables, with environment variables overriding the placeholders.
 - The test `appsettings.json` had no `Cors:AllowedOrigins`. `Startup.ConfigureServices` splits that value and throws when it is missing, which happens before migration. The test file now has the same local origins as the API `appsettings.json`.
 - xUnit would run the fixtures in parallel. Each fixture starts the API, and startup migrates one shared database. Parallelization is disabled for this assembly. One collection fixture migrates, then seeds, before the cases start the API again.
-- Group tests used a placeholder bearer token and expected group id 46. The end-to-end pack inserts “The Simpsons” at id 1, which is the id on the `group-member` persona. The cases now use that persona and those ids.
-- `apply.mjs` read only `infra/secrets/api.env`. CI has no copy of that file. When `SqlConnection__*` is set on the process, the script uses those values and encrypts the connection the same way Development startup does.
-- The pack named `family.jpg` and `giraffe.jpg` but did not insert `Images` or the group and event joins. The script now inserts those rows when the file exists under `tests/e2e/shared-data/images`. It does not upload the bytes.
+- Group tests used a placeholder bearer token and expected group id 46. The cases now use the group-member persona and groups 1 and 2 from the seed in this test project.
 - A pull request workflow’s default checkout is a merge of the head with `main`. The up-to-date job checks out `github.event.pull_request.head.sha` and fails when `origin/main` is not an ancestor of that commit.
 
 ## References to any best practices that we found
@@ -44,6 +42,7 @@ The container `sa` password is a throwaway value in the workflow. It authenticat
 
 ## Any remaining issues that we may wish to address
 
-- The persona file, shared-state packs, and image files still live under `tests/e2e`. A later change can move them to a location both the API integration tests and the end-to-end tests read.
+- The API tests carry their own copy of the event, group, image names, and persona claims. When that data moves to a location shared with the website and app tests, this copy can move with it.
+- The API seed does not insert competitions, dances, or venues. The group and status cases do not call those endpoints.
 - This suite does not prove the live Auth0 Post Login Action still copies `app_metadata` into `https://dertinfo.co.uk/*` claims.
 - `docker-dev` still waits only on `build`. Unit tests gate `deploy-dev` and do not gate the Docker Hub image.

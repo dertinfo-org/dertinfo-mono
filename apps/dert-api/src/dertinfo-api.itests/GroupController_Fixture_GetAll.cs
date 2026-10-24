@@ -12,10 +12,10 @@ namespace DertInfo.Api.ITests
     [Collection(IntegrationCollection.Name)]
     public class GroupController_Fixture_GetAll : IntergrationTestBase<GroupDto>
     {
-        // Auth0ForcedId in tests/e2e/shared-state/system-basic/groups.json.
-        // The group-member persona in tests/e2e/shared-data/auth0-personas.json claims group 1 only.
+        // IntegrationDatabaseSeed inserts "The Simpsons" at id 1.
+        // IntegrationTestPersonas.GroupMember claims that group only.
         private const int SimpsonGroupId = 1;
-        private const string GroupMemberPersona = "group-member";
+        private const string GroupMemberPersona = IntegrationTestPersonas.GroupMember;
 
         public GroupController_Fixture_GetAll() : base()
         {

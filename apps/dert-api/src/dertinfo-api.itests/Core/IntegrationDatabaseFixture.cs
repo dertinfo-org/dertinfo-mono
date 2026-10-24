@@ -4,8 +4,8 @@ using Xunit;
 namespace DertInfo.Api.ITests.Core
 {
     /// <summary>
-    /// Migrates once, then loads the end-to-end system-basic pack. Later tests start the API again;
-    /// EnsureSeedData leaves that pack in place because system settings and activities already exist.
+    /// Migrates once, then inserts the API integration seed. Later tests start the API again.
+    /// EnsureSeedData leaves that seed in place because system settings and activities already exist.
     /// </summary>
     public sealed class IntegrationDatabaseFixture : IAsyncLifetime
     {
@@ -14,7 +14,7 @@ namespace DertInfo.Api.ITests.Core
             var bootstrap = new IntergrationTestBase<object>();
             await bootstrap.InitialiseApplicationHostAndClient();
             await bootstrap.StopHost();
-            SharedStateSeed.ApplySystemBasic();
+            IntegrationDatabaseSeed.Apply();
         }
 
         public Task DisposeAsync()
