@@ -1,9 +1,8 @@
 ﻿using DertInfo.Api.ITests.Core;
 using DertInfo.Models.DataTransferObject;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,11 +10,11 @@ using Xunit;
 
 namespace DertInfo.Api.ITests
 {
-    public class GroupController_Fixture_GetAll: IntergrationTestBase<GroupDto>
+    [Collection(IntegrationCollection.Name)]
+    public class GroupController_Fixture_GetAll : IntergrationTestBase<GroupDto>
     {
         public GroupController_Fixture_GetAll() : base()
         {
-            
         }
 
         [Theory]
@@ -27,14 +26,10 @@ namespace DertInfo.Api.ITests
                 await base.InitialiseApplicationHostAndClient();
             }
 
-            // Arrange
             var request = new HttpRequestMessage(new HttpMethod(verb), "/api/group");
-            // note - client already knows base url as created from the server
 
-            // Act
             var response = await _client.SendAsync(request);
 
-            // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
@@ -47,16 +42,27 @@ namespace DertInfo.Api.ITests
                 await base.InitialiseApplicationHostAndClient();
             }
 
-            // Arrange
+            var persona = IntegrationTestPersonas.Get(IntegrationTestPersonas.GroupMember);
+            var expectedGroups = IntegrationTestData.GroupsFor(persona);
+            Assert.NotEmpty(expectedGroups);
+
             var request = new HttpRequestMessage(new HttpMethod(verb), "/api/group");
-            request = base.ApplyAuthorisation(request);
+            request = base.ApplyAuthorisation(request, IntegrationTestPersonas.GroupMember);
 
-            // Act
             var response = await _client.SendAsync(request);
+            var body = await response.Content.ReadAsStringAsync();
+            var groups = JsonConvert.DeserializeObject<List<GroupDto>>(body, GetSerialiserSettings());
 
-            // Assert
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(groups);
+            Assert.Equal(expectedGroups.Count, groups.Count);
+            foreach (var expected in expectedGroups)
+            {
+                var actual = Assert.Single(groups, group => group.Id == expected.Id);
+                Assert.Equal(expected.Name, actual.GroupName);
+                Assert.Contains(expected.ImageFile, actual.GroupPictureUrl);
+            }
         }
     }
 }

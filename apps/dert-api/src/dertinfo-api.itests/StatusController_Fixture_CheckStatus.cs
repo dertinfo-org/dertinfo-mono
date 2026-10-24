@@ -1,14 +1,12 @@
 ﻿using DertInfo.Api.ITests.Core;
 using DertInfo.Models.DataTransferObject;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace DertInfo.Api.ITests
 {
+    [Collection(IntegrationCollection.Name)]
     public class StatusController_Fixture_CheckStatus : IntergrationTestBase<GroupDto>
     {
         public StatusController_Fixture_CheckStatus() : base()

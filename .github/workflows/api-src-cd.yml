@@ -26,6 +26,9 @@ concurrency:
   group: api-src-cd
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: windows-latest
@@ -76,26 +79,6 @@ jobs:
           dotnet test apps/dert-api/src/dertinfo-api.utests/dertinfo-api.utests.csproj --no-build --configuration Release --verbosity normal
           dotnet test apps/dert-api/src/dertinfo-services.utests/dertinfo-services.utests.csproj --no-build --configuration Release --verbosity normal
           dotnet test apps/dert-api/src/dertinfo-repository.utests/dertinfo-repository.utests.csproj --no-build --configuration Release --verbosity normal
-
-  integration-test:
-    if: false
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Restore integration tests
-        run: dotnet restore apps/dert-api/src/dertinfo-api.itests/dertinfo-api.itests.csproj
-
-      - name: Build integration tests
-        run: dotnet build apps/dert-api/src/dertinfo-api.itests/dertinfo-api.itests.csproj --no-restore --configuration Release
-
-      # Disabled: requires SQL Server on the runner. See https://github.com/dertinfo/dertinfo-mono/issues/122.
-      - name: Run integration tests
-        run: dotnet test apps/dert-api/src/dertinfo-api.itests/dertinfo-api.itests.csproj --no-build --configuration Release --verbosity normal
 
   docker-dev:
     needs: build

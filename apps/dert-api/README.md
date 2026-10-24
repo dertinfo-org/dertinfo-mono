@@ -131,6 +131,10 @@ Notes:
 
 Create the database named in your secrets if needed. The API applies EF migrations on startup.
 
+### Integration tests
+
+`src/dertinfo-api.itests` starts the API in a test host. The command line, including the SQL Server container and the environment variables, is in [API integration tests](../../docs/technical/guides/api-integration-tests.md). API source CI runs the same assembly; see [CI/CD](../../docs/technical/infra/cicd.md).
+
 ## Usage
 
 When the application is successfully running it will provide the endpoints used for both the web and app clients. 

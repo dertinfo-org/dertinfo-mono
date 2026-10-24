@@ -86,6 +86,8 @@ GitHub requires reusable workflows at the **top level** of `.github/workflows/` 
 
 Bicep house rules: [Bicep standards](../standards/bicep/). Operator scripts: [`infra/scripts/`](../../../infra/scripts/).
 
+Source CI workflows, source CD workflows, and the Docker build reusable workflow set `permissions: contents: read` for `GITHUB_TOKEN`. That is the checkout, fetch, and same-workflow artifact scope. A job that signs in to Azure keeps its own block (`id-token: write` and `contents: read`), which replaces the workflow default for that job. Static Web App deploy jobs also set `actions: read`. [Assigning permissions to jobs](https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs).
+
 ### Per-app src CD
 
 | Workflow | Build | Docker image | Deploy target |
@@ -94,6 +96,8 @@ Bicep house rules: [Bicep standards](../standards/bicep/). Operator scripts: [`i
 | `web-src-cd.yml` | One `npm run build:hosted`; CD writes `app.config.json` per Environment | `dertinfo/dertinfo-web` | Static Web App (`development` / `production`) — needs SWA tokens and callback URL var |
 | `app-src-cd.yml` | One `npm run build:hosted`; CD writes `app.config.json` per Environment | `dertinfo/dertinfo-app` | Static Web App (`development` / `production`) — needs SWA tokens and callback URL var |
 | `functions-src-cd.yml` | .NET publish | `dertinfo/dertinfo-imageresizev4` | Flex Function App via One Deploy (`development` / `production`) — needs `AZURE_FUNCTIONAPP_FUNCTIONS_RESOURCENAME`. Upload identity is the site MI ([Security](../subsystems/security.md)). The build artefact must include hidden files (`include-hidden-files: true`) so `.azurefunctions` survives `upload-artifact@v4`; Flex rejects the zip without it. |
+
+API source CI (`api-src-ci.yml`) runs the `dertinfo-api.itests` assembly on `ubuntu-latest` against a SQL Server service container. The image tag matches root [`docker-compose.yml`](../../../docker-compose.yml) (`mcr.microsoft.com/mssql/server:2025-CU9-ubuntu-24.04`). The job sets `ASPNETCORE_ENVIRONMENT=Development` and `SqlConnection__*` so startup uses SQL authentication and trusts the container certificate (`Startup` adds `TrustServerCertificate` only when the environment is Development). A collection fixture starts the API once, which migrates, then inserts the event, groups, and image rows that ship in that test project. Authenticated cases send a token signed in the test host from the persona claims in that project. The test host trusts that token’s signing key; the API process outside the test host still validates Auth0. The job does not call Auth0, and it does not run the website or app Playwright suite. A failed integration-test job fails the workflow. API source CD does not repeat it. On a pull request, the `up-to-date` job fails unless the pull request head already contains every commit on `main`, and `build` waits for that job. The container `sa` password is a throwaway value for that job; it is not a hosted credential. The same assembly from a developer machine is in [API integration tests](../guides/api-integration-tests.md).
 
 Docker images are for **local development** (root `docker-compose.yml`, Codespaces). Hosted Azure deployments use native App Service / SWA deploy, not containers.
 
