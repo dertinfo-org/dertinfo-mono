@@ -2,6 +2,7 @@
 using DertInfo.Models.DataTransferObject;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,11 +13,6 @@ namespace DertInfo.Api.ITests
     [Collection(IntegrationCollection.Name)]
     public class GroupController_Fixture_GetAll : IntergrationTestBase<GroupDto>
     {
-        // IntegrationDatabaseSeed inserts "The Simpsons" at id 1.
-        // IntegrationTestPersonas.GroupMember claims that group only.
-        private const int SimpsonGroupId = 1;
-        private const string GroupMemberPersona = IntegrationTestPersonas.GroupMember;
-
         public GroupController_Fixture_GetAll() : base()
         {
         }
@@ -46,8 +42,12 @@ namespace DertInfo.Api.ITests
                 await base.InitialiseApplicationHostAndClient();
             }
 
+            var persona = IntegrationTestPersonas.Get(IntegrationTestPersonas.GroupMember);
+            var expectedGroups = IntegrationTestData.GroupsFor(persona);
+            Assert.NotEmpty(expectedGroups);
+
             var request = new HttpRequestMessage(new HttpMethod(verb), "/api/group");
-            request = base.ApplyAuthorisation(request, GroupMemberPersona);
+            request = base.ApplyAuthorisation(request, IntegrationTestPersonas.GroupMember);
 
             var response = await _client.SendAsync(request);
             var body = await response.Content.ReadAsStringAsync();
@@ -55,10 +55,14 @@ namespace DertInfo.Api.ITests
 
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            var group = Assert.Single(groups);
-            Assert.Equal(SimpsonGroupId, group.Id);
-            Assert.Equal("The Simpsons", group.GroupName);
-            Assert.Contains("family.jpg", group.GroupPictureUrl);
+            Assert.NotNull(groups);
+            Assert.Equal(expectedGroups.Count, groups.Count);
+            foreach (var expected in expectedGroups)
+            {
+                var actual = Assert.Single(groups, group => group.Id == expected.Id);
+                Assert.Equal(expected.Name, actual.GroupName);
+                Assert.Contains(expected.ImageFile, actual.GroupPictureUrl);
+            }
         }
     }
 }

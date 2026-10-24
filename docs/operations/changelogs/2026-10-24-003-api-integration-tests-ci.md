@@ -12,7 +12,7 @@ The integration-test job existed and was switched off (`if: false`). [Issue 122]
 
 CI on a pull request that already contains `main` is enough to validate the change. CD deploys that same commit after merge, so it does not start SQL Server again. `deploy-dev` still waits for `build` and `unit-test`.
 
-A status check proves SQL and migration. It does not prove an authenticated request. The group fixtures needed a bearer token and rows at the ids in the persona claims. Calling Auth0 from CI would need tenant credentials. The test host signs a token from persona claims that live in `dertinfo-api.itests`, and accepts that signature only there. The same project inserts “The Simpsons” at group id 1, “The Flanders” at group id 2, and “City Zoo Gathering” at event id 1, with image rows whose names are `family.jpg` and `giraffe.jpg`. Those values match the website and app personas. The Playwright tree is left unchanged, so removing it would leave the API tests able to migrate, seed, and sign a token.
+A status check proves SQL and migration. It does not prove an authenticated request. The group fixtures needed a bearer token and rows at the ids in the persona claims. Calling Auth0 from CI would need tenant credentials. The test host signs a token from persona claims that live in `dertinfo-api.itests`, and accepts that signature only there. The same project inserts the event, groups, and image rows in `IntegrationTestData`. The cases compare each response with those records. The Playwright tree is left unchanged, so removing it would leave the API tests able to migrate, seed, and sign a token.
 
 The container `sa` password is a throwaway value in the workflow. It authenticates only to a SQL Server container that the job creates and destroys. It is not a hosted credential, so it is not a GitHub secret. The image tag is the same as `sqlserver` in root `docker-compose.yml`.
 
@@ -29,7 +29,7 @@ The container `sa` password is a throwaway value in the workflow. It authenticat
 - The integration test host was a bare `HostBuilder`. That host does not load `appsettings.json` or environment variables, so a service container alone would not supply `SqlConnection__*`. The host now loads the test `appsettings.json` and process environment variables, with environment variables overriding the placeholders.
 - The test `appsettings.json` had no `Cors:AllowedOrigins`. `Startup.ConfigureServices` splits that value and throws when it is missing, which happens before migration. The test file now has the same local origins as the API `appsettings.json`.
 - xUnit would run the fixtures in parallel. Each fixture starts the API, and startup migrates one shared database. Parallelization is disabled for this assembly. One collection fixture migrates, then seeds, before the cases start the API again.
-- Group tests used a placeholder bearer token and expected group id 46. The cases now use the group-member persona and groups 1 and 2 from the seed in this test project.
+- Group tests used a placeholder bearer token and expected group id 46. The cases now take the group-member persona and compare each response with the records in `IntegrationTestData` for that persona. The fixture names and assertions do not name the contents of those records.
 - A pull request workflow’s default checkout is a merge of the head with `main`. The up-to-date job checks out `github.event.pull_request.head.sha` and fails when `origin/main` is not an ancestor of that commit.
 
 ## References to any best practices that we found

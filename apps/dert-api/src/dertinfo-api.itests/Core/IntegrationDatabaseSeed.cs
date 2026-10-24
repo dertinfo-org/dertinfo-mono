@@ -8,11 +8,9 @@ using System.Text.RegularExpressions;
 namespace DertInfo.Api.ITests.Core
 {
     /// <summary>
-    /// Inserts the event, groups, and image rows the API integration tests call.
-    /// The names and ids match the website and app personas: group 1 is "The Simpsons"
-    /// with family.jpg, group 2 is "The Flanders", and event 1 is "City Zoo Gathering"
-    /// with giraffe.jpg. The picture URL is built from the row. The image bytes are not stored.
-    /// System settings written by startup are left in place.
+    /// Inserts <see cref="IntegrationTestData"/>. The picture URL is built from the image file
+    /// name on each record. The image bytes are not stored. System settings written by startup
+    /// are left in place.
     /// </summary>
     public static class IntegrationDatabaseSeed
     {
@@ -129,56 +127,85 @@ namespace DertInfo.Api.ITests.Core
         private static void InsertPack(SqlConnection connection, SqlTransaction transaction)
         {
             var now = DateTime.UtcNow;
-            var familyImageId = InsertImage(connection, transaction, now, "family.jpg", "groupimages", "The Simpsons");
-            var giraffeImageId = InsertImage(connection, transaction, now, "giraffe.jpg", "eventimages", "City Zoo Gathering");
+            var imageIds = new Dictionary<string, int>();
 
-            InsertWithId(connection, transaction, "Events", 1, new (string, object)[]
+            foreach (var entry in IntegrationTestData.Events)
             {
-                ("CreatedBy", Actor),
-                ("DateCreated", now),
-                ("DateModified", now),
-                ("ModifiedBy", Actor),
-                ("IsDeleted", false),
-                ("AccessToken", DBNull.Value),
-                ("Name", "City Zoo Gathering"),
-                ("ContactName", "Event Keeper"),
-                ("ContactEmail", "event-admin-1@dertinfo.co.uk"),
-                ("ContactTelephone", "01234567891"),
-                ("RegistrationOpenDate", new DateTime(2026, 1, 1)),
-                ("RegistrationCloseDate", new DateTime(2027, 5, 1)),
-                ("EventSynopsis", "A day riding a giraffe at the city zoo"),
-                ("EventStartDate", new DateTime(2027, 6, 1)),
-                ("EventEndDate", new DateTime(2027, 6, 2)),
-                ("EventTemplateType", 1),
-                ("EventVisibilityType", 0),
-                ("LocationTown", "Springfield"),
-                ("LocationPostcode", "SP1 1AA"),
-                ("IsConfigured", true),
-                ("IsPromoted", false),
-                ("IsCancelled", false),
-                ("TermsAndConditionsAgreed", true),
-                ("TermsAndConditionsAgreedBy", Actor),
-                ("SentEmailsBcc", DBNull.Value),
-            });
-            InsertRow(connection, transaction, "EventImages", new (string, object)[]
+                var imageId = ImageId(connection, transaction, now, imageIds, entry.ImageFile, IntegrationTestData.EventImageContainer, entry.Name);
+                InsertWithId(connection, transaction, "Events", entry.Id, new (string, object)[]
+                {
+                    ("CreatedBy", Actor),
+                    ("DateCreated", now),
+                    ("DateModified", now),
+                    ("ModifiedBy", Actor),
+                    ("IsDeleted", false),
+                    ("AccessToken", DBNull.Value),
+                    ("Name", entry.Name),
+                    ("ContactName", entry.ContactName),
+                    ("ContactEmail", entry.ContactEmail),
+                    ("ContactTelephone", entry.ContactTelephone),
+                    ("RegistrationOpenDate", entry.RegistrationOpen),
+                    ("RegistrationCloseDate", entry.RegistrationClose),
+                    ("EventSynopsis", entry.Synopsis),
+                    ("EventStartDate", entry.Start),
+                    ("EventEndDate", entry.End),
+                    ("EventTemplateType", entry.TemplateType),
+                    ("EventVisibilityType", 0),
+                    ("LocationTown", entry.Town),
+                    ("LocationPostcode", entry.Postcode),
+                    ("IsConfigured", true),
+                    ("IsPromoted", false),
+                    ("IsCancelled", false),
+                    ("TermsAndConditionsAgreed", true),
+                    ("TermsAndConditionsAgreedBy", Actor),
+                    ("SentEmailsBcc", DBNull.Value),
+                });
+                InsertRow(connection, transaction, "EventImages", new (string, object)[]
+                {
+                    ("EventId", entry.Id),
+                    ("ImageId", imageId),
+                    ("IsPrimary", true),
+                });
+                foreach (var activity in entry.Activities)
+                {
+                    InsertActivity(connection, transaction, now, entry.Id, activity.AudienceTypeId, activity.Title, activity.Description, activity.Price, activity.IsDefault);
+                }
+            }
+
+            foreach (var entry in IntegrationTestData.Groups)
             {
-                ("EventId", 1),
-                ("ImageId", giraffeImageId),
-                ("IsPrimary", true),
-            });
-            InsertActivity(connection, transaction, now, 1, 1, "Adult Giraffe Ride", "A ticket for an adult to ride a giraffe", 15m, true);
-            InsertActivity(connection, transaction, now, 1, 1, "Child Giraffe Ride", "A ticket for a child to ride a giraffe", 8m, false);
-            InsertActivity(connection, transaction, now, 1, 2, "Carry a Giraffe", "A team carries a giraffe across the zoo", 20m, false);
+                var imageId = ImageId(connection, transaction, now, imageIds, entry.ImageFile, IntegrationTestData.GroupImageContainer, entry.Name);
+                InsertGroup(connection, transaction, now, imageId, entry.Id, entry.Name, entry.Bio, entry.Town, entry.Postcode, entry.ContactName, entry.ContactEmail, entry.ContactNumber, entry.Pin);
+                foreach (var member in entry.Members)
+                {
+                    var email = string.IsNullOrEmpty(member.Email) ? (object)DBNull.Value : member.Email;
+                    InsertMember(connection, transaction, now, entry.Id, member.Name, member.MemberType, email);
+                }
 
-            InsertGroup(connection, transaction, now, familyImageId, 1, "The Simpsons", "The family from Springfield", "Springfield", "SP1 1AA", "Homer Simpson", "group-admin-1@dertinfo.co.uk", "01234567890", "1001");
-            InsertMember(connection, transaction, now, 1, "Homer Simpson", 1, "group-member-1@dertinfo.co.uk");
-            InsertMember(connection, transaction, now, 1, "Marge Simpson", 2, DBNull.Value);
-            InsertTeam(connection, transaction, now, 1, "Springfield", "A team from Springfield");
+                foreach (var team in entry.Teams)
+                {
+                    InsertTeam(connection, transaction, now, entry.Id, team.Name, team.Bio);
+                }
+            }
+        }
 
-            InsertGroup(connection, transaction, now, familyImageId, 2, "The Flanders", "The neighbours from Evergreen Terrace", "Springfield", "SP1 2BB", "Ned Flanders", "group-admin-2@dertinfo.co.uk", "01234567892", "1002");
-            InsertMember(connection, transaction, now, 2, "Ned Flanders", 1, "group-admin-2@dertinfo.co.uk");
-            InsertMember(connection, transaction, now, 2, "Maude Flanders", 2, DBNull.Value);
-            InsertTeam(connection, transaction, now, 2, "Leftorium", "The shop team from Springfield");
+        private static int ImageId(
+            SqlConnection connection,
+            SqlTransaction transaction,
+            DateTime now,
+            Dictionary<string, int> imageIds,
+            string fileName,
+            string container,
+            string alt)
+        {
+            var key = container + "/" + fileName;
+            if (!imageIds.TryGetValue(key, out var id))
+            {
+                id = InsertImage(connection, transaction, now, fileName, container, alt);
+                imageIds[key] = id;
+            }
+
+            return id;
         }
 
         private static void InsertGroup(
