@@ -2,7 +2,7 @@
 name: Local development
 type: guide
 status: active
-updated: 2026-07-26
+updated: 2026-10-24
 ---
 
 # Local development
@@ -64,4 +64,5 @@ Set `"api": { "mode": "off", "rebuild": false }` in `runtime.json` and debug the
 - [Architecture overview](../architecture/overview.md)
 - [Configuration](../infra/configuration.md)
 - [Secrets](../../../infra/secrets/README.md)
+- [API integration tests](api-integration-tests.md)
 - [Contributing workflow](contributing-workflow.md)

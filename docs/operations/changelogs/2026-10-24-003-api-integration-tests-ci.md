@@ -2,7 +2,7 @@
 
 ## Summary of the work completed
 
-API source CI runs the `dertinfo-api.itests` assembly against a SQL Server service container. The suite migrates on launch, then inserts the event, groups, and image rows that ship in that test project. Authenticated cases send a token signed from the persona claims in that project. The integration-test host trusts that token’s signing key. The API outside that host still validates Auth0. The job does not call Auth0, and it does not run the website or app Playwright suite. A failure fails the workflow. API source CD does not run integration tests. On a pull request, CI fails unless the pull request head already contains every commit on `main`.
+API source CI runs the `dertinfo-api.itests` assembly against a SQL Server service container. The suite migrates on launch, then inserts the event, groups, and image rows that ship in that test project. Authenticated cases send a token signed from the persona claims in that project. The integration-test host trusts that token’s signing key. The API outside that host still validates Auth0. The job does not call Auth0, and it does not run the website or app Playwright suite. A failure fails the workflow. API source CD does not run integration tests. On a pull request, CI fails unless the pull request head already contains every commit on `main`. The command to run the same assembly on a developer machine is in [API integration tests](../../technical/guides/api-integration-tests.md).
 
 Pull request: https://github.com/dertinfo-org/dertinfo-mono/pull/138
 
@@ -15,6 +15,8 @@ CI on a pull request that already contains `main` is enough to validate the chan
 A status check proves SQL and migration. It does not prove an authenticated request. The group fixtures needed a bearer token and rows at the ids in the persona claims. Calling Auth0 from CI would need tenant credentials. The test host signs a token from persona claims that live in `dertinfo-api.itests`, and accepts that signature only there. The same project inserts the event, groups, and image rows in `IntegrationTestData`. The cases compare each response with those records. The Playwright tree is left unchanged, so removing it would leave the API tests able to migrate, seed, and sign a token.
 
 The container `sa` password is a throwaway value in the workflow. It authenticates only to a SQL Server container that the job creates and destroys. It is not a hosted credential, so it is not a GitHub secret. The image tag is the same as `sqlserver` in root `docker-compose.yml`.
+
+The same steps belong in the technical guides. The API README keeps install and debug, and links to that guide, so a developer can run the assembly without reading the workflow.
 
 ## Date the work was started
 

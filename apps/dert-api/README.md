@@ -133,7 +133,7 @@ Create the database named in your secrets if needed. The API applies EF migratio
 
 ### Integration tests
 
-`src/dertinfo-api.itests` starts the API in a test host. Startup migrates on launch, so the process needs a SQL Server it can create a database on. Set `ASPNETCORE_ENVIRONMENT=Development` and `SqlConnection__ServerName`, `SqlConnection__DatabaseName`, `SqlConnection__ServerAdminName`, and `SqlConnection__ServerAdminPassword` on the test process. Those environment variables override the placeholders in the test `appsettings.json`. The suite then inserts its own event, groups, and image rows, and signs a token from the persona claims in that project. Only this test host accepts that token. API source CI runs the assembly against a SQL Server service container and does not call Auth0; see [CI/CD](../../docs/technical/infra/cicd.md).
+`src/dertinfo-api.itests` starts the API in a test host. The command line, including the SQL Server container and the environment variables, is in [API integration tests](../../docs/technical/guides/api-integration-tests.md). API source CI runs the same assembly; see [CI/CD](../../docs/technical/infra/cicd.md).
 
 ## Usage
 
