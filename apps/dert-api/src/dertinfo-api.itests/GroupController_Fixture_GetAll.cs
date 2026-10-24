@@ -38,7 +38,7 @@ namespace DertInfo.Api.ITests
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-        [Theory]
+        [RequiresBearerTokenTheory]
         [InlineData("GET")]
         public async Task Get_Groups_With_Valid_Token_Is_Reports_OK(string verb)
         {

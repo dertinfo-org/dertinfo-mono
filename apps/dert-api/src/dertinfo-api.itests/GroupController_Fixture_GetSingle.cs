@@ -19,7 +19,7 @@ namespace DertInfo.Api.ITests
 
         }
 
-        [Theory]
+        [RequiresBearerTokenTheory]
         [InlineData("GET", 46)]
         public async Task Get_Single_Group_Where_User_Has_Permission_Returns_Requested_Group(string verb, int groupId)
         {
