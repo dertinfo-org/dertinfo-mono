@@ -7,6 +7,10 @@
  * Usage (from tests/e2e):
  *   node shared-state/apply.mjs <system-empty|system-basic>
  *   node shared-state/apply.mjs --check system-basic
+ *
+ * SQL settings: a complete SqlConnection__* set on the process wins (API integration tests and CI).
+ * Otherwise the script reads infra/secrets/api.env, which is the Playwright path.
+ * Image files stay under tests/e2e/shared-data/images. This script records the filename; it does not upload bytes.
  */
 import fs from 'fs';
 import path from 'path';
@@ -16,7 +20,10 @@ import sql from 'mssql';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, '../../..');
 const secretsPath = path.join(repoRoot, 'infra', 'secrets', 'api.env');
+const imageFilesDir = path.join(here, '../shared-data/images');
 const actor = 'shared-state';
+const imageBlobPath = 'originals';
+const imageContainer = { group: 'groupimages', event: 'eventimages' };
 
 const eventTemplateType = { Basic: 0, StandardDert: 1, ClassicDert: 2, Blank: 3 };
 const audienceType = { INDIVIDUAL: 1, TEAM: 2 };
@@ -55,18 +62,7 @@ function parseEnvFile(filePath) {
   return values;
 }
 
-function sqlConfig() {
-  if (!fs.existsSync(secretsPath)) {
-    throw new Error(`SQL settings are missing: ${secretsPath}`);
-  }
-  const env = parseEnvFile(secretsPath);
-  const serverRaw = env.SqlConnection__ServerName;
-  const user = env.SqlConnection__ServerAdminName;
-  const password = env.SqlConnection__ServerAdminPassword;
-  const database = env.SqlConnection__DatabaseName;
-  if (!serverRaw || !user || !password || !database) {
-    throw new Error('api.env must set SqlConnection server, admin, password, and database.');
-  }
+function connectionFrom(serverRaw, user, password, database, encrypt) {
   const [server, portText] = serverRaw.split(',');
   return {
     server,
@@ -74,8 +70,32 @@ function sqlConfig() {
     user,
     password,
     database,
-    options: { encrypt: false, trustServerCertificate: true },
+    options: { encrypt, trustServerCertificate: true },
   };
+}
+
+function sqlConfig() {
+  const serverRaw = process.env.SqlConnection__ServerName;
+  const user = process.env.SqlConnection__ServerAdminName;
+  const password = process.env.SqlConnection__ServerAdminPassword;
+  const database = process.env.SqlConnection__DatabaseName;
+  if (serverRaw && user && password && database) {
+    // Same as Startup when ASPNETCORE_ENVIRONMENT is Development.
+    return connectionFrom(serverRaw, user, password, database, true);
+  }
+
+  if (!fs.existsSync(secretsPath)) {
+    throw new Error(`SQL settings are missing: ${secretsPath}`);
+  }
+  const env = parseEnvFile(secretsPath);
+  const fileServer = env.SqlConnection__ServerName;
+  const fileUser = env.SqlConnection__ServerAdminName;
+  const filePassword = env.SqlConnection__ServerAdminPassword;
+  const fileDatabase = env.SqlConnection__DatabaseName;
+  if (!fileServer || !fileUser || !filePassword || !fileDatabase) {
+    throw new Error('api.env must set SqlConnection server, admin, password, and database.');
+  }
+  return connectionFrom(fileServer, fileUser, filePassword, fileDatabase, false);
 }
 
 function requireEnum(map, value, label) {
@@ -288,6 +308,50 @@ async function insertActivity(transaction, now, eventId, activity) {
   });
 }
 
+async function ensurePackImage(transaction, now, filename, alt, container, cache) {
+  if (!filename) return null;
+  const cacheKey = `${container}/${filename}`;
+  if (cache.has(cacheKey)) return cache.get(cacheKey);
+  const filePath = path.join(imageFilesDir, filename);
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Image file "${filename}" is not in ${imageFilesDir}`);
+  }
+
+  const extension = path.extname(filename).replace(/^\./, '');
+  const columns = {
+    ...audit(now),
+    ImageAlt: { type: sql.NVarChar, value: alt },
+    ImagePath: { type: sql.NVarChar, value: filename },
+    ImageUri: { type: sql.NVarChar, value: null },
+    MarkedForRemoval: { type: sql.Bit, value: false },
+  };
+  if (await columnExists(transaction, 'Images', 'BlobName')) {
+    columns.BlobName = { type: sql.NVarChar, value: filename };
+  }
+  if (await columnExists(transaction, 'Images', 'Extension')) {
+    columns.Extension = { type: sql.NVarChar, value: extension };
+  }
+  if (await columnExists(transaction, 'Images', 'Container')) {
+    columns.Container = { type: sql.NVarChar, value: container };
+  }
+  if (await columnExists(transaction, 'Images', 'BlobPath')) {
+    columns.BlobPath = { type: sql.NVarChar, value: imageBlobPath };
+  }
+  if (await columnExists(transaction, 'Images', 'IsProtected')) {
+    columns.IsProtected = { type: sql.Bit, value: false };
+  }
+  if (await columnExists(transaction, 'Images', 'HasBeenMovedForMigration')) {
+    columns.HasBeenMovedForMigration = { type: sql.Bit, value: false };
+  }
+  if (await columnExists(transaction, 'Images', 'HasBeenProcessedForMigration')) {
+    columns.HasBeenProcessedForMigration = { type: sql.Bit, value: false };
+  }
+
+  const imageId = await insertRow(transaction, 'Images', columns);
+  cache.set(cacheKey, imageId);
+  return imageId;
+}
+
 async function insertBasic(transaction) {
   const now = new Date();
   const events = readJson(path.join(here, 'system-basic', 'events.json'));
@@ -299,6 +363,7 @@ async function insertBasic(transaction) {
   const eventsWithCompetitionActivity = new Set();
   const registrationIds = new Map();
   const attendanceIds = new Map();
+  const imageIds = new Map();
 
   expectedLoginRows();
 
@@ -327,6 +392,22 @@ async function insertBasic(transaction) {
       SentEmailsBcc: { type: sql.NVarChar, value: null },
     }, event.Auth0ForcedId);
     eventIds.set(event.Name, eventId);
+
+    if (event.Image) {
+      const imageId = await ensurePackImage(
+        transaction,
+        now,
+        event.Image,
+        event.Name,
+        imageContainer.event,
+        imageIds,
+      );
+      await insertRow(transaction, 'EventImages', {
+        EventId: { type: sql.Int, value: eventId },
+        ImageId: { type: sql.Int, value: imageId },
+        IsPrimary: { type: sql.Bit, value: true },
+      });
+    }
 
     for (const activity of event.Activities || []) {
       await insertActivity(transaction, now, eventId, {
@@ -358,6 +439,22 @@ async function insertBasic(transaction) {
       IsConfigured: { type: sql.Bit, value: true },
     }, group.Auth0ForcedId);
     groupIds.set(group.GroupName, groupId);
+
+    if (group.Image) {
+      const imageId = await ensurePackImage(
+        transaction,
+        now,
+        group.Image,
+        group.GroupName,
+        imageContainer.group,
+        imageIds,
+      );
+      await insertRow(transaction, 'GroupImages', {
+        GroupId: { type: sql.Int, value: groupId },
+        ImageId: { type: sql.Int, value: imageId },
+        IsPrimary: { type: sql.Bit, value: true },
+      });
+    }
 
     for (const member of group.GroupMembers || []) {
       await insertRow(transaction, 'GroupMembers', {

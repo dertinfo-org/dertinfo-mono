@@ -1,9 +1,7 @@
 ﻿using DertInfo.Api.ITests.Core;
 using DertInfo.Models.DataTransferObject;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,11 +9,16 @@ using Xunit;
 
 namespace DertInfo.Api.ITests
 {
-    public class GroupController_Fixture_GetAll: IntergrationTestBase<GroupDto>
+    [Collection(IntegrationCollection.Name)]
+    public class GroupController_Fixture_GetAll : IntergrationTestBase<GroupDto>
     {
+        // Auth0ForcedId in tests/e2e/shared-state/system-basic/groups.json.
+        // The group-member persona in tests/e2e/shared-data/auth0-personas.json claims group 1 only.
+        private const int SimpsonGroupId = 1;
+        private const string GroupMemberPersona = "group-member";
+
         public GroupController_Fixture_GetAll() : base()
         {
-            
         }
 
         [Theory]
@@ -27,18 +30,14 @@ namespace DertInfo.Api.ITests
                 await base.InitialiseApplicationHostAndClient();
             }
 
-            // Arrange
             var request = new HttpRequestMessage(new HttpMethod(verb), "/api/group");
-            // note - client already knows base url as created from the server
 
-            // Act
             var response = await _client.SendAsync(request);
 
-            // Assert
             Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
-        [RequiresBearerTokenTheory]
+        [Theory]
         [InlineData("GET")]
         public async Task Get_Groups_With_Valid_Token_Is_Reports_OK(string verb)
         {
@@ -47,16 +46,19 @@ namespace DertInfo.Api.ITests
                 await base.InitialiseApplicationHostAndClient();
             }
 
-            // Arrange
             var request = new HttpRequestMessage(new HttpMethod(verb), "/api/group");
-            request = base.ApplyAuthorisation(request);
+            request = base.ApplyAuthorisation(request, GroupMemberPersona);
 
-            // Act
             var response = await _client.SendAsync(request);
+            var body = await response.Content.ReadAsStringAsync();
+            var groups = JsonConvert.DeserializeObject<List<GroupDto>>(body, GetSerialiserSettings());
 
-            // Assert
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var group = Assert.Single(groups);
+            Assert.Equal(SimpsonGroupId, group.Id);
+            Assert.Equal("The Simpsons", group.GroupName);
+            Assert.Contains("family.jpg", group.GroupPictureUrl);
         }
     }
 }

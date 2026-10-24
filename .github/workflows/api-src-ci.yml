@@ -10,6 +10,10 @@ on:
       - 'dertinfo.sln'
       - 'Directory.Build.props'
       - '.github/workflows/api-src-ci.yml'
+      - 'tests/e2e/package.json'
+      - 'tests/e2e/shared-state/**'
+      - 'tests/e2e/shared-data/auth0-personas.json'
+      - 'tests/e2e/shared-data/images/**'
 
 jobs:
   up-to-date:
@@ -113,13 +117,22 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # mssql only. Ignore scripts so Playwright does not download a browser. No lockfile is checked in.
+      - name: Install shared-state SQL client
+        working-directory: tests/e2e
+        run: npm install --ignore-scripts --no-package-lock
+
       - name: Download build output
         uses: actions/download-artifact@v4
         with:
           name: api-build-output
           path: apps/dert-api/src
 
-      # Environment check only: boot the API, migrate SQL Server, and GET /api/status.
-      # The group fixtures are not part of this job.
+      # Migrates SQL Server, seeds tests/e2e shared-state system-basic, then runs the assembly.
+      # Tokens are signed in the test host. This job does not call Auth0.
       - name: Run integration tests
-        run: dotnet test apps/dert-api/src/dertinfo-api.itests/dertinfo-api.itests.csproj --no-build --configuration Release --verbosity normal --filter "FullyQualifiedName=DertInfo.Api.ITests.StatusController_Fixture_CheckStatus.Check_Status_Controller_Returns_Response"
+        run: dotnet test apps/dert-api/src/dertinfo-api.itests/dertinfo-api.itests.csproj --no-build --configuration Release --verbosity normal
