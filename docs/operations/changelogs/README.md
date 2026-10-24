@@ -8,7 +8,7 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
-| 2026-10-24 | Homepage GitHub link points at the organisation repository | [2026-10-24-001-homepage-github-org-link.md](./2026-10-24-001-homepage-github-org-link.md) |
+| 2026-10-24 | Homepage GitHub link points at the organisation page | [2026-10-24-001-homepage-github-org-link.md](./2026-10-24-001-homepage-github-org-link.md) |
 | 2026-10-17 | A new group or event appears once in the left navigation | [2026-10-17-006-nav-duplicate-after-create.md](./2026-10-17-006-nav-duplicate-after-create.md) |
 | 2026-10-17 | A pull request that fixes a bug names the issue so GitHub closes it | [2026-10-17-005-pr-fixes-issue.md](./2026-10-17-005-pr-fixes-issue.md) |
 | 2026-10-17 | An unset group cannot be registered for an event | [2026-10-17-004-unconfigured-group-registration.md](./2026-10-17-004-unconfigured-group-registration.md) |

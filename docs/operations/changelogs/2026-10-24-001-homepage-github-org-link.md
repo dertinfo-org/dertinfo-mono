@@ -1,12 +1,12 @@
-# Homepage GitHub link points at the organisation repository
+# Homepage GitHub link points at the organisation page
 
 ## Summary of the work completed
 
-The website homepage **View on GitHub** button now opens [https://github.com/dertinfo-org/dertinfo-mono](https://github.com/dertinfo-org/dertinfo-mono). It previously opened `https://github.com/dertinfo`, the personal account the repository left when it moved to the `dertinfo-org` organisation. The footer and other public pages in `apps/dert-web` have no second link to this repository. [Pull request 139](https://github.com/dertinfo-org/dertinfo-mono/pull/139).
+The website homepage **View on GitHub** button now opens [https://github.com/dertinfo-org](https://github.com/dertinfo-org), the organisation page whose welcome README introduces the organisation. It previously opened `https://github.com/dertinfo`, the personal account the repository left when it moved to the `dertinfo-org` organisation. The footer and other public pages in `apps/dert-web` have no second link to this organisation. [Pull request 139](https://github.com/dertinfo-org/dertinfo-mono/pull/139).
 
 ## Why the work was completed
 
-The public homepage invites people to help with the open-source project and sends them to GitHub. After the move, that button landed on the old account and the repository was no longer there. The button is the way a visitor reaches this codebase, so it needs the organisation repository URL.
+The public homepage invites people to help with the open-source project and sends them to GitHub. After the move, that button landed on the old account. The organisation page is the front door: it shows the organisation welcome README, and from there a visitor can open the repositories. The button should stop on that page rather than open `dertinfo-mono` directly.
 
 ## Date the work was started
 
@@ -19,8 +19,9 @@ The public homepage invites people to help with the open-source project and send
 ## Issues that were encountered on the way
 
 - Branch naming conflicts. [GitHub Flow](../../../.cursor/rules/github-flow.mdc) asks for `feature/` (or `hotfix/`) branches from `main`. This cloud agent run requires `cursor/<description>-c78c`. The branch is `cursor/homepage-github-org-link-c78c`, based on `main`, and is independent of pull request 138. No GitHub issue number exists for this broken link, so the pull request description does not use a closing keyword.
+- The first revision of this change pointed the button at `https://github.com/dertinfo-org/dertinfo-mono`. The destination was then changed to the organisation page `https://github.com/dertinfo-org` so the welcome README is what opens.
 - `npm run web:lint` (`ng lint`) exits immediately because `apps/dert-web/src/client/angular.json` has no `lint` target. [Web Src CI](../../../.github/workflows/web-src-ci.yml) already sets that step to `continue-on-error: true`. This change does not add a linter.
-- `apps/dert-web/README.md` still links to the older repositories `dertinfo/dertinfo` and `dertinfo/dertinfo-app`. Those are not this monorepo, so they were left as written.
+- `apps/dert-web/README.md` still links to the older repositories `dertinfo/dertinfo` and `dertinfo/dertinfo-app`. Those are not this organisation page, so they were left as written.
 
 ## References to any best practices that we found
 
