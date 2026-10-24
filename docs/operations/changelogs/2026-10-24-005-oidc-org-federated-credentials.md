@@ -12,6 +12,8 @@ New operator scripts add that subject onto the Entra apps that already exist. Ea
 
 [`Shared-DertInfoOidcFederatedCredential.ps1`](../../../infra/scripts/Entra/Shared-DertInfoOidcFederatedCredential.ps1) holds the compare-and-create logic. The control plane does not list it. The scripts do not create apps, service principals, or role assignments, and they do not change GitHub Environment variables. House docs: [GitHub Actions OIDC](../../technical/guides/github-azure-federated-credentials.md), [CI/CD](../../technical/infra/cicd.md), [scripts README](../../../infra/scripts/README.md).
 
+Pull request: https://github.com/dertinfo-org/dertinfo-mono/pull/143
+
 ## Why the work was completed
 
 The repository moved from `dertinfo/dertinfo-mono` to `dertinfo-org/dertinfo-mono`. A GitHub Actions OIDC token subject includes the owner, so the credentials already on the apps no longer match tokens from the organisation repository. The app registrations, service principals, and role assignments are still the right identities. Replacing them would mint new client ids and force every GitHub Environment variable to change.
