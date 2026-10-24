@@ -4,6 +4,8 @@
 
 The `integration-test` job in API source CI and CD now runs `dertinfo-api.itests` against a SQL Server service container. A failed test fails the workflow. On CD, `deploy-dev` waits for that job as well as `build` and `unit-test`, so a failure is not deployed to development. Production deploy already waits on `deploy-dev`, so it waits on the integration tests too.
 
+Pull request: https://github.com/dertinfo-org/dertinfo-mono/pull/138
+
 ## Why the work was completed
 
 The job existed and was switched off (`if: false`). [Issue 122](https://github.com/dertinfo-org/dertinfo-mono/issues/122) calls out that startup migration in `Startup.Configure` cannot connect without SQL Server, so integration coverage was local-only. A change that needs a real SQL connection was not checked before deploy.
