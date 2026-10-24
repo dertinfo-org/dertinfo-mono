@@ -11,6 +11,9 @@ on:
       - 'Directory.Build.props'
       - '.github/workflows/api-src-ci.yml'
 
+permissions:
+  contents: read
+
 jobs:
   up-to-date:
     if: github.event_name == 'pull_request'

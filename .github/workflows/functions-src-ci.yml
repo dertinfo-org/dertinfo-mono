@@ -10,6 +10,9 @@ on:
       - 'Directory.Build.props'
       - '.github/workflows/functions-src-ci.yml'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest

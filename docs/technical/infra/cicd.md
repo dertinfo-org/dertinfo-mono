@@ -86,6 +86,8 @@ GitHub requires reusable workflows at the **top level** of `.github/workflows/` 
 
 Bicep house rules: [Bicep standards](../standards/bicep/). Operator scripts: [`infra/scripts/`](../../../infra/scripts/).
 
+Source CI workflows, source CD workflows, and the Docker build reusable workflow set `permissions: contents: read` for `GITHUB_TOKEN`. That is the checkout, fetch, and same-workflow artifact scope. A job that signs in to Azure keeps its own block (`id-token: write` and `contents: read`), which replaces the workflow default for that job. Static Web App deploy jobs also set `actions: read`. [Assigning permissions to jobs](https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs).
+
 ### Per-app src CD
 
 | Workflow | Build | Docker image | Deploy target |
