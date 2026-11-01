@@ -2,7 +2,7 @@
 name: Local development
 type: guide
 status: active
-updated: 2026-10-24
+updated: 2026-11-01
 ---
 
 # Local development
@@ -24,6 +24,83 @@ Day-to-day: API + website + image resize + Azurite on the host. **Docker Desktop
 
 Default URLs: API `44100`, website `44200`, image resize `44400`, Azurite `10000–10002`. SQL may be host Express or Compose on `44000`. PWA `44300` only if enabled in `runtime.json`.
 
+## Native builds
+
+Build, then run, one component at a time. Commands start from the repository root.
+
+### API
+
+```powershell
+dotnet build apps/dert-api/src/dertinfo-api/dertinfo-api.csproj
+```
+
+```powershell
+Get-Content infra/secrets/api.env | ForEach-Object {
+  $line = $_.Trim()
+  if (-not $line -or $line.StartsWith('#')) { return }
+  $eq = $line.IndexOf('=')
+  if ($eq -le 0) { return }
+  $name = $line.Substring(0, $eq).Trim()
+  $value = $line.Substring($eq + 1).Trim()
+  if (($value.StartsWith('"') -and $value.EndsWith('"')) -or ($value.StartsWith("'") -and $value.EndsWith("'"))) {
+    $value = $value.Substring(1, $value.Length - 2)
+  }
+  Set-Item -Path "Env:$name" -Value $value
+}
+dotnet run --project apps/dert-api/src/dertinfo-api/dertinfo-api.csproj --no-build -- --urls http://localhost:44100
+```
+
+The run command loads `infra/secrets/api.env` into the process environment. .NET maps `SqlConnection__ServerName` to `SqlConnection:ServerName`. The API listens on `http://localhost:44100`.
+
+### Website
+
+```powershell
+cd apps/dert-web/src/client
+ng build
+ng serve
+```
+
+In a second terminal, from the repository root:
+
+```powershell
+swa start http://127.0.0.1:4200 --port 44200 --devserver-timeout 120
+```
+
+### App (PWA)
+
+```powershell
+cd apps/dert-app/src/client
+ng build
+ng serve --port 4201
+```
+
+In a second terminal, from the repository root:
+
+```powershell
+swa start http://127.0.0.1:4201 --port 44300 --devserver-timeout 120
+```
+
+### Image resize
+
+Copy `apps/dert-functions/src/dertinfo-image-resize/local.settings.json.example` to `local.settings.json` beside `host.json` before the first build. The build copies that file into the output folder. Core Tools reads `FUNCTIONS_WORKER_RUNTIME` from the `--script-root` folder.
+
+```bash
+dotnet build apps/dert-functions/src/dertinfo-image-resize/DertInfoImageResizeV4.csproj --configuration Debug
+func start --port 44400 --script-root apps/dert-functions/src/dertinfo-image-resize/bin/Debug/net8.0
+```
+
+### Azurite
+
+No build. Create `infra/data/azurite` if it is missing.
+
+```bash
+azurite --silent --blobHost 127.0.0.1 --queueHost 127.0.0.1 --tableHost 127.0.0.1 --blobPort 10000 --queuePort 10001 --tablePort 10002 --location infra/data/azurite
+```
+
+### SQL
+
+No build and no start command. Native mode uses the SQL Server instance named in `infra/secrets/api.env`.
+
 ## Hybrid native / Docker
 
 [`infra/dev/`](../../../infra/dev/README.md) scripts read `runtime.json`. Each service has `mode` (`native` | `docker` | `off`), `rebuild`, and optional `hotReload`.
@@ -32,6 +109,8 @@ Default URLs: API `44100`, website `44200`, image resize `44400`, Azurite `10000
 - Mixed modes use Compose `--no-deps` and `host.docker.internal` where containers talk to host SQL/Azurite.
 
 Details, timings, and recommended day-to-day matrix: [`infra/dev/README.md`](../../../infra/dev/README.md).
+
+To build and run an individual service in Docker, use the commands under [Full Docker Compose](#full-docker-compose).
 
 ## Full Docker Compose
 
@@ -48,6 +127,17 @@ docker compose up --build
 ```
 
 Prefer native/hybrid for editing API or website; use Compose when you want containers without host Azurite/func/SWA. Root README: [Docker (optional)](../../../README.md#docker-optional).
+
+From the repository root, `docker compose up --build` builds and starts the whole estate. To build one component and then run it (Compose also starts that service’s `depends_on` containers):
+
+| Component | Build | Run |
+|-----------|-------|-----|
+| API | `docker compose build dertinfo-api` | `docker compose up dertinfo-api` |
+| Website | `docker compose build web-frontend` | `docker compose up web-frontend` |
+| App (PWA) | `docker compose build app-frontend` | `docker compose up app-frontend` |
+| Image resize | `docker compose build functions` | `docker compose up functions` |
+| Azurite | `docker compose pull azstorage` | `docker compose up azstorage` |
+| SQL | `docker compose pull sqlserver` | `docker compose up sqlserver` |
 
 Each app still has a **Dockerfile** for image builds; CD publishes test-tagged images to Docker Hub — see [CI/CD](../infra/cicd.md).
 
