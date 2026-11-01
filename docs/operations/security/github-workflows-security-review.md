@@ -2,12 +2,12 @@
 name: GitHub workflows security review (subscription OIDC)
 type: security-review
 status: active
-updated: 2026-10-17
+updated: 2026-10-24
 ---
 
 # Security review: GitHub workflows and subscription OIDC
 
-**Scope:** Public monorepo `dertinfo/dertinfo-mono`, **Subscription infra CD**, Entra federated credentials, GitHub Environments `development` / `production`, and operator scripts under [`infra/scripts/`](../../../infra/scripts/).
+**Scope:** Public monorepo `dertinfo-org/dertinfo-mono`, **Subscription infra CD**, Entra federated credentials, GitHub Environments `development` / `production`, and operator scripts under [`infra/scripts/`](../../../infra/scripts/).
 
 **Related:** [GitHub Actions OIDC guide](../../technical/guides/github-azure-federated-credentials.md), [CI/CD](../../technical/infra/cicd.md), [Security (storage / Flex deploy)](../../technical/subsystems/security.md). A disallowed-SKU deny is still unchecked: [issue 126](https://github.com/dertinfo/dertinfo-mono/issues/126).
 
@@ -22,9 +22,9 @@ updated: 2026-10-17
 | Public git history and workflow YAML | Anyone can read `.github/workflows/*`, Bicep, and federated-credential **JSON shapes** (issuer/subject/audience — no secrets). |
 | GitHub Actions on this repo | `workflow_dispatch` and `push` to `main` (path-filtered) for subscription CD; jobs request `id-token: write` and use Environment vars for Azure login. |
 | GitHub Environment variables | Non-secret OIDC client id, tenant id, subscription id (visible to users with appropriate GitHub access; client id is not a password). |
-| Entra app registrations | Application (client) ids for subscription deploy SPs; federated credentials trust GitHub OIDC subjects `repo:dertinfo/dertinfo-mono:environment:development` and `…:environment:production`. |
+| Entra app registrations | Application (client) ids for subscription deploy SPs; federated credentials trust GitHub OIDC subjects `repo:dertinfo-org@347463852/dertinfo-mono@1286253466:environment:development` and `…:environment:production`. A previous `repo:dertinfo/dertinfo-mono:...` credential may remain until an operator deletes it after the organization repository has signed in. |
 | Azure RBAC | Each SP has Contributor + User Access Administrator on **one** subscription only (development vs production isolation). |
-| Operator scripts | [`New-DertInfoSubscriptionOidcIdentities.ps1`](../../../infra/scripts/Entra/New-DertInfoSubscriptionOidcIdentities.ps1) / [`Remove-DertInfoSubscriptionOidcIdentity.ps1`](../../../infra/scripts/Entra/Remove-DertInfoSubscriptionOidcIdentity.ps1) — powerful if run by a human with Entra + subscription admin rights (local workstation / Cloud Shell), not invoked by Actions. |
+| Operator scripts | [`New-DertInfoSubscriptionOidcIdentities.ps1`](../../../infra/scripts/Entra/New-DertInfoSubscriptionOidcIdentities.ps1), [`Update-DertInfoSubscriptionOidcIdentities.ps1`](../../../infra/scripts/Entra/Update-DertInfoSubscriptionOidcIdentities.ps1), [`Update-DertInfoWorkloadOidcIdentities.ps1`](../../../infra/scripts/Entra/Update-DertInfoWorkloadOidcIdentities.ps1) / [`Remove-DertInfoSubscriptionOidcIdentity.ps1`](../../../infra/scripts/Entra/Remove-DertInfoSubscriptionOidcIdentity.ps1) — powerful if run by a human with Entra + subscription admin rights (local workstation / Cloud Shell), not invoked by Actions. The update scripts add a federated credential and do not change role assignments. |
 
 Out of scope for this review: Auth0, app CD Environments `test` / `prod`, and future RG-scoped workload identities (except that they must not reuse the subscription SP).
 
@@ -53,7 +53,7 @@ Out of scope for this review: Auth0, app CD Environments `test` / `prod`, and fu
 | **Required reviewers** | `development` and `production` require approval from **`dertinfo` or `davidsmonkeys`**. Deploy (and token exchange for that Environment) waits on that approval. |
 | **Isolated app registrations** | Separate Entra apps/SPs per Environment; development SP must not have RBAC on Production (and vice versa). A stolen or misused development identity cannot administer the production subscription. |
 | **Operator scripts (create / remove)** | Standardise creating isolated identities and tearing down a single client id; reduce accidental “one SP for both subs” setups. See [`infra/scripts/README.md`](../../../infra/scripts/README.md). |
-| **Public-repo fork behaviour** | Fork PRs do not receive this repo’s Environment configuration for privileged OIDC the way maintainer runs do; subjects would not match the checked-in trust policy for `dertinfo/dertinfo-mono`. |
+| **Public-repo fork behaviour** | Fork PRs do not receive this repo’s Environment configuration for privileged OIDC the way maintainer runs do; subjects would not match the checked-in trust policy for `dertinfo-org/dertinfo-mono`. |
 | **Production not on push** | `deploy-prod` only on `workflow_dispatch` with `target: prod`, still behind the `production` Environment. |
 | **Path-filtered push to `main`** | Auto `deploy-dev` only when subscription Bicep/workflow paths change; still requires Environment approval. |
 

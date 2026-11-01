@@ -54,6 +54,9 @@ App registrations and groups.
 | [`New-DertInfoSubscriptionOidcIdentities.ps1`](Entra/New-DertInfoSubscriptionOidcIdentities.ps1) | Create **isolated** Entra apps + service principals for subscription-scope GitHub Actions OIDC (`development` and `production`), apply federated credentials from [`infra/configuration/`](../configuration/), and grant Contributor + User Access Administrator on each subscription |
 | [`New-DertInfoWorkloadOidcIdentities.ps1`](Entra/New-DertInfoWorkloadOidcIdentities.ps1) | Master: create all workload identities for **one** Environment / subscription; prints copy-paste GitHub variables |
 | [`New-DertInfoWorkloadOidcIdentity.ps1`](Entra/New-DertInfoWorkloadOidcIdentity.ps1) | Create **one** workload identity (one Environment + one part). No subscription RBAC |
+| [`Update-DertInfoSubscriptionOidcIdentities.ps1`](Entra/Update-DertInfoSubscriptionOidcIdentities.ps1) | Add the checked-in federated credential subject to **one** existing subscription OIDC app (`development` or `production`) |
+| [`Update-DertInfoWorkloadOidcIdentities.ps1`](Entra/Update-DertInfoWorkloadOidcIdentities.ps1) | Add that subject to **every** existing workload OIDC app for one Environment |
+| [`Update-DertInfoWorkloadOidcIdentity.ps1`](Entra/Update-DertInfoWorkloadOidcIdentity.ps1) | Add that subject to **one** existing workload OIDC app. No subscription RBAC |
 | [`Remove-DertInfoSubscriptionOidcIdentity.ps1`](Entra/Remove-DertInfoSubscriptionOidcIdentity.ps1) | Tear down **one** subscription-scope identity by app (client) id |
 | [`Remove-DertInfoWorkloadOidcIdentity.ps1`](Entra/Remove-DertInfoWorkloadOidcIdentity.ps1) | Tear down **one** workload identity by app (client) id |
 
@@ -97,6 +100,21 @@ The script prints the GitHub Environment **variables** to set on **`development`
 ```
 
 The remove script prints display name, federated credential names, and each role/scope, then prompts for confirmation. Pass `-Force` to skip the prompt. Missing federated credentials, the service principal, or the app are skipped (safe to re-run).
+
+## Add the organization repository credential
+
+The create scripts skip a federated credential when its name already exists (`github-development` / `github-production`). After the move to `dertinfo-org/dertinfo-mono`, use the update scripts. Each run is one GitHub Environment. They show up in [`Start-DertInfoControlPlane.ps1`](Start-DertInfoControlPlane.ps1) as `Entra > Update-DertInfoSubscriptionOidcIdentities.ps1` and `Entra > Update-DertInfoWorkloadOidcIdentities.ps1`.
+
+Run **development** and confirm `azure/login` before **production**:
+
+```powershell
+.\Entra\Update-DertInfoSubscriptionOidcIdentities.ps1 -GitHubEnvironment development
+.\Entra\Update-DertInfoWorkloadOidcIdentities.ps1 -GitHubEnvironment development
+```
+
+Then the same two commands with `-GitHubEnvironment production`.
+
+The subject comes from [`github-azure-dev-credential.json`](../configuration/github-azure-dev-credential.json) or [`github-azure-prd-credential.json`](../configuration/github-azure-prd-credential.json). The script does not create apps or change role assignments or GitHub variables. When the JSON name is already used by another subject, it adds a second credential and leaves the old one in place. An immutable subject `repo:dertinfo-org@347463852/...` is named `github-development-dertinfo-org-347463852` or `github-production-dertinfo-org-347463852`. A second run finds the new subject and does nothing. `-Force` skips the prompt.
 
 ## Workload OIDC identities
 
