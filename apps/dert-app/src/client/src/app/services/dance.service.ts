@@ -1,7 +1,7 @@
 // Angular
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { ILogger } from '../providers/diagnostics/logger';
 
 // Application
@@ -74,7 +74,7 @@ export class DanceService {
             errMsg = error.message ? error.message : error.toString();
         }
         console.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(() => errMsg);
     }
 
 }

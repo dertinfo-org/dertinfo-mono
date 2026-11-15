@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ILogger } from '../providers/diagnostics/logger';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 // Application
 import { PinCodeSubmissionDto } from '../models/dto/index';
@@ -36,6 +36,6 @@ export class PinCodeService {
             errMsg = error.message ? error.message : error.toString();
         }
         console.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(() => errMsg);
     }
 }

@@ -470,6 +470,32 @@ The CLI migration set `tsconfig.json` `target` to `ES2022` and added `useDefineF
 
 `ngcc` still processes `@ionic/storage-angular` and `@auth0/angular-jwt`. Angular 16 removes `ngcc`. Node stays **16.20.2**. The same `node-releases` engine warning remains.
 
+## App watch-list from the Angular 15 to 16 upgrade
+
+These showed up on the Ionic app during the move to Angular 16.2. Check them again on the next hop.
+
+### Ionic 7 requires RxJS 7, and two libraries had to leave View Engine first
+
+Ionic 6's support ceiling is Angular 15. `@ionic/angular` moved from **6.3.10** to **7.8.6** before `ng update`. Ionic 7 peers `rxjs` `>=7.5.0`, so RxJS moved from **6.6.7** to **7.8.2**. `Observable.throw` is gone. Five services now use `throwError(() => errMsg)`. `@ionic/storage-angular` moved from **3.0.6** to **4.0.0**, and `@auth0/angular-jwt` from **5.0.2** to **5.2.0**, because those releases publish `fesm2020` and Angular 16 removes `ngcc`. `IonicStorageModule.forRoot()` and `JwtModule` stayed. The production build on Angular 15 succeeded after those moves, and again after `ng update`.
+
+`ng update @angular/cli@^16 @angular/core@^16` completed with no `--force`. CLI **16.2.16**, framework **16.2.12**, TypeScript **5.1.6**, `zone.js` **0.13.3**. A later `npm install` had no peer errors. The `node-releases` engine warning remains.
+
+### Zone imports no longer use `zone.js/dist`
+
+`zone.js` 0.13 does not ship `dist/zone`. `src/polyfills.ts` imports `zone.js`. `src/test.ts` imports `zone.js/testing`.
+
+### The guard migration removed `implements`, not the method
+
+`AuthGuard` no longer implements `CanActivate`. `canActivate` stayed. The Protractor builder is still in `@angular-devkit/build-angular`, so the `e2e` target stayed. The webpack `browser` builder stayed. `target` stayed `es2020`. The production build still warns that the CLI applies ES2022 itself.
+
+### Ionic 7 stylesheets use selectors this build skips
+
+The production build skips `:host-context`, `:dir`, and `::part` rules from Ionic CSS. The build still completes. No stylesheet was rewritten for that.
+
+### Node stays 16
+
+Angular 16.2 supports Node `^16.14.0 || ^18.10.0`. This hop stayed on portable Node **16.20.2**. Angular 17 does not. The next hop moves Node to 18 before `ng update`, while the app is still on Angular 16.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -478,6 +504,7 @@ The CLI migration set `tsconfig.json` `target` to `ES2022` and added `useDefineF
 - [Deferred website Angular modernisation](https://github.com/dertinfo/dertinfo-mono/issues/96)
 - [App upgraded from Angular 13 to Angular 14](../../operations/changelogs/2026-11-15-002-app-angular-14.md)
 - [App upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-11-15-003-app-angular-15.md)
+- [App upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-11-15-004-app-angular-16.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)
