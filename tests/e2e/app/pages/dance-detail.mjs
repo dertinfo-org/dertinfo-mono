@@ -75,15 +75,9 @@ export class DanceDetailPage {
     await this.segmentButton('Photos').click();
   }
 
-  /** After scores are sent, the photos tab may already be showing. Otherwise open it. */
+  /** After scores are sent, the photos pane should already be showing. */
   async ensurePhotoCapture() {
-    const takePhoto = this.takePhotoButton();
-    try {
-      await takePhoto.waitFor({ state: 'visible', timeout: 5000 });
-    } catch {
-      await this.openPhotosTab();
-      await takePhoto.waitFor({ state: 'visible', timeout: 15000 });
-    }
+    await this.takePhotoButton().waitFor({ state: 'visible', timeout: 15000 });
   }
 
   segmentButton(name) {

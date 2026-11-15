@@ -280,17 +280,10 @@ export class DanceDetailPage implements OnInit, OnDestroy {
             (danceDetailDto: DanceDetailDto) => {
                 this.showToast('Scores submitted and recieved');
 
-                /*
-                 * When updating to swiper the model of this.currentslide
-                 * appears to be working as selected. When we complate the scores
-                 * part we want to move the user through to the camera part
-                 * the method below used to do this but we need to change that.
-                 *
-                 * We cannot test this at this time so am commenting here to explain
-                 * the changes
-                 */
-                // WAS: this.cameraSegmentSelected();
+                // Ionic 7 does not emit ionChange when the segment value is set in code.
+                // Setting currentSlide selects the Photos tab. scoreSegmentChanged moves the swiper.
                 this.currentSlide = "camera";
+                this.scoreSegmentChanged();
             }
         );
 

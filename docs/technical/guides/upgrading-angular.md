@@ -492,6 +492,10 @@ Ionic 6's support ceiling is Angular 15. `@ionic/angular` moved from **6.3.10** 
 
 The production build skips `:host-context`, `:dir`, and `::part` rules from Ionic CSS. The build still completes. No stylesheet was rewritten for that.
 
+### Setting the segment value no longer emits `ionChange`
+
+Ionic 7 emits `ionChange` only when the user clicks a segment. `submitScoresForm` sets `currentSlide` to `camera` and then calls `scoreSegmentChanged()`, which moves the swiper. The smoke page object waits for the photo button and does not click the Photos tab.
+
 ### Node stays 16
 
 Angular 16.2 supports Node `^16.14.0 || ^18.10.0`. This hop stayed on portable Node **16.20.2**. Angular 17 does not. The next hop moves Node to 18 before `ng update`, while the app is still on Angular 16.
