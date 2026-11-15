@@ -27,7 +27,8 @@ import { AuthService } from 'src/app/authentication/auth.service';
     selector: 'page-dance-detail',
     templateUrl: 'dance-detail.page.html',
     styleUrls: ['dance-detail.page.scss'],
-    providers: [DanceService]
+    providers: [DanceService],
+    standalone: false
 })
 export class DanceDetailPage implements OnInit, OnDestroy {
 

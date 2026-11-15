@@ -10,7 +10,8 @@ SwiperCore.use([Zoom]);
 @Component({
     selector: 'photo-modal',
     templateUrl: 'photomodal.component.html',
-    styleUrls: ['photomodal.component.scss']
+    styleUrls: ['photomodal.component.scss'],
+    standalone: false
 })
 export class PhotoModal {
 

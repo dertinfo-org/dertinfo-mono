@@ -10,7 +10,8 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
   Ionic pages and navigation.
 */
 @Component({
-    templateUrl: 'settings.page.html'
+    templateUrl: 'settings.page.html',
+    standalone: false
 })
 export class SettingsPage implements OnInit {
 

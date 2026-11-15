@@ -9,9 +9,10 @@ import { VenueStore } from 'src/app/stores/venue.store';
 import { IonFab, NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-venue',
-  templateUrl: './venue.page.html',
-  styleUrls: ['./venue.page.scss'],
+    selector: 'app-venue',
+    templateUrl: './venue.page.html',
+    styleUrls: ['./venue.page.scss'],
+    standalone: false
 })
 export class VenuePage implements OnInit, OnDestroy {
 

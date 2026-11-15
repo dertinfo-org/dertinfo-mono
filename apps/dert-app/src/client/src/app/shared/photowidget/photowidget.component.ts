@@ -10,7 +10,8 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 @Component({
     selector: 'photo-widget',
     templateUrl: 'photowidget.component.html',
-    styleUrls: ['photowidget.component.scss']
+    styleUrls: ['photowidget.component.scss'],
+    standalone: false
 })
 export class PhotoWidget implements OnInit {
 

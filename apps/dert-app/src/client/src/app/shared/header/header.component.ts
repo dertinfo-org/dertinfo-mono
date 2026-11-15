@@ -8,7 +8,8 @@ import { AuthService } from 'src/app/authentication/auth.service';
 
 @Component({
     selector: 'app-header',
-    templateUrl: 'header.component.html'
+    templateUrl: 'header.component.html',
+    standalone: false
 })
 export class AppHeaderComponent {
 

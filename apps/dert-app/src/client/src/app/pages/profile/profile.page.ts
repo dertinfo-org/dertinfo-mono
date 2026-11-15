@@ -14,8 +14,8 @@ import { AuthService } from 'src/app/authentication/auth.service';
 @Component({
     selector: 'page-profile',
     templateUrl: 'profile.page.html',
-    styleUrls: ['profile.page.scss']
-
+    styleUrls: ['profile.page.scss'],
+    standalone: false
 })
 export class ProfilePage implements OnInit, OnDestroy {
 

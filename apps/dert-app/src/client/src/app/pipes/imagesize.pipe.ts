@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ILogger } from '../providers/diagnostics/logger';
 
-@Pipe({ name: 'sizedImage' })
+@Pipe({
+    name: 'sizedImage',
+    standalone: false
+})
 export class ImageSizePipe implements PipeTransform {
 
   constructor(private _logger: ILogger) {

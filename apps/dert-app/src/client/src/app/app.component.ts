@@ -7,9 +7,10 @@ import { ILogger } from './providers/diagnostics/logger';
 import { EventStore } from './stores/event.store';
 import { VenueStore } from './stores/venue.store';
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
 

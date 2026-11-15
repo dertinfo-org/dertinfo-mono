@@ -5,7 +5,8 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
     selector: 'photo-button',
-    templateUrl: 'photobutton.component.html'
+    templateUrl: 'photobutton.component.html',
+    standalone: false
 })
 export class PhotoButton implements OnInit {
 

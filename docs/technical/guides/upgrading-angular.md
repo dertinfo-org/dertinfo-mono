@@ -554,6 +554,32 @@ Angular 18.2 supports Node `^18.19.1 || ^20.11.1 || ^22.0.0`. The installed CLI 
 
 Ionic **8.8.19** peers Angular `>=16`, and the support policy lists Ionic 8 through Angular 20. Stay on it unless a peer or the build refuses it. Node **18.20.8** is inside the Angular 19 range. TypeScript **5.4.5** is not. Angular 19 needs TypeScript `>=5.5.0`. Let `ng update` move it.
 
+## App watch-list from the Angular 18 to 19 upgrade
+
+These showed up on the Ionic app during the move to Angular 19.2. Check them again on the next hop. The full record is [App upgraded from Angular 18 to Angular 19](../../operations/changelogs/2026-11-15-007-app-angular-19.md).
+
+### Ionic 8.8.19 stayed
+
+`@ionic/angular` stayed at **8.8.19**. Its peer range is `@angular/core` `>=16.0.0`. RxJS stayed **7.8.2**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**.
+
+`ng update @angular/cli@^19 @angular/core@^19` completed with no `--force`. CLI **19.2.27**, framework **19.2.25**, TypeScript **5.8.3**, `zone.js` **0.15.1**. A later `npm install` completed. It warned that optional peer `karma` `^6.4.0` from `@angular/build` was overridden by the installed `karma` 6.3. The install did not fail. Karma was left at **6.3.16**.
+
+### Optional migrations were not run
+
+The CLI listed `use-application-builder` and `provide-initializer` and did not run them. The webpack `browser` builder stayed. `APP_INITIALIZER` stayed. `target` stayed `es2020`. The Protractor builder is still present, so the `e2e` target stayed.
+
+### The core migration sets `standalone: false`
+
+Angular 19 defaults `standalone` to true. The required migration added `standalone: false` to 25 components, directives, and pipes. That keeps the NgModules. `ng generate @angular/core:standalone` was not run.
+
+### Node stays 18
+
+Angular 19.2 supports Node `^18.19.1 || ^20.11.1 || ^22.0.0`. The installed CLI 19.2.27 engines field is `^18.19.1 || ^20.11.1 || >=22.0.0`. This hop stayed on portable Node **18.20.8**. npm **10.8.2** left `lockfileVersion` 3. The production build warns that Sass `@import` is deprecated, and the initial bundle is over the 2 MB warning budget. The build still completes.
+
+### The next hop is Angular 20
+
+Angular 20 drops Node 18. Move app CI, the app image, and local `ng` to Node **20.20.2** while the app is still on Angular 19, and re-run the smoke suite before `ng update`. Ionic **8.8.19** still peers Angular `>=16`. Stay on it unless a peer or the build refuses it.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -565,6 +591,7 @@ Ionic **8.8.19** peers Angular `>=16`, and the support policy lists Ionic 8 thro
 - [App upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-11-15-004-app-angular-16.md)
 - [App upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-11-15-005-app-angular-17.md)
 - [App upgraded from Angular 17 to Angular 18](../../operations/changelogs/2026-11-15-006-app-angular-18.md)
+- [App upgraded from Angular 18 to Angular 19](../../operations/changelogs/2026-11-15-007-app-angular-19.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)

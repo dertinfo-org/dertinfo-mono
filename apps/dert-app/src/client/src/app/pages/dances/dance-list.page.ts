@@ -23,8 +23,9 @@ import { Router } from '@angular/router';
 
 @Component({
     templateUrl: 'dance-list.page.html',
-    styleUrls:['dance-list.page.scss'],
-    providers: []
+    styleUrls: ['dance-list.page.scss'],
+    providers: [],
+    standalone: false
 })
 export class DanceListPage implements OnInit, OnDestroy {
 

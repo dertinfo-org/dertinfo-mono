@@ -1,7 +1,8 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-    selector: '[maintain-original]'
+    selector: '[maintain-original]',
+    standalone: false
 })
 export class MaintainOriginalDirective {
 

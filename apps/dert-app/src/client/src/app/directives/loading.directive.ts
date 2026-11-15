@@ -2,7 +2,8 @@ import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Directive({
-    selector: '[isLoading]'
+    selector: '[isLoading]',
+    standalone: false
 })
 export class LoadingDirective implements OnInit {
 
