@@ -442,6 +442,34 @@ The production build warns that `src/global.scss` imports `~swiper/scss` and `~@
 
 Angular 14.3 supports Node `^14.15.0 || ^16.10.0`. This machine's PATH is Node **24.19.0**. Update, install, `ng build`, and `ng serve` used the portable Node **16.20.2**. The Static Web Apps proxy on port 44300 stayed on Node 24. App CI and the app image stay on Node 16. The lockfile was already `lockfileVersion` 3, and npm 8.19.4 left it there.
 
+## App watch-list from the Angular 14 to 15 upgrade
+
+These showed up on the Ionic app during the move to Angular 15.2. Check them again on the next hop.
+
+### Ionic stays on 6
+
+`@ionic/angular` moved from **6.1.15** to **6.3.10**. Angular 15 support starts at Ionic **6.3.6**. The peer range is still `@angular/core` `>=12.0.0`. Ionic 7 waits until Angular 16. `ng update @angular/cli@^15 @angular/core@^15` completed with no `--force`. CLI **15.2.11**, framework **15.2.10**. TypeScript stayed **4.8.4**. `zone.js` stayed **0.11.4**. RxJS stayed **6.6.7**.
+
+### The schematic rewrote `target`, and that edit was reverted
+
+The CLI migration set `tsconfig.json` `target` to `ES2022` and added `useDefineForClassFields: false`. The checked-in target stayed `es2020`, and `useDefineForClassFields` was not added. The production build warns that the CLI applies ES2022 itself.
+
+### The default browserslist file was removed
+
+`.browserslistrc` matched the Angular CLI default, including `not safari 15.2-15.3`. The migration deleted it. The CLI now owns that list.
+
+### Tilde imports no longer resolve
+
+`src/global.scss` imported Ionic CSS and `swiper/scss` with a `~` prefix. Sass stopped on `~swiper/scss`. Ionic CSS is not in the package `exports`, so those imports are relative paths under `node_modules`. `swiper/scss` is exported, so that import has no `~` and no relative path. Search stylesheets for `~` on the next hop.
+
+### Karma no longer loads specs with `require.context`
+
+`src/test.ts` no longer calls `require.context`. The Karma builder loads the specs. Protractor is still configured. Angular 16 is the hop that may remove that builder.
+
+### View Engine libraries are still processed
+
+`ngcc` still processes `@ionic/storage-angular` and `@auth0/angular-jwt`. Angular 16 removes `ngcc`. Node stays **16.20.2**. The same `node-releases` engine warning remains.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -449,6 +477,7 @@ Angular 14.3 supports Node `^14.15.0 || ^16.10.0`. This machine's PATH is Node *
 - [Website smoke tests](website-smoke-tests.md)
 - [Deferred website Angular modernisation](https://github.com/dertinfo/dertinfo-mono/issues/96)
 - [App upgraded from Angular 13 to Angular 14](../../operations/changelogs/2026-11-15-002-app-angular-14.md)
+- [App upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-11-15-003-app-angular-15.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)
