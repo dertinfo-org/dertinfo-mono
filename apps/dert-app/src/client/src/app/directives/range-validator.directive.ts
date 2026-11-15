@@ -1,9 +1,9 @@
 import { Directive, forwardRef } from '@angular/core';
-import { AbstractControl, FormControl, NG_VALIDATORS, Validator, ValidatorFn } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, NG_VALIDATORS, Validator, ValidatorFn } from '@angular/forms';
 
 function validateRangeFactory(minValue: number, maxValue: number) {
 
-    return (c: FormControl) => {
+    return (c: UntypedFormControl) => {
 
         // prepare the return
         const isValid = c.value >= minValue && c.value <= maxValue;

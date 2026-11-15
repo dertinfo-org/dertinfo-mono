@@ -2,12 +2,12 @@
 name: Upgrading Angular
 type: guide
 status: active
-updated: 2026-10-17
+updated: 2026-11-15
 ---
 
 # Upgrading Angular
 
-How to take the website (`apps/dert-web`) up one Angular major. The Ionic app (`apps/dert-app`) is a separate client. This page does not cover that upgrade.
+How to take the website (`apps/dert-web`) up one Angular major. The Ionic app (`apps/dert-app`) is a separate client. App hops are recorded from [App watch-list from the Angular 13 to 14 upgrade](#app-watch-list-from-the-angular-13-to-14-upgrade).
 
 Do one major at a time, on a branch from `main`. The client lives in `apps/dert-web/src/client`. After the official steps, read the watch-list below before treating the hop as done. The existing website smoke suite is the functional check. The hop itself is recorded in a [change log](../../operations/changelogs/README.md).
 
@@ -410,12 +410,45 @@ Angular 22 is the current major. There is no compatibility row yet for a later m
 - Competition admin, Dert of Derts, notifications, and system admin were not part of the layout pass.
 - These packages are still referenced and were left in place: `angular-csv-ext`, `hopscotch`, `perfect-scrollbar`, `moment`, `tslint`, `codelyzer`. TSLint-to-ESLint is separate work.
 
+## App watch-list from the Angular 13 to 14 upgrade
+
+These showed up on the Ionic app during the move to Angular 14.3. The update guide does not list them as application steps. Check them again on the next hop. The client lives in `apps/dert-app/src/client`. The functional check is `npm run test:app:smoke` in `tests/e2e`.
+
+### Ionic 6.0.7 peers Angular 14 and does not build as the supported line
+
+`@ionic/angular` **6.0.7** publishes `@angular/core` `>=12.0.0` with no ceiling. The [Ionic support policy](https://ionicframework.com/docs/reference/support) starts Angular 14 support at Ionic **6.1.9**. This hop moved `@ionic/angular` to **6.1.15**, the last 6.1 patch, before `ng update`. Ionic 7 waits until Angular 16. `@ionic/angular-toolkit` stayed at **5**, and `@ionic/storage-angular` stayed at **3**.
+
+### `ng update` did not need `--force`
+
+`ng update @angular/cli@^14 @angular/core@^14` completed with `--allow-dirty` and no `--force`. It installed CLI **14.2.13**, framework **14.3.0**, and TypeScript **4.8.4**. A later `npm install` on Node 16.20.2 had no peer errors. One transitive package, `node-releases` **2.0.64**, warns that it wants Node `>=18`. That warning is not a peer failure. No `.npmrc` force was added. The Dockerfile still runs `npm install --force` because that image was already doing so for an older conflict.
+
+### The schematic moved the TypeScript target to ES2020
+
+`tsconfig.json` `target` was `es2015`. The CLI migration set it to `es2020`. That matches what this CLI emits, so the edit stayed. `module` was already `es2020`.
+
+### Required migrations kept the old forms and dropped `entryComponents`
+
+The core migration removed `entryComponents` from `AppModule`. It rewrote the dance score form and the range validator to `UntypedFormGroup` and `UntypedFormControl`. Typed forms were not adopted. `APP_INITIALIZER` stayed. The webpack `browser` builder stayed. `defaultProject` was removed from `angular.json`.
+
+### A checked segment button does not receive the click on its inner tab
+
+Ionic 6.1 renders `ion-segment-button` so the host intercepts pointer events for the inner `role="tab"` button. Playwright's `getByRole('tab')` resolves to that inner button. Clicking the Scores tab once it is already selected timed out. The app smoke page object clicks the `ion-segment-button` host. The score form and the photos tab still show.
+
+### Tilde imports still resolve, and two libraries are still View Engine
+
+The production build warns that `src/global.scss` imports `~swiper/scss` and `~@ionic/angular/css/ionic-swiper`. The other Ionic CSS imports in that file use the same `~` prefix and did not warn. The build still completes. On the Angular 15 hop, search stylesheets for `~` before treating the build as clean. `ngcc` still processes `@ionic/storage-angular` and `@auth0/angular-jwt`. Both stayed. Auth0 login was not rewritten.
+
+### This machine's default Node cannot run the app CLI
+
+Angular 14.3 supports Node `^14.15.0 || ^16.10.0`. This machine's PATH is Node **24.19.0**. Update, install, `ng build`, and `ng serve` used the portable Node **16.20.2**. The Static Web Apps proxy on port 44300 stayed on Node 24. App CI and the app image stay on Node 16. The lockfile was already `lockfileVersion` 3, and npm 8.19.4 left it there.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
 - [Configuration](../infra/configuration.md)
 - [Website smoke tests](website-smoke-tests.md)
 - [Deferred website Angular modernisation](https://github.com/dertinfo/dertinfo-mono/issues/96)
+- [App upgraded from Angular 13 to Angular 14](../../operations/changelogs/2026-11-15-002-app-angular-14.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ILogger } from '../../providers/diagnostics/logger';
@@ -48,7 +48,7 @@ export class DanceDetailPage implements OnInit, OnDestroy {
     public danceMarkingSheets: DanceMarkingSheetDto[];
     public scoresLocked = false;
     public currentSlide = 'scores';
-    public danceScoresFormGroup: FormGroup = new FormGroup({});
+    public danceScoresFormGroup: UntypedFormGroup = new UntypedFormGroup({});
     public errorMessage: any;
     public overrun = false;
 
@@ -343,11 +343,11 @@ export class DanceDetailPage implements OnInit, OnDestroy {
 
             const validators = this.scoresLocked ? null : [Validators.required, rangeValidator.validatorFunction];
             //WAS: group[danceScore.scoreCatagoryId] = new FormControl(danceScore.markGiven, validators);
-            group[danceScore.scoreCatagoryId] = new FormControl({value: danceScore.markGiven, disabled: this.scoresLocked}, validators);
+            group[danceScore.scoreCatagoryId] = new UntypedFormControl({value: danceScore.markGiven, disabled: this.scoresLocked}, validators);
 
         });
         // group['overrun'] = new FormControl(this.overrun);
-        return new FormGroup(group); // return the group.
+        return new UntypedFormGroup(group); // return the group.
     }
 
 

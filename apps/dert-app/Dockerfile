@@ -19,7 +19,7 @@
 ##################################################################
 
 # Base Stage
-# Pin Node 16 — matches SPA CI and Angular 13. node:lts (24) / npm 11 fails
+# Pin Node 16 — matches SPA CI and Angular 14. node:lts (24) / npm 11 fails
 # npm install when a file: workspace target is missing from this build context.
 FROM node:16-bookworm AS base
 

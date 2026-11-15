@@ -72,7 +72,7 @@ export class DanceDetailPage {
   }
 
   async openPhotosTab() {
-    await this.page.getByRole('tab', { name: 'Photos' }).click();
+    await this.segmentButton('Photos').click();
   }
 
   /** After scores are sent, the photos tab may already be showing. Otherwise open it. */
@@ -86,8 +86,12 @@ export class DanceDetailPage {
     }
   }
 
+  segmentButton(name) {
+    return this.page.locator('ion-segment-button').filter({ hasText: name });
+  }
+
   async openScores() {
-    await this.page.getByRole('tab', { name: 'Scores' }).click();
+    await this.segmentButton('Scores').click();
     await this.scoreRows().first().waitFor({ state: 'visible', timeout: 30000 });
   }
 
