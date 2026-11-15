@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DanceMarkingSheetDto } from '../../models/dto/DanceMarkingSheetDto';
 
 @Component({
     selector: 'photo-reel',
     templateUrl: 'photoreel.component.html',
-    styleUrls: ['photoreel.component.scss']
+    styleUrls: ['photoreel.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PhotoReel {
 

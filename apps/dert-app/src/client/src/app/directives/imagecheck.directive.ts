@@ -5,7 +5,8 @@ import { Directive, Input } from '@angular/core';
     host: {
         '(error)': 'imageLoadError($event)',
         '[src]': 'src'
-    }
+    },
+    standalone: false
 })
 export class ImageCheckDirective {
 

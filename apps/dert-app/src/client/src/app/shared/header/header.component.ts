@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ILogger } from '../../providers/diagnostics/logger';
 
 import { Subscription } from 'rxjs';
@@ -8,7 +8,9 @@ import { AuthService } from 'src/app/authentication/auth.service';
 
 @Component({
     selector: 'app-header',
-    templateUrl: 'header.component.html'
+    templateUrl: 'header.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AppHeaderComponent {
 

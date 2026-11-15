@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/authentication/auth.service';
 
 @Component({
-  selector: 'app-sign-out',
-  templateUrl: './sign-out.page.html',
-  styleUrls: ['./sign-out.page.scss']
+    selector: 'app-sign-out',
+    templateUrl: './sign-out.page.html',
+    styleUrls: ['./sign-out.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SignOutPage implements OnInit {
 

@@ -5,6 +5,8 @@ export const id = 'scoring.venue-admin.rejects-out-of-range-score';
 
 export async function run(ctx) {
   ctx.plan = await ctx.danceDetail.readScorePlan();
+  await ctx.danceDetail.fillScore(0, ctx.plan[0].value);
+  await ctx.danceDetail.focusClearsAndBlurKeeps(0);
   await ctx.danceDetail.fillScores(ctx.plan);
   await ctx.danceDetail.fillScore(0, String(ctx.plan[0].max + 1));
   await ctx.danceDetail.waitForOutOfRange();

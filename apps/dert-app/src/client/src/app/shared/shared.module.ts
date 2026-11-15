@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppHeaderComponent } from './header/header.component'
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { LoaderComponent } from './loader/loader.component';
 import { PhotoWidget } from './photowidget/photowidget.component';
 import { PhotoReel } from './photoreel/photoreel.component';

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DanceMarkingSheetDto } from '../../models/dto/DanceMarkingSheetDto';
@@ -10,7 +10,9 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 @Component({
     selector: 'photo-widget',
     templateUrl: 'photowidget.component.html',
-    styleUrls: ['photowidget.component.scss']
+    styleUrls: ['photowidget.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class PhotoWidget implements OnInit {
 

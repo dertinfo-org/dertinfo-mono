@@ -8,6 +8,15 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-11-15 | App upgraded from Angular 21 to Angular 22 | [2026-11-15-010-app-angular-22.md](./2026-11-15-010-app-angular-22.md) |
+| 2026-11-15 | App upgraded from Angular 20 to Angular 21 | [2026-11-15-009-app-angular-21.md](./2026-11-15-009-app-angular-21.md) |
+| 2026-11-15 | App upgraded from Angular 19 to Angular 20 | [2026-11-15-008-app-angular-20.md](./2026-11-15-008-app-angular-20.md) |
+| 2026-11-15 | App upgraded from Angular 18 to Angular 19 | [2026-11-15-007-app-angular-19.md](./2026-11-15-007-app-angular-19.md) |
+| 2026-11-15 | App upgraded from Angular 17 to Angular 18 | [2026-11-15-006-app-angular-18.md](./2026-11-15-006-app-angular-18.md) |
+| 2026-11-15 | App upgraded from Angular 16 to Angular 17 | [2026-11-15-005-app-angular-17.md](./2026-11-15-005-app-angular-17.md) |
+| 2026-11-15 | App upgraded from Angular 15 to Angular 16 | [2026-11-15-004-app-angular-16.md](./2026-11-15-004-app-angular-16.md) |
+| 2026-11-15 | App upgraded from Angular 14 to Angular 15 | [2026-11-15-003-app-angular-15.md](./2026-11-15-003-app-angular-15.md) |
+| 2026-11-15 | App upgraded from Angular 13 to Angular 14 | [2026-11-15-002-app-angular-14.md](./2026-11-15-002-app-angular-14.md) |
 | 2026-11-15 | App group-member pin and own-team dances are covered by Playwright | [2026-11-15-001-app-group-member-tests.md](./2026-11-15-001-app-group-member-tests.md) |
 | 2026-10-24 | Existing OIDC apps can trust the organisation repository | [2026-10-24-005-oidc-org-federated-credentials.md](./2026-10-24-005-oidc-org-federated-credentials.md) |
 | 2026-10-24 | Source workflows grant the GitHub token read access to contents | [2026-10-24-004-workflow-token-read.md](./2026-10-24-004-workflow-token-read.md) |

@@ -1,5 +1,5 @@
 // angular
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { List } from 'immutable';
@@ -23,8 +23,10 @@ import { Router } from '@angular/router';
 
 @Component({
     templateUrl: 'dance-list.page.html',
-    styleUrls:['dance-list.page.scss'],
-    providers: []
+    styleUrls: ['dance-list.page.scss'],
+    providers: [],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DanceListPage implements OnInit, OnDestroy {
 

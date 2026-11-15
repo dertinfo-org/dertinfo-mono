@@ -1,6 +1,6 @@
 // src/pages/profile/profile.ts
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ILogger } from '../../providers/diagnostics/logger';
 import { Subscription } from 'rxjs';
 import { UserData } from '../../models/auth/UserData';
@@ -14,8 +14,9 @@ import { AuthService } from 'src/app/authentication/auth.service';
 @Component({
     selector: 'page-profile',
     templateUrl: 'profile.page.html',
-    styleUrls: ['profile.page.scss']
-
+    styleUrls: ['profile.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ProfilePage implements OnInit, OnDestroy {
 

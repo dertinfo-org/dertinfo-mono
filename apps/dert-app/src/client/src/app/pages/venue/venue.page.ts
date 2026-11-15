@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { List } from 'immutable';
 import { Subscription } from 'rxjs';
@@ -9,9 +9,11 @@ import { VenueStore } from 'src/app/stores/venue.store';
 import { IonFab, NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-venue',
-  templateUrl: './venue.page.html',
-  styleUrls: ['./venue.page.scss'],
+    selector: 'app-venue',
+    templateUrl: './venue.page.html',
+    styleUrls: ['./venue.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class VenuePage implements OnInit, OnDestroy {
 

@@ -2,12 +2,12 @@
 name: Upgrading Angular
 type: guide
 status: active
-updated: 2026-10-17
+updated: 2026-11-15
 ---
 
 # Upgrading Angular
 
-How to take the website (`apps/dert-web`) up one Angular major. The Ionic app (`apps/dert-app`) is a separate client. This page does not cover that upgrade.
+How to take the website (`apps/dert-web`) up one Angular major. The Ionic app (`apps/dert-app`) is a separate client. App hops are recorded from [App watch-list from the Angular 13 to 14 upgrade](#app-watch-list-from-the-angular-13-to-14-upgrade).
 
 Do one major at a time, on a branch from `main`. The client lives in `apps/dert-web/src/client`. After the official steps, read the watch-list below before treating the hop as done. The existing website smoke suite is the functional check. The hop itself is recorded in a [change log](../../operations/changelogs/README.md).
 
@@ -410,12 +410,273 @@ Angular 22 is the current major. There is no compatibility row yet for a later m
 - Competition admin, Dert of Derts, notifications, and system admin were not part of the layout pass.
 - These packages are still referenced and were left in place: `angular-csv-ext`, `hopscotch`, `perfect-scrollbar`, `moment`, `tslint`, `codelyzer`. TSLint-to-ESLint is separate work.
 
+## App watch-list from the Angular 13 to 14 upgrade
+
+These showed up on the Ionic app during the move to Angular 14.3. The update guide does not list them as application steps. Check them again on the next hop. The client lives in `apps/dert-app/src/client`. The functional check is `npm run test:app:smoke` in `tests/e2e`.
+
+### Ionic 6.0.7 peers Angular 14 and does not build as the supported line
+
+`@ionic/angular` **6.0.7** publishes `@angular/core` `>=12.0.0` with no ceiling. The [Ionic support policy](https://ionicframework.com/docs/reference/support) starts Angular 14 support at Ionic **6.1.9**. This hop moved `@ionic/angular` to **6.1.15**, the last 6.1 patch, before `ng update`. Ionic 7 waits until Angular 16. `@ionic/angular-toolkit` stayed at **5**, and `@ionic/storage-angular` stayed at **3**.
+
+### `ng update` did not need `--force`
+
+`ng update @angular/cli@^14 @angular/core@^14` completed with `--allow-dirty` and no `--force`. It installed CLI **14.2.13**, framework **14.3.0**, and TypeScript **4.8.4**. A later `npm install` on Node 16.20.2 had no peer errors. One transitive package, `node-releases` **2.0.64**, warns that it wants Node `>=18`. That warning is not a peer failure. No `.npmrc` force was added. The Dockerfile still runs `npm install --force` because that image was already doing so for an older conflict.
+
+### The schematic moved the TypeScript target to ES2020
+
+`tsconfig.json` `target` was `es2015`. The CLI migration set it to `es2020`. That matches what this CLI emits, so the edit stayed. `module` was already `es2020`.
+
+### Required migrations kept the old forms and dropped `entryComponents`
+
+The core migration removed `entryComponents` from `AppModule`. It rewrote the dance score form and the range validator to `UntypedFormGroup` and `UntypedFormControl`. Typed forms were not adopted. `APP_INITIALIZER` stayed. The webpack `browser` builder stayed. `defaultProject` was removed from `angular.json`.
+
+### A checked segment button does not receive the click on its inner tab
+
+Ionic 6.1 renders `ion-segment-button` so the host intercepts pointer events for the inner `role="tab"` button. Playwright's `getByRole('tab')` resolves to that inner button. Clicking the Scores tab once it is already selected timed out. The app smoke page object clicks the `ion-segment-button` host. The score form and the photos tab still show.
+
+### Tilde imports still resolve, and two libraries are still View Engine
+
+The production build warns that `src/global.scss` imports `~swiper/scss` and `~@ionic/angular/css/ionic-swiper`. The other Ionic CSS imports in that file use the same `~` prefix and did not warn. The build still completes. On the Angular 15 hop, search stylesheets for `~` before treating the build as clean. `ngcc` still processes `@ionic/storage-angular` and `@auth0/angular-jwt`. Both stayed. Auth0 login was not rewritten.
+
+### This machine's default Node cannot run the app CLI
+
+Angular 14.3 supports Node `^14.15.0 || ^16.10.0`. This machine's PATH is Node **24.19.0**. Update, install, `ng build`, and `ng serve` used the portable Node **16.20.2**. The Static Web Apps proxy on port 44300 stayed on Node 24. App CI and the app image stay on Node 16. The lockfile was already `lockfileVersion` 3, and npm 8.19.4 left it there.
+
+## App watch-list from the Angular 14 to 15 upgrade
+
+These showed up on the Ionic app during the move to Angular 15.2. Check them again on the next hop.
+
+### Ionic stays on 6
+
+`@ionic/angular` moved from **6.1.15** to **6.3.10**. Angular 15 support starts at Ionic **6.3.6**. The peer range is still `@angular/core` `>=12.0.0`. Ionic 7 waits until Angular 16. `ng update @angular/cli@^15 @angular/core@^15` completed with no `--force`. CLI **15.2.11**, framework **15.2.10**. TypeScript stayed **4.8.4**. `zone.js` stayed **0.11.4**. RxJS stayed **6.6.7**.
+
+### The schematic rewrote `target`, and that edit was reverted
+
+The CLI migration set `tsconfig.json` `target` to `ES2022` and added `useDefineForClassFields: false`. The checked-in target stayed `es2020`, and `useDefineForClassFields` was not added. The production build warns that the CLI applies ES2022 itself.
+
+### The default browserslist file was removed
+
+`.browserslistrc` matched the Angular CLI default, including `not safari 15.2-15.3`. The migration deleted it. The CLI now owns that list.
+
+### Tilde imports no longer resolve
+
+`src/global.scss` imported Ionic CSS and `swiper/scss` with a `~` prefix. Sass stopped on `~swiper/scss`. Ionic CSS is not in the package `exports`, so those imports are relative paths under `node_modules`. `swiper/scss` is exported, so that import has no `~` and no relative path. Search stylesheets for `~` on the next hop.
+
+### Karma no longer loads specs with `require.context`
+
+`src/test.ts` no longer calls `require.context`. The Karma builder loads the specs. Protractor is still configured. Angular 16 is the hop that may remove that builder.
+
+### View Engine libraries are still processed
+
+`ngcc` still processes `@ionic/storage-angular` and `@auth0/angular-jwt`. Angular 16 removes `ngcc`. Node stays **16.20.2**. The same `node-releases` engine warning remains.
+
+## App watch-list from the Angular 15 to 16 upgrade
+
+These showed up on the Ionic app during the move to Angular 16.2. Check them again on the next hop.
+
+### Ionic 7 requires RxJS 7, and two libraries had to leave View Engine first
+
+Ionic 6's support ceiling is Angular 15. `@ionic/angular` moved from **6.3.10** to **7.8.6** before `ng update`. Ionic 7 peers `rxjs` `>=7.5.0`, so RxJS moved from **6.6.7** to **7.8.2**. `Observable.throw` is gone. Five services now use `throwError(() => errMsg)`. `@ionic/storage-angular` moved from **3.0.6** to **4.0.0**, and `@auth0/angular-jwt` from **5.0.2** to **5.2.0**, because those releases publish `fesm2020` and Angular 16 removes `ngcc`. `IonicStorageModule.forRoot()` and `JwtModule` stayed. The production build on Angular 15 succeeded after those moves, and again after `ng update`.
+
+`ng update @angular/cli@^16 @angular/core@^16` completed with no `--force`. CLI **16.2.16**, framework **16.2.12**, TypeScript **5.1.6**, `zone.js` **0.13.3**. A later `npm install` had no peer errors. The `node-releases` engine warning remains.
+
+### Zone imports no longer use `zone.js/dist`
+
+`zone.js` 0.13 does not ship `dist/zone`. `src/polyfills.ts` imports `zone.js`. `src/test.ts` imports `zone.js/testing`.
+
+### The guard migration removed `implements`, not the method
+
+`AuthGuard` no longer implements `CanActivate`. `canActivate` stayed. The Protractor builder is still in `@angular-devkit/build-angular`, so the `e2e` target stayed. The webpack `browser` builder stayed. `target` stayed `es2020`. The production build still warns that the CLI applies ES2022 itself.
+
+### Ionic 7 stylesheets use selectors this build skips
+
+The production build skips `:host-context`, `:dir`, and `::part` rules from Ionic CSS. The build still completes. No stylesheet was rewritten for that.
+
+### Setting the segment value no longer emits `ionChange`
+
+Ionic 7 emits `ionChange` only when the user clicks a segment. `submitScoresForm` sets `currentSlide` to `camera` and then calls `scoreSegmentChanged()`, which moves the swiper. The smoke page object waits for the photo button and does not click the Photos tab.
+
+### Node stays 16
+
+Angular 16.2 supports Node `^16.14.0 || ^18.10.0`. This hop stayed on portable Node **16.20.2**. Angular 17 does not. The next hop moves Node to 18 before `ng update`, while the app is still on Angular 16.
+
+## App watch-list from the Angular 16 to 17 upgrade
+
+These showed up on the Ionic app during the move to Angular 17.3. Check them again on the next hop. The full record is [App upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-11-15-005-app-angular-17.md).
+
+### Node 18 comes first
+
+Angular 17.3 supports Node `^18.13.0 || ^20.9.0`. The installed CLI 17.3.17 engines field is `^18.13.0 || >=20.9.0`. App CI, the app image, and local `ng` moved to Node **18.20.8** while the app was still on Angular 16.2.12. `npm install` and the production build succeeded, and the smoke suite passed, before `ng update`. npm **10.8.2** left `lockfileVersion` 3. This machine's default Node is 24.19.0. `ng` stayed on Node 18 so the lockfile stayed on npm 10. The Static Web Apps proxy on port 44300 stayed on Node 24.
+
+### Ionic 7.8.6 already covers Angular 17
+
+`@ionic/angular` stayed at **7.8.6**. Angular 17 support starts at Ionic **7.5.4**. RxJS stayed **7.8.2**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**.
+
+`ng update @angular/cli@^17 @angular/core@^17` completed with no `--force`. CLI **17.3.17**, framework **17.3.12**, TypeScript **5.4.5**, `zone.js` **0.14.10**. A later `npm install` had no peer errors. The `node-releases` engine warning from Node 16 is gone.
+
+### The CLI renamed `browserTarget` and left the webpack builder
+
+`browserTarget` became `buildTarget` on the dev server and extract-i18n targets. The webpack `browser` builder stayed. The Cordova targets still say `browserTarget`. The control-flow migration found no `@` to escape. `tsconfig.json` `target` stayed `es2020`. The CLI still applies ES2022 and still warns. The Protractor builder is still in `@angular-devkit/build-angular`, so the `e2e` target stayed. The production build still skips Ionic `:host-context`, `:dir`, and `::part`. The initial bundle is over the 2 MB warning budget. The build still completes.
+
+### The next hop is Angular 18
+
+Ionic 8 starts Angular 18 support at **8.2**. Node **18.20.8** is inside the Angular 18.2 range (`^18.19.1 || ^20.11.1 || ^22.0.0`). Keep the webpack `browser` builder. The application builder is optional.
+
+## App watch-list from the Angular 17 to 18 upgrade
+
+These showed up on the Ionic app during the move to Angular 18.2. Check them again on the next hop. The full record is [App upgraded from Angular 17 to Angular 18](../../operations/changelogs/2026-11-15-006-app-angular-18.md).
+
+### Ionic 8.8.19 already covers this hop
+
+Ionic 7's support ceiling is Angular 17. `@ionic/angular` moved from **7.8.6** to **8.8.19** before `ng update`. The peer range is `@angular/core` `>=16.0.0`. Angular 18 support starts at Ionic **8.2.0**. The production build on Angular 17 succeeded after that move. RxJS stayed **7.8.2**. `zone.js` stayed **0.14.10**. TypeScript stayed **5.4.5**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**. `@ionic/angular-toolkit` stayed **5.0.3**. It declares no peers.
+
+### `ng update` lists the application builder and does not run it
+
+`ng update @angular/cli@^18 @angular/core@^18` completed with no `--force`. The CLI printed one optional migration, `use-application-builder`, and did not run it. The webpack `browser` builder stayed. CLI **18.2.21**, framework **18.2.14**. A later `npm install` had no peer errors.
+
+### The core migration replaced `HttpClientModule`
+
+The core migration removed `HttpClientModule` from `AppModule` and added `provideHttpClient(withInterceptorsFromDi())`. `HttpClient` is still injected by `APP_INITIALIZER`. The new control flow, standalone components, and zoneless change detection were not adopted. `target` stayed `es2020`. The Protractor builder is still present, so the `e2e` target stayed.
+
+### Score fields clear on focus through the native input
+
+`maintain-original` used to clear `children[0]`. Ionic 8 wraps the native input, and the focus re-render writes the component value back onto it. The directive clears `input` after that re-render. Leaving the field empty puts the saved value back.
+
+### The dance list stays mounted under the detail page
+
+`DanceListPage` has no selector, so its host is `ng-component`. After this hop that page stays `display: flex` underneath `page-dance-detail`. The detail page is on top and receives the clicks. The smoke helper waits for the team heading inside `page-dance-detail`. A page-wide heading locator also matches the dance row on the list.
+
+### Node stays 18
+
+Angular 18.2 supports Node `^18.19.1 || ^20.11.1 || ^22.0.0`. The installed CLI 18.2.21 engines field is `^18.19.1 || ^20.11.1 || >=22.0.0`. This hop stayed on portable Node **18.20.8**. npm **10.8.2** left `lockfileVersion` 3. The production build still skips Ionic `:host-context`, `:dir`, and `::part`, and the initial bundle is still over the 2 MB warning budget. The build still completes.
+
+### The next hop is Angular 19
+
+Ionic **8.8.19** peers Angular `>=16`, and the support policy lists Ionic 8 through Angular 20. Stay on it unless a peer or the build refuses it. Node **18.20.8** is inside the Angular 19 range. TypeScript **5.4.5** is not. Angular 19 needs TypeScript `>=5.5.0`. Let `ng update` move it.
+
+## App watch-list from the Angular 18 to 19 upgrade
+
+These showed up on the Ionic app during the move to Angular 19.2. Check them again on the next hop. The full record is [App upgraded from Angular 18 to Angular 19](../../operations/changelogs/2026-11-15-007-app-angular-19.md).
+
+### Ionic 8.8.19 stayed
+
+`@ionic/angular` stayed at **8.8.19**. Its peer range is `@angular/core` `>=16.0.0`. RxJS stayed **7.8.2**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**.
+
+`ng update @angular/cli@^19 @angular/core@^19` completed with no `--force`. CLI **19.2.27**, framework **19.2.25**, TypeScript **5.8.3**, `zone.js` **0.15.1**. A later `npm install` completed. It warned that optional peer `karma` `^6.4.0` from `@angular/build` was overridden by the installed `karma` 6.3. The install did not fail. Karma was left at **6.3.16**.
+
+### Optional migrations were not run
+
+The CLI listed `use-application-builder` and `provide-initializer` and did not run them. The webpack `browser` builder stayed. `APP_INITIALIZER` stayed. `target` stayed `es2020`. The Protractor builder is still present, so the `e2e` target stayed.
+
+### The core migration sets `standalone: false`
+
+Angular 19 defaults `standalone` to true. The required migration added `standalone: false` to 25 components, directives, and pipes. That keeps the NgModules. `ng generate @angular/core:standalone` was not run.
+
+### Node stays 18
+
+Angular 19.2 supports Node `^18.19.1 || ^20.11.1 || ^22.0.0`. The installed CLI 19.2.27 engines field is `^18.19.1 || ^20.11.1 || >=22.0.0`. This hop stayed on portable Node **18.20.8**. npm **10.8.2** left `lockfileVersion` 3. The production build warns that Sass `@import` is deprecated, and the initial bundle is over the 2 MB warning budget. The build still completes.
+
+### The next hop is Angular 20
+
+Angular 20 drops Node 18. Move app CI, the app image, and local `ng` to Node **20.20.2** while the app is still on Angular 19, and re-run the smoke suite before `ng update`. Ionic **8.8.19** still peers Angular `>=16`. Stay on it unless a peer or the build refuses it.
+
+## App watch-list from the Angular 19 to 20 upgrade
+
+These showed up on the Ionic app during the move to Angular 20.3. Check them again on the next hop. The full record is [App upgraded from Angular 19 to Angular 20](../../operations/changelogs/2026-11-15-008-app-angular-20.md).
+
+### Node 20 comes first
+
+Angular 20.3 supports Node `^20.19.0 || ^22.12.0 || ^24.0.0`. The installed CLI 20.3.43 engines field is `^20.19.0 || ^22.12.0 || >=24.0.0`. App CI, the app image, and local `ng` moved to Node **20.20.2** while the app was still on Angular 19.2.25. `npm install` and the production build succeeded, and the smoke suite passed, before `ng update`. npm **10.8.2** left `lockfileVersion` 3. This machine's default Node is 24.19.0. `ng` stayed on Node 20 so the lockfile stayed on npm 10. The Static Web Apps proxy on port 44300 stayed on Node 24. Node 20 ended on 30 April 2026. **20.20.2** is the last release on that line. Angular 21 still lists `^20.19.0`.
+
+### Ionic 8.8.19 stayed
+
+`@ionic/angular` stayed at **8.8.19**. Its peer range is `@angular/core` `>=16.0.0`. The support policy lists Ionic 8 through Angular 20. RxJS stayed **7.8.2**. TypeScript stayed **5.8.3**. `zone.js` stayed **0.15.1**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**.
+
+`ng update @angular/cli@^20 @angular/core@^20` completed with no `--force`. CLI **20.3.43**, framework **20.3.35**. A later `npm install` completed. It warned that optional peer `karma` `^6.4.0` from `@angular/build` was overridden by the installed `karma` 6.3. The install did not fail. Karma was left at **6.3.16**.
+
+### Optional migrations were not run
+
+The CLI listed `use-application-builder`, `control-flow-migration`, and `router-current-navigation` and did not run them. The webpack `browser` builder stayed. `*ngIf`, `*ngFor`, and `*ngSwitch` stayed. `APP_INITIALIZER` stayed. `target` stayed `es2020`. The `standalone: false` flags from Angular 19 stayed. The Protractor builder is still present, so the `e2e` target stayed.
+
+### The CLI set `moduleResolution` to `bundler`
+
+The required CLI migration changed `tsconfig.json` `moduleResolution` from `node` to `bundler` and wrote schematic defaults that keep the current file-name suffixes. The `DOCUMENT`, `InjectFlags`, and `TestBed.get` migrations made no changes.
+
+### The next hop is Angular 21
+
+Ionic 8's support ceiling is Angular 20. The next hop moves to Ionic 9. Keep `IonicModule` and Zone.js. Node **20.20.2** is inside the Angular 21 range. TypeScript **5.8.3** is not. Angular 21 needs TypeScript `>=5.9.0`. Let `ng update` move it.
+
+## App watch-list from the Angular 20 to 21 upgrade
+
+These showed up on the Ionic app during the move to Angular 21.2. Check them again on the next hop. The full record is [App upgraded from Angular 20 to Angular 21](../../operations/changelogs/2026-11-15-009-app-angular-21.md).
+
+### Ionic 9.0.11 keeps `IonicModule` on the lazy entry
+
+`@ionic/angular` moved from **8.8.19** to **9.0.11** before `ng update`. Its peer range is `@angular/core` `>=18`. The production build and the smoke suite passed on Angular 20.3.35 after that move. The root export no longer includes `IonicModule`. The NgModules import it from `@ionic/angular/lazy`. `IonicModule.forRoot()` stayed. `provideIonicAngular()` is also registered, because `ModalController` from the root export is not provided by the lazy module. Without it, a saved marking-sheet photo never renders. RxJS stayed **7.8.2**. `zone.js` stayed **0.15.1**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**. `@ionic/angular-toolkit` stayed **5.0.3**.
+
+### Node stayed 20
+
+Angular 21.2 supports Node `^20.19.0 || ^22.12.0 || ^24.0.0`. The installed CLI 21.2.30 engines field is `^20.19.0 || ^22.12.0 || >=24.0.0`. This hop stayed on portable Node **20.20.2**. npm **10.8.2** left `lockfileVersion` 3. There was no engine change before `ng update`.
+
+### `ng update` runs the control-flow migration, and this hop put the templates back
+
+`ng update @angular/cli@^21 @angular/core@^21` completed with no `--force`. CLI **21.2.30**, framework **21.2.26**, TypeScript **5.9.3**. The control-flow migration is no longer optional. It rewrote 11 templates. Those files were restored, so `*ngIf` and `*ngFor` stayed. `use-application-builder` and `router-current-navigation` stayed optional and were not run. The webpack `browser` builder stayed. `APP_INITIALIZER` stayed. The `standalone: false` flags stayed. The Protractor builder is still present, so the `e2e` target stayed.
+
+### `provideZoneChangeDetection` keeps Zone change detection
+
+The bootstrap migration added `provideZoneChangeDetection()` as `applicationProviders` on `bootstrapModule` in `main.ts`. `zone.js` stayed **0.15.1**. Zoneless change detection was not adopted.
+
+### The TypeScript `lib` array was removed
+
+`tsconfig.json` `lib` was `es2018` and `dom`. The migration removed that array. `target` stayed `es2020`. `moduleResolution` stayed `bundler`. The CLI still applies ES2022 and still warns.
+
+### The next hop is Angular 22
+
+Angular 22 drops Node 20. Move app CI, the app image, and local `ng` to Node **22.23.3** while the app is still on Angular 21, and re-run the smoke suite before `ng update`. Pin the framework to the website's **22.2.1**. Keep `ChangeDetectionStrategy.Eager` and Zone.js. TypeScript **5.9.3** is outside the Angular 22 range. Let `ng update` move it.
+
+## App watch-list from the Angular 21 to 22 upgrade
+
+These showed up on the Ionic app during the move to Angular 22.2. The full record is [App upgraded from Angular 21 to Angular 22](../../operations/changelogs/2026-11-15-010-app-angular-22.md).
+
+### Node 22 comes first
+
+Angular 22.2 supports Node `^22.22.3 || ^24.15.0 || ^26.0.0`. The installed CLI 22.2.1 engines field is `^22.22.3 || ^24.15.0 || >=26.0.0`. App CI, the app image, and local `ng` moved to Node **22.23.3** while the app was still on Angular 21.2.26. The production build hash matched the Node 20 build (`64549b3ec703b6a0`), and the smoke suite passed, before `ng update`. npm **10.9.9** left `lockfileVersion` 3. Node **22.22.2** is below the Angular 22 floor.
+
+### The packages are pinned to 22.2.1
+
+`ng update @angular/cli@22.2.1 @angular/core@22.2.1` completed with no `--force`. The ranges it wrote resolved to framework **22.2.6** and CLI **22.2.7**. `package.json` was then set to exact **22.2.1** for the framework, the CLI, and `@angular-devkit/build-angular`, and TypeScript to **6.0.3**, matching the website. A clean `npm install` succeeded. Ionic stayed **9.0.11**. RxJS stayed **7.8.2**. `zone.js` stayed **0.15.1**.
+
+### Optional migrations were not run
+
+The CLI listed `use-application-builder` and `migrate-karma-to-vitest` and did not run them. The webpack `browser` builder stayed. The production build prints that this builder is deprecated. The control-flow migration was not offered. `*ngIf` and `*ngFor` stayed. `APP_INITIALIZER` stayed. The `standalone: false` flags stayed. `provideZoneChangeDetection()` stayed.
+
+### Required migrations keep Eager change detection and XHR
+
+The migration added `changeDetection: ChangeDetectionStrategy.Eager` on 19 components. It added `withXhr()` beside `withInterceptorsFromDi()`. `$safeNavigationMigration` made no template changes. `paramsInheritanceStrategy` now defaults to `'always'` and has no migration. `RouterModule.forRoot` sets `paramsInheritanceStrategy: 'emptyOnly'`.
+
+### TypeScript 6 keeps the previous checking
+
+`ng update` moved TypeScript from **5.9.3** to **6.0.3**. `tsconfig.json` sets `strict: false`, `esModuleInterop: false`, and `ignoreDeprecations: "6.0"`. `target` stayed `es2020`. `moduleResolution` stayed `bundler`. `strictTemplates` stayed true. The migration suppressed `nullishCoalescingNotNullable` and `optionalChainNotNullable` in `tsconfig.app.json` and `tsconfig.spec.json`. The production build accepted that.
+
+### The Protractor builder is gone
+
+`@angular-devkit/build-angular` 22.2.1 does not ship the Protractor builder. The `e2e` target was removed from `angular.json`. The `protractor` package is still installed. The Playwright suite is the check.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
 - [Configuration](../infra/configuration.md)
 - [Website smoke tests](website-smoke-tests.md)
 - [Deferred website Angular modernisation](https://github.com/dertinfo/dertinfo-mono/issues/96)
+- [App upgraded from Angular 13 to Angular 14](../../operations/changelogs/2026-11-15-002-app-angular-14.md)
+- [App upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-11-15-003-app-angular-15.md)
+- [App upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-11-15-004-app-angular-16.md)
+- [App upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-11-15-005-app-angular-17.md)
+- [App upgraded from Angular 17 to Angular 18](../../operations/changelogs/2026-11-15-006-app-angular-18.md)
+- [App upgraded from Angular 18 to Angular 19](../../operations/changelogs/2026-11-15-007-app-angular-19.md)
+- [App upgraded from Angular 19 to Angular 20](../../operations/changelogs/2026-11-15-008-app-angular-20.md)
+- [App upgraded from Angular 20 to Angular 21](../../operations/changelogs/2026-11-15-009-app-angular-21.md)
+- [App upgraded from Angular 21 to Angular 22](../../operations/changelogs/2026-11-15-010-app-angular-22.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)

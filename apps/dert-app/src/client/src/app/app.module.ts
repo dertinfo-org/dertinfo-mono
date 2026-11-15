@@ -1,9 +1,10 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { AppComponent } from './app.component';
@@ -31,40 +32,40 @@ export function initSettings(configurationService: ConfigurationService, appInsi
 }
 
 @NgModule({
-  imports: [
-    IonicStorageModule.forRoot(),
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    AppSharedModule,
-    AppServicesModule,
-    AppStoresModule,
-    AuthModule,
-    HttpClientModule,
-    PipesModule,
-    JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptions.options
-      }
-    })
-  ],
-  declarations: [
-    AppComponent
-  ],
-  entryComponents: [],
-  providers: [
-    { provide: APP_INITIALIZER, useFactory: initSettings, deps: [ConfigurationService, AppInsightsService, HttpClient], multi: true },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: ILogger, useClass: ConsoleLogger },
-    AuthGuard
-  ],
-  bootstrap: [AppComponent],
-  exports:[
-    AppSharedModule,
-    AppServicesModule,
-    AppStoresModule,
-    PipesModule
-  ]
+    imports: [
+        IonicStorageModule.forRoot(),
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        AppSharedModule,
+        AppServicesModule,
+        AppStoresModule,
+        AuthModule,
+        PipesModule,
+        JwtModule.forRoot({
+            jwtOptionsProvider: {
+                provide: JWT_OPTIONS,
+                useFactory: jwtOptions.options
+            }
+        })
+    ],
+    declarations: [
+        AppComponent
+    ],
+    providers: [
+        { provide: APP_INITIALIZER, useFactory: initSettings, deps: [ConfigurationService, AppInsightsService, HttpClient], multi: true },
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        { provide: ILogger, useClass: ConsoleLogger },
+        AuthGuard,
+        provideIonicAngular(),
+        provideHttpClient(withXhr(), withInterceptorsFromDi())
+    ],
+    bootstrap: [AppComponent],
+    exports: [
+        AppSharedModule,
+        AppServicesModule,
+        AppStoresModule,
+        PipesModule
+    ]
 })
 export class AppModule { }

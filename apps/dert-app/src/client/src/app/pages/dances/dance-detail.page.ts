@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { ILogger } from '../../providers/diagnostics/logger';
@@ -27,7 +27,9 @@ import { AuthService } from 'src/app/authentication/auth.service';
     selector: 'page-dance-detail',
     templateUrl: 'dance-detail.page.html',
     styleUrls: ['dance-detail.page.scss'],
-    providers: [DanceService]
+    providers: [DanceService],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DanceDetailPage implements OnInit, OnDestroy {
 
@@ -48,7 +50,7 @@ export class DanceDetailPage implements OnInit, OnDestroy {
     public danceMarkingSheets: DanceMarkingSheetDto[];
     public scoresLocked = false;
     public currentSlide = 'scores';
-    public danceScoresFormGroup: FormGroup = new FormGroup({});
+    public danceScoresFormGroup: UntypedFormGroup = new UntypedFormGroup({});
     public errorMessage: any;
     public overrun = false;
 
@@ -280,17 +282,10 @@ export class DanceDetailPage implements OnInit, OnDestroy {
             (danceDetailDto: DanceDetailDto) => {
                 this.showToast('Scores submitted and recieved');
 
-                /*
-                 * When updating to swiper the model of this.currentslide
-                 * appears to be working as selected. When we complate the scores
-                 * part we want to move the user through to the camera part
-                 * the method below used to do this but we need to change that.
-                 *
-                 * We cannot test this at this time so am commenting here to explain
-                 * the changes
-                 */
-                // WAS: this.cameraSegmentSelected();
+                // Ionic 7 does not emit ionChange when the segment value is set in code.
+                // Setting currentSlide selects the Photos tab. scoreSegmentChanged moves the swiper.
                 this.currentSlide = "camera";
+                this.scoreSegmentChanged();
             }
         );
 
@@ -343,11 +338,11 @@ export class DanceDetailPage implements OnInit, OnDestroy {
 
             const validators = this.scoresLocked ? null : [Validators.required, rangeValidator.validatorFunction];
             //WAS: group[danceScore.scoreCatagoryId] = new FormControl(danceScore.markGiven, validators);
-            group[danceScore.scoreCatagoryId] = new FormControl({value: danceScore.markGiven, disabled: this.scoresLocked}, validators);
+            group[danceScore.scoreCatagoryId] = new UntypedFormControl({value: danceScore.markGiven, disabled: this.scoresLocked}, validators);
 
         });
         // group['overrun'] = new FormControl(this.overrun);
-        return new FormGroup(group); // return the group.
+        return new UntypedFormGroup(group); // return the group.
     }
 
 

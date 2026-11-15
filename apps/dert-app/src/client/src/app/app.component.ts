@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from './authentication/auth.service';
 import { EventDto, VenueDto } from './models/dto';
@@ -7,9 +7,11 @@ import { ILogger } from './providers/diagnostics/logger';
 import { EventStore } from './stores/event.store';
 import { VenueStore } from './stores/venue.store';
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AppComponent {
 

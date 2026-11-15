@@ -24,7 +24,7 @@ export class DanceDetailPage {
   }
 
   async waitForTeam(teamName) {
-    await this.page.getByRole('heading', { name: teamName, exact: true }).waitFor({ timeout: 30000 });
+    await this.page.locator('page-dance-detail').getByRole('heading', { name: teamName, exact: true }).waitFor({ state: 'visible', timeout: 30000 });
   }
 
   async readScorePlan() {
@@ -47,6 +47,32 @@ export class DanceDetailPage {
     await box.click();
     await box.fill(value);
     await box.blur();
+  }
+
+  /** Focus hides the current digits. Leaving without a key keeps them. A key replaces them. */
+  async focusClearsAndBlurKeeps(index) {
+    const box = this.scoreRows().nth(index).getByRole('textbox');
+    const original = (await box.inputValue()).trim();
+    if (!original) throw new Error('Score field had no value to clear on focus');
+    const cleared = (nth) => {
+      const input = document.querySelectorAll('form ion-input input')[nth];
+      return !!input && input.value === '';
+    };
+    await box.click();
+    await this.page.waitForFunction(cleared, index, { timeout: 2000 });
+    await box.blur();
+    const restored = (await box.inputValue()).trim();
+    if (restored !== original) {
+      throw new Error(`Leaving the score field changed ${original} to ${restored}`);
+    }
+    await box.click();
+    await this.page.waitForFunction(cleared, index, { timeout: 2000 });
+    await box.press('4');
+    await box.blur();
+    const typed = (await box.inputValue()).trim();
+    if (typed !== '4') {
+      throw new Error(`Typing in a focused score field produced ${typed}`);
+    }
   }
 
   async fillScores(plan) {
@@ -72,22 +98,20 @@ export class DanceDetailPage {
   }
 
   async openPhotosTab() {
-    await this.page.getByRole('tab', { name: 'Photos' }).click();
+    await this.segmentButton('Photos').click();
   }
 
-  /** After scores are sent, the photos tab may already be showing. Otherwise open it. */
+  /** After scores are sent, the photos pane should already be showing. */
   async ensurePhotoCapture() {
-    const takePhoto = this.takePhotoButton();
-    try {
-      await takePhoto.waitFor({ state: 'visible', timeout: 5000 });
-    } catch {
-      await this.openPhotosTab();
-      await takePhoto.waitFor({ state: 'visible', timeout: 15000 });
-    }
+    await this.takePhotoButton().waitFor({ state: 'visible', timeout: 15000 });
+  }
+
+  segmentButton(name) {
+    return this.page.locator('ion-segment-button').filter({ hasText: name });
   }
 
   async openScores() {
-    await this.page.getByRole('tab', { name: 'Scores' }).click();
+    await this.segmentButton('Scores').click();
     await this.scoreRows().first().waitFor({ state: 'visible', timeout: 30000 });
   }
 
