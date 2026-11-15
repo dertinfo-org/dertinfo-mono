@@ -10,6 +10,8 @@ The app screens those tests use now have stable hooks: header login, logout, and
 
 With the local estate running, both fixtures passed: the three pin scenarios and the three dance scenarios.
 
+Pull request: https://github.com/dertinfo-org/dertinfo-mono/pull/151
+
 ## Why the work was completed
 
 The app is due an Angular upgrade, and that upgrade needs a check that a group member can still sign in, join a group with its pin, and see only their own teams' dances. The product behaviour is on the capability pages. The tests follow those pages, including the temporary sign-out after a pin until [issue 149](https://github.com/dertinfo-org/dertinfo-mono/issues/149) is fixed.
