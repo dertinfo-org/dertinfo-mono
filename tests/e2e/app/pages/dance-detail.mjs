@@ -49,6 +49,32 @@ export class DanceDetailPage {
     await box.blur();
   }
 
+  /** Focus hides the current digits. Leaving without a key keeps them. A key replaces them. */
+  async focusClearsAndBlurKeeps(index) {
+    const box = this.scoreRows().nth(index).getByRole('textbox');
+    const original = (await box.inputValue()).trim();
+    if (!original) throw new Error('Score field had no value to clear on focus');
+    const cleared = (nth) => {
+      const input = document.querySelectorAll('form ion-input input')[nth];
+      return !!input && input.value === '';
+    };
+    await box.click();
+    await this.page.waitForFunction(cleared, index, { timeout: 2000 });
+    await box.blur();
+    const restored = (await box.inputValue()).trim();
+    if (restored !== original) {
+      throw new Error(`Leaving the score field changed ${original} to ${restored}`);
+    }
+    await box.click();
+    await this.page.waitForFunction(cleared, index, { timeout: 2000 });
+    await box.press('4');
+    await box.blur();
+    const typed = (await box.inputValue()).trim();
+    if (typed !== '4') {
+      throw new Error(`Typing in a focused score field produced ${typed}`);
+    }
+  }
+
   async fillScores(plan) {
     for (let index = 0; index < plan.length; index += 1) {
       await this.fillScore(index, plan[index].value);

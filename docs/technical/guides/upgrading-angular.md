@@ -538,6 +538,10 @@ Ionic 7's support ceiling is Angular 17. `@ionic/angular` moved from **7.8.6** t
 
 The core migration removed `HttpClientModule` from `AppModule` and added `provideHttpClient(withInterceptorsFromDi())`. `HttpClient` is still injected by `APP_INITIALIZER`. The new control flow, standalone components, and zoneless change detection were not adopted. `target` stayed `es2020`. The Protractor builder is still present, so the `e2e` target stayed.
 
+### Score fields clear on focus through the native input
+
+`maintain-original` used to clear `children[0]`. Ionic 8 wraps the native input, and the focus re-render writes the component value back onto it. The directive clears `input` after that re-render. Leaving the field empty puts the saved value back.
+
 ### The dance list stays mounted under the detail page
 
 `DanceListPage` has no selector, so its host is `ng-component`. After this hop that page stays `display: flex` underneath `page-dance-detail`. The detail page is on top and receives the clicks. The smoke helper waits for the team heading inside `page-dance-detail`. A page-wide heading locator also matches the dance row on the list.
