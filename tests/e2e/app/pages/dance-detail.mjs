@@ -24,7 +24,7 @@ export class DanceDetailPage {
   }
 
   async waitForTeam(teamName) {
-    await this.page.getByRole('heading', { name: teamName, exact: true }).waitFor({ timeout: 30000 });
+    await this.page.locator('page-dance-detail').getByRole('heading', { name: teamName, exact: true }).waitFor({ state: 'visible', timeout: 30000 });
   }
 
   async readScorePlan() {

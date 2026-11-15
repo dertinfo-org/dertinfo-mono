@@ -522,6 +522,34 @@ Angular 17.3 supports Node `^18.13.0 || ^20.9.0`. The installed CLI 17.3.17 engi
 
 Ionic 8 starts Angular 18 support at **8.2**. Node **18.20.8** is inside the Angular 18.2 range (`^18.19.1 || ^20.11.1 || ^22.0.0`). Keep the webpack `browser` builder. The application builder is optional.
 
+## App watch-list from the Angular 17 to 18 upgrade
+
+These showed up on the Ionic app during the move to Angular 18.2. Check them again on the next hop. The full record is [App upgraded from Angular 17 to Angular 18](../../operations/changelogs/2026-11-15-006-app-angular-18.md).
+
+### Ionic 8.8.19 already covers this hop
+
+Ionic 7's support ceiling is Angular 17. `@ionic/angular` moved from **7.8.6** to **8.8.19** before `ng update`. The peer range is `@angular/core` `>=16.0.0`. Angular 18 support starts at Ionic **8.2.0**. The production build on Angular 17 succeeded after that move. RxJS stayed **7.8.2**. `zone.js` stayed **0.14.10**. TypeScript stayed **5.4.5**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**. `@ionic/angular-toolkit` stayed **5.0.3**. It declares no peers.
+
+### `ng update` lists the application builder and does not run it
+
+`ng update @angular/cli@^18 @angular/core@^18` completed with no `--force`. The CLI printed one optional migration, `use-application-builder`, and did not run it. The webpack `browser` builder stayed. CLI **18.2.21**, framework **18.2.14**. A later `npm install` had no peer errors.
+
+### The core migration replaced `HttpClientModule`
+
+The core migration removed `HttpClientModule` from `AppModule` and added `provideHttpClient(withInterceptorsFromDi())`. `HttpClient` is still injected by `APP_INITIALIZER`. The new control flow, standalone components, and zoneless change detection were not adopted. `target` stayed `es2020`. The Protractor builder is still present, so the `e2e` target stayed.
+
+### The dance list stays mounted under the detail page
+
+`DanceListPage` has no selector, so its host is `ng-component`. After this hop that page stays `display: flex` underneath `page-dance-detail`. The detail page is on top and receives the clicks. The smoke helper waits for the team heading inside `page-dance-detail`. A page-wide heading locator also matches the dance row on the list.
+
+### Node stays 18
+
+Angular 18.2 supports Node `^18.19.1 || ^20.11.1 || ^22.0.0`. The installed CLI 18.2.21 engines field is `^18.19.1 || ^20.11.1 || >=22.0.0`. This hop stayed on portable Node **18.20.8**. npm **10.8.2** left `lockfileVersion` 3. The production build still skips Ionic `:host-context`, `:dir`, and `::part`, and the initial bundle is still over the 2 MB warning budget. The build still completes.
+
+### The next hop is Angular 19
+
+Ionic **8.8.19** peers Angular `>=16`, and the support policy lists Ionic 8 through Angular 20. Stay on it unless a peer or the build refuses it. Node **18.20.8** is inside the Angular 19 range. TypeScript **5.4.5** is not. Angular 19 needs TypeScript `>=5.5.0`. Let `ng update` move it.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -532,6 +560,7 @@ Ionic 8 starts Angular 18 support at **8.2**. Node **18.20.8** is inside the Ang
 - [App upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-11-15-003-app-angular-15.md)
 - [App upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-11-15-004-app-angular-16.md)
 - [App upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-11-15-005-app-angular-17.md)
+- [App upgraded from Angular 17 to Angular 18](../../operations/changelogs/2026-11-15-006-app-angular-18.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)

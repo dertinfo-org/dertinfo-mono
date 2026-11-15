@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
@@ -40,7 +40,6 @@ export function initSettings(configurationService: ConfigurationService, appInsi
         AppServicesModule,
         AppStoresModule,
         AuthModule,
-        HttpClientModule,
         PipesModule,
         JwtModule.forRoot({
             jwtOptionsProvider: {
@@ -56,7 +55,8 @@ export function initSettings(configurationService: ConfigurationService, appInsi
         { provide: APP_INITIALIZER, useFactory: initSettings, deps: [ConfigurationService, AppInsightsService, HttpClient], multi: true },
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         { provide: ILogger, useClass: ConsoleLogger },
-        AuthGuard
+        AuthGuard,
+        provideHttpClient(withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent],
     exports: [
