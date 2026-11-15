@@ -2,6 +2,8 @@
 
 Playwright scripts for the website and the app. Each journey is a fixture. This page is the layout to follow when adding one.
 
+How the suites start, and what a run is allowed to change: [Testing](../../docs/technical/testing/README.md). The group-member app fixtures edit the development Auth0 tenant with the Management API: [Auth0 Management API edits](../../docs/technical/testing/auth0-management.md).
+
 How to run the smoke suite and record video: [Website smoke tests](../../docs/technical/guides/website-smoke-tests.md).
 
 How a website scenario is sized, how it calls page objects, and how session files are passed between scenarios: [Playwright standards](../../docs/technical/standards/playwright/README.md).
@@ -52,6 +54,8 @@ Login warmup is not a Gherkin feature, so it stays as [`web/fixtures/fixture-2`]
 | [Public content](../../docs/capabilities/features/web/public-content.md) | [`public.content`](web/fixtures/public.content/description.md) | none |
 | [Stay signed in](../../docs/capabilities/features/web/auth-session-continuity.md) | [`auth.session-continuity`](web/fixtures/auth.session-continuity/description.md) | none |
 | [Venue score capture](../../docs/capabilities/features/app/venue-score-capture.md) | [`scoring.venue-capture`](app/fixtures/scoring.venue-capture/description.md) | none |
+| [Join a group with a pin](../../docs/capabilities/features/app/groups-join-by-pin.md) | [`groups.join-by-pin`](app/fixtures/groups.join-by-pin/description.md) | none |
+| [View own team dances](../../docs/capabilities/features/app/results-own-team-dances.md) | [`results.own-team-dances`](app/fixtures/results.own-team-dances/description.md) | none |
 
 Create event, create and manage group, and the register-for-event test still cover several Gherkin scenarios each. Those scenarios are not listed below.
 
@@ -71,6 +75,12 @@ Create event, create and manage group, and the register-for-event test still cov
 | Venue administrator photographs the score sheets | [`scoring.venue-admin.photographs-score-sheets`](app/tests/scoring.venue-admin.photographs-score-sheets.mjs) |
 | Venue administrator confirms the dance is completed | [`scoring.venue-admin.confirms-dance-completed`](app/tests/scoring.venue-admin.confirms-dance-completed.mjs) |
 | Venue administrator confirms the scores and photos remain | [`scoring.venue-admin.confirms-scores-and-photos`](app/tests/scoring.venue-admin.confirms-scores-and-photos.mjs) |
+| Group member sees the groups they already belong to | [`groups.group-member.sees-current-group`](app/tests/groups.group-member.sees-current-group.mjs) |
+| Group member rejects an unknown pin | [`groups.group-member.rejects-unknown-pin`](app/tests/groups.group-member.rejects-unknown-pin.mjs) |
+| Group member joins a second group with its pin | [`groups.group-member.joins-second-group`](app/tests/groups.group-member.joins-second-group.mjs) |
+| Group member sees only their own team's dance | [`results.group-member.sees-own-team-dance`](app/tests/results.group-member.sees-own-team-dance.mjs) |
+| Unpublished results stay hidden | [`results.group-member.hides-unpublished-results`](app/tests/results.group-member.hides-unpublished-results.mjs) |
+| Group member sees a dance for each group they have joined | [`results.group-member.sees-joined-groups-dances`](app/tests/results.group-member.sees-joined-groups-dances.mjs) |
 
 ## How a fixture is built
 

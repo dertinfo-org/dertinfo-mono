@@ -2,7 +2,7 @@
 name: Platform capability catalogue
 type: index
 status: active
-updated: 2026-10-11
+updated: 2026-11-01
 ---
 
 # Platform capability catalogue
@@ -23,9 +23,9 @@ Start with the [Domain glossary](system/domain-glossary.md).
 
 | Area | Features |
 |------|----------|
-| Groups & events | [Create and manage group](features/web/groups-manage.md), [Create event](features/web/events-create.md) |
+| Groups & events | [Create and manage group](features/web/groups-manage.md), [Join a group with a pin](features/app/groups-join-by-pin.md), [Create event](features/web/events-create.md) |
 | Registration & money | [Submit registration](features/web/registration-submit.md), [Confirm registrations](features/web/registration-confirm.md), [Invoicing](features/web/invoicing.md) |
-| Competition day | [Run competitions](features/web/competitions-run.md), [Venue score capture](features/app/venue-score-capture.md), [Validate scores](features/web/scoring-validate.md), [Publish results](features/web/results-publish.md) |
+| Competition day | [Run competitions](features/web/competitions-run.md), [Venue score capture](features/app/venue-score-capture.md), [View own team dances](features/app/results-own-team-dances.md), [Validate scores](features/web/scoring-validate.md), [Publish results](features/web/results-publish.md) |
 | Public & DoD | [Public content](features/web/public-content.md), [Cookie consent](features/web/cookie-consent.md), [Dert of Derts](features/web/dod-programme.md) |
 | Account & consent | [User account and GDPR consent](features/web/account-gdpr-consent.md) |
 | Messaging | [Send email](features/web/send-email.md), [In-app notifications](features/web/in-app-notifications.md) (rarely used) |

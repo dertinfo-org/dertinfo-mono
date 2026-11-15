@@ -7,15 +7,17 @@ export class HomePage {
   }
 
   loginButton() {
-    return this.page.getByRole('button', { name: /log in/i });
+    return this.page.locator('[data-testid="app-header-login"]:visible').last();
   }
 
   logoutButton() {
-    return this.page.getByRole('button', { name: /log out/i });
+    return this.page.locator('[data-testid="app-header-logout"]:visible').last();
   }
 
   async open() {
-    await this.page.goto(`${APP_BASE}/home`, { waitUntil: 'domcontentloaded', timeout: 60000 });
+    // The dev server returns the app at /. A direct /home request is "Cannot GET /home".
+    // Angular then redirects / to the home page.
+    await this.page.goto(`${APP_BASE}/`, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await this.loginButton().or(this.logoutButton()).waitFor({ state: 'visible', timeout: 30000 });
   }
 
@@ -23,7 +25,7 @@ export class HomePage {
     const logout = this.logoutButton();
     if (await logout.isVisible()) {
       await logout.click();
-      await this.loginButton().waitFor({ state: 'visible', timeout: 20000 });
+      await this.loginButton().waitFor({ state: 'visible', timeout: 45000 });
     }
   }
 

@@ -16,7 +16,7 @@
 
     </ion-card>
     <div *ngIf="userAuthenticated" class="pin-button-container">
-        <ion-button (click)="onEnterPinClick()" expand="block">Enter Group Member Pin</ion-button>
+        <ion-button (click)="onEnterPinClick()" expand="block" data-testid="profile-enter-pin">Enter Group Member Pin</ion-button>
     </div>
     <ion-card *ngIf="userAuthenticated && !_groupsLoading && adminGroups.count() > 0">
         <ion-list>
@@ -24,7 +24,7 @@
                 Your Groups
                 <ion-icon name="people" class="icon-circle" slot="end"></ion-icon>
             </ion-list-header>
-            <ion-item *ngFor="let group of adminGroups">
+            <ion-item *ngFor="let group of adminGroups" data-testid="profile-group" [attr.data-group-name]="group.groupName">
                 <ion-avatar slot="start">
                     <img src="{{ group.teamPictureUrl | sizedImage: imageSize }}" [dertimagecheck]="imageSize"
                         [defaultImage]="'assets/icon/missing-avatar-person.png'"

@@ -196,7 +196,7 @@
   title: Log in
   status: active
   path: features/web/auth-login.md
-  roles: [public-user, member, group-admin, event-admin]
+  roles: [public-user, member, group-member, group-admin, event-admin]
 
 - id: auth.logout
   title: Log out
@@ -222,6 +222,12 @@
   status: active
   path: features/web/groups-manage.md
   roles: [member, group-admin]
+
+- id: groups.join-by-pin
+  title: Join a group with a pin
+  status: active
+  path: features/app/groups-join-by-pin.md
+  roles: [member, group-member]
 
 - id: events.create
   title: Create event
@@ -270,6 +276,12 @@
   status: active
   path: features/web/results-publish.md
   roles: [event-admin, group-admin, group-member, member, public-user]
+
+- id: results.own-team-dances
+  title: View own team dances
+  status: active
+  path: features/app/results-own-team-dances.md
+  roles: [group-member, group-admin]
 
 - id: public.content
   title: Public content

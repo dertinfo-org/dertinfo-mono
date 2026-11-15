@@ -8,6 +8,7 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-11-15 | App group-member pin and own-team dances are covered by Playwright | [2026-11-15-001-app-group-member-tests.md](./2026-11-15-001-app-group-member-tests.md) |
 | 2026-10-24 | Existing OIDC apps can trust the organisation repository | [2026-10-24-005-oidc-org-federated-credentials.md](./2026-10-24-005-oidc-org-federated-credentials.md) |
 | 2026-10-24 | Source workflows grant the GitHub token read access to contents | [2026-10-24-004-workflow-token-read.md](./2026-10-24-004-workflow-token-read.md) |
 | 2026-10-24 | API CI seeds its own database and accepts a token only in the test host | [2026-10-24-003-api-integration-tests-ci.md](./2026-10-24-003-api-integration-tests-ci.md) |

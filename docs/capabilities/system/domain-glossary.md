@@ -2,7 +2,7 @@
 name: Domain glossary
 type: system
 status: active
-updated: 2026-09-27
+updated: 2026-11-01
 id: system.domain-glossary
 ---
 
@@ -39,7 +39,7 @@ Product language for DertInfo. The platform supports **sword-dancing clubs** (gr
 | Client | Typical use |
 |--------|-------------|
 | **Website** | Group and event administration, registration, invoicing, score validation, reporting, publish results |
-| **App** | Venue score capture and score-sheet photos; after publish, own-team scores and sheets |
+| **App** | Venue score capture and score-sheet photos; join a group with its member pin; see the dances of those groups' teams, and their scores and sheets after results are published |
 
 ## Data roles (GDPR)
 

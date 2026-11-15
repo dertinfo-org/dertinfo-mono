@@ -1,6 +1,7 @@
 /**
  * Runs the app feature fixtures that have tests, in dependency order.
- * The first fixture applies the pack in its run-config.yaml. Later fixtures leave the database as it is.
+ * Venue score capture applies system-basic and then writes scores.
+ * The group-member fixtures apply system-basic again so those scores are cleared.
  * A passing run clears shared-session. A failing run stops and leaves it.
  */
 import path from 'path';
@@ -16,6 +17,8 @@ const sessionDir = sharedSessionDir(e2eRoot);
 
 const steps = [
   ['scoring.venue-capture', ['--clear-session', 'false']],
+  ['groups.join-by-pin', ['--clear-session', 'false']],
+  ['results.own-team-dances', ['--clear-session', 'false']],
 ];
 
 const invokedDirectly = process.argv[1]

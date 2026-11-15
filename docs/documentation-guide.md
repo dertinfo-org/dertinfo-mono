@@ -35,6 +35,7 @@ docs/
     infra/
     subsystems/            # Auth0, security, …
     standards/             # Angular, .NET, … technology conventions
+    testing/               # How the suites run, and what they are allowed to change
   operations/
     changelogs/
     investigations/
@@ -68,6 +69,7 @@ docs/
 | `technical/subsystems/` | Deep technical topics (Auth0, security, …) |
 | `technical/standards/` | Stack-wide conventions (Angular constructs, style, …) |
 | `technical/guides/` | Cross-cutting how-tos (e.g. run the whole estate, contributing) |
+| `technical/testing/` | How the test suites start, how a test is laid out, and what a run is allowed to change |
 | `technical/infra/` | Configuration model, CI/CD, secrets rotation, tooling setup |
 | App README | That component’s local install / F5 / debug only |
 

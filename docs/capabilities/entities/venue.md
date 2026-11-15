@@ -2,7 +2,7 @@
 name: Venue
 type: entity
 status: active
-updated: 2026-09-27
+updated: 2026-11-01
 id: entity.venue
 ---
 
@@ -18,6 +18,7 @@ A place where part of a [competition](competition.md) is judged. A competition c
 - **Attach to a competition** — event-admin. The competition is then judged at that venue.
 - **Assign judges** — event-admin. Each judge at the venue is given a [score set](score-set.md). See [Judge](judge.md).
 - **Capture scores** — venue-admin or event-admin, via [Venue score capture](../features/app/venue-score-capture.md). Scores and [marking sheet](marking-sheet.md) photos are taken for each [dance](dance.md) at the venue.
+- **View own teams' dances** — group-member or group-admin, via [View own team dances](../features/app/results-own-team-dances.md). The venue lists dances for the teams in the groups that person has joined, and no others.
 
 ## States
 

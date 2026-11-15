@@ -29,7 +29,7 @@
           <ion-icon name="time-outline" class="icon-circle black" slot="end"></ion-icon>
         </ion-button>
       </ion-list-header>
-      <ion-item *ngFor="let danceDto of pendingDances" (click)="goToDanceDetail(danceDto.danceId)" detail>
+      <ion-item *ngFor="let danceDto of pendingDances" (click)="goToDanceDetail(danceDto.danceId)" detail data-testid="dance-row" [attr.data-team-name]="danceDto.teamName">
         <ion-avatar slot="start">
           <img src="{{ danceDto.teamPictureUrl | sizedImage: imageSize }}" [dertimagecheck]="imageSize"
             [defaultImage]="'assets/icon/missing-avatar-person.png'" [loadingImage]="'assets/icon/loading-avatar.gif'">
@@ -52,7 +52,7 @@
           <ion-icon name="lock-open-outline" class="icon-circle black" slot="end"></ion-icon>
         </ion-button>
       </ion-list-header>
-      <ion-item *ngFor="let danceDto of completedDances" (click)="goToDanceDetail(danceDto.danceId)" detail>
+      <ion-item *ngFor="let danceDto of completedDances" (click)="goToDanceDetail(danceDto.danceId)" detail data-testid="dance-row" [attr.data-team-name]="danceDto.teamName">
         <ion-avatar slot="start">
           <img src="{{ danceDto.teamPictureUrl | sizedImage: imageSize }}" [dertimagecheck]="imageSize"
             [defaultImage]="'assets/icon/missing-avatar-person.png'" [loadingImage]="'assets/icon/loading-avatar.gif'">
@@ -75,7 +75,7 @@
           <ion-icon name="lock-closed-outline" class="icon-circle black" slot="end"></ion-icon>
         </ion-button>
       </ion-list-header>
-      <ion-item *ngFor="let danceDto of lockedDances" (click)="goToDanceDetail(danceDto.danceId)" detail>
+      <ion-item *ngFor="let danceDto of lockedDances" (click)="goToDanceDetail(danceDto.danceId)" detail data-testid="dance-row" [attr.data-team-name]="danceDto.teamName">
         <ion-avatar slot="start">
           <img src="{{ danceDto.teamPictureUrl | sizedImage: imageSize }}" [dertimagecheck]="imageSize"
             [defaultImage]="'assets/icon/missing-avatar-person.png'" [loadingImage]="'assets/icon/loading-avatar.gif'">

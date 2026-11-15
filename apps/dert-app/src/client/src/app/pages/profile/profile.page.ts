@@ -152,6 +152,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     public onEnterPinClick() {
 
         const alertOptions: AlertOptions = {
+            cssClass: 'group-member-pin',
             header: 'Enter Group Member Pin',
             message: 'Entering a valid pin will add you to the group to view results',
             inputs: [
