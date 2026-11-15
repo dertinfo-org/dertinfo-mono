@@ -2,7 +2,7 @@
 name: Publish competition results
 type: feature
 status: active
-updated: 2026-10-04
+updated: 2026-11-01
 id: results.publish
 roles: [event-admin, group-admin, group-member, member, public-user]
 ---
@@ -25,7 +25,7 @@ After the competition day and awards ceremony, the event administrator marks eac
 2. Event admins use reporting to determine winners for **awards** (overall and category).
 3. After the ceremony, mark the competition **results published**.
 4. **Public website:** publishes competition results focused on who won each award (aggregations / award outcomes — not other groups’ detailed score sheets).
-5. **Website and app:** group admins and team-associated members can see scores and score sheets for **their** team only. On the website, open the group with **View**, then the event.
+5. **Website and app:** group admins and team-associated members can see scores and score sheets for **their** team only. On the website, open the group with **View**, then the event. On the app, the dances of those teams are listed before publish, and the scores stay hidden until this step. See [View own team dances](../app/results-own-team-dances.md).
 
 ## Limitations
 

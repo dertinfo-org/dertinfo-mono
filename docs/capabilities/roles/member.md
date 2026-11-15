@@ -2,7 +2,7 @@
 name: Member
 type: role
 status: active
-updated: 2026-10-11
+updated: 2026-11-01
 id: member
 ---
 
@@ -17,6 +17,7 @@ A signed-in user of the platform. Any member may create a group; further powers 
 - [Log in](../features/web/auth-login.md) / [Log out](../features/web/auth-logout.md) / [Stay signed in](../features/web/auth-session-continuity.md) / [Homepage account](../features/web/homepage-account.md)
 - [User account and GDPR consent](../features/web/account-gdpr-consent.md)
 - [Create and manage group](../features/web/groups-manage.md) — **create** a group only; managing requires group-admin
+- [Join a group with a pin](../features/app/groups-join-by-pin.md) — on the app, enter a group's member pin to view that group's results
 - [Dert of Derts](../features/web/dod-programme.md) — as the product allows
 - [In-app notifications](../features/web/in-app-notifications.md) — rarely used
 

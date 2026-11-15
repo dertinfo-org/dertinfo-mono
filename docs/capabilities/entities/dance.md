@@ -2,7 +2,7 @@
 name: Dance
 type: entity
 status: active
-updated: 2026-09-27
+updated: 2026-11-01
 id: entity.dance
 ---
 
@@ -17,6 +17,7 @@ One team's performance at one [venue](venue.md) in one [competition](competition
 - **Generate** — event-admin, when the competition's dances are built. The competition moves to Generated. See [Competition](competition.md) and [Run competitions](../features/web/competitions-run.md).
 - **Add ad hoc** — event-admin, when the competition allows extra dances after generation.
 - **Enter scores** — venue-admin or event-admin, via [Venue score capture](../features/app/venue-score-capture.md). Awaiting scores becomes scores entered. [Scores](score.md) and a photographed [marking sheet](marking-sheet.md) are captured.
+- **View** — group-member or group-admin, via [View own team dances](../features/app/results-own-team-dances.md). The person sees the dance when they belong to that team's group. Scores and the marking sheet stay hidden until results are published.
 - **Check scores** — event-admin, via [Validate scores](../features/web/scoring-validate.md). Scores entered becomes scores checked. After that, the venue admin can no longer change the scores or the marking sheet.
 
 ## States

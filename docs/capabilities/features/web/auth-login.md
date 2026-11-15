@@ -2,9 +2,9 @@
 name: Log in
 type: feature
 status: active
-updated: 2026-10-03
+updated: 2026-11-01
 id: auth.login
-roles: [public-user, member, group-admin, event-admin]
+roles: [public-user, member, group-member, group-admin, event-admin]
 ---
 
 # Feature: Log in
@@ -17,6 +17,7 @@ A visitor can authenticate and become a signed-in user of the platform.
 
 - **public-user** — can start sign-in
 - **member** — result of a successful sign-in (and higher roles inherit signed-in behaviour)
+- **group-member** — signs in on the app
 - **group-admin** — signs in with the group administrator account
 - **event-admin** — signs in with the event administrator account
 
@@ -24,6 +25,7 @@ A visitor can authenticate and become a signed-in user of the platform.
 
 - User can initiate sign-in from the client experiences that support it.
 - After successful sign-in, the user is treated as authenticated for subsequent actions that require it.
+- On the app, a group member signs in from the sign-in control and can then open the menu.
 
 ## Limitations
 
@@ -48,5 +50,10 @@ Feature: Log in
     Given the group administrator is on the login page
     When the group administrator enters valid credentials
     Then the group administrator should see the dashboard
+
+  Scenario: Group member signs in on the app
+    Given the group member is not signed in
+    When the group member signs in on the app
+    Then the app shows that they are signed in
 ```
 

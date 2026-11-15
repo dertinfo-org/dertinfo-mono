@@ -33,11 +33,12 @@
         header="Scores Checked" subText="Changes are no longer permitted" cardType="warning" icon="lock-closed-outline">
     </app-notification-box>
     <app-notification-box *ngIf="scoresLocked && showNotPublishedMessage && !_isLoading && !_isError"
-        header="Scores Taken" subText="Results Not Yet Published" cardType="notification" icon="warning-outline">
+        header="Scores Taken" subText="Results Not Yet Published" cardType="notification" icon="warning-outline"
+        data-testid="dance-results-hidden">
     </app-notification-box>
     <app-notification-box *ngIf="scoresLocked && showScoresNotInMessage && !_isLoading && !_isError"
         header="Awaiting Scores" subText="Dance not yet completed or results not in" cardType="notification"
-        icon="warning-outline"></app-notification-box>
+        icon="warning-outline" data-testid="dance-results-hidden"></app-notification-box>
 
     <!-- /Notification Messages -->
 

@@ -29,6 +29,30 @@ export class DancesPage {
     }
   }
 
+  dance(teamName) {
+    return this.page.locator(`[data-testid="dance-row"][data-team-name="${teamName}"]`);
+  }
+
+  async expectTeams(names) {
+    await this.dance(names[0]).waitFor({ state: 'visible', timeout: 30000 });
+    const listed = this.page.locator('[data-testid="dance-row"]');
+    const count = await listed.count();
+    if (count !== names.length) {
+      const actual = [];
+      for (let index = 0; index < count; index += 1) {
+        actual.push(await listed.nth(index).getAttribute('data-team-name'));
+      }
+      throw new Error(`Dances were [${actual.join(', ')}]. Expected [${names.join(', ')}].`);
+    }
+    for (const name of names) {
+      await this.dance(name).waitFor({ state: 'visible', timeout: 5000 });
+    }
+  }
+
+  async openTeam(teamName) {
+    await this.dance(teamName).click();
+  }
+
   async openFirstExpected() {
     const firstDance = this.expectedList().locator('ion-item').first();
     if (await firstDance.count() === 0) {

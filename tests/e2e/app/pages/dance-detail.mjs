@@ -16,6 +16,13 @@ export class DanceDetailPage {
     return this.page.locator('photo-button').getByRole('button', { name: /Take Photo/ });
   }
 
+  async assertResultsHidden() {
+    await this.page.locator('[data-testid="dance-results-hidden"]').waitFor({ state: 'visible', timeout: 30000 });
+    if (await this.sendScoresButton().isVisible().catch(() => false)) {
+      throw new Error('Send Scores is shown for a group member');
+    }
+  }
+
   async waitForTeam(teamName) {
     await this.page.getByRole('heading', { name: teamName, exact: true }).waitFor({ timeout: 30000 });
   }

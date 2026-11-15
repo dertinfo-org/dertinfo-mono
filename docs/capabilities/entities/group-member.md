@@ -2,7 +2,7 @@
 name: Group member
 type: entity
 status: active
-updated: 2026-10-04
+updated: 2026-11-01
 id: entity.group-member
 ---
 
@@ -18,6 +18,7 @@ A person on a [group](group.md)'s list. Members are not permanently assigned to 
 - **Update** — group-admin. Change the name, contact details, date of birth, date joined, and whether the person is a member or a guest. Attendances name the event and the ticket types.
 - **Remove** — group-admin.
 - **Include on a registration** — group-admin, while a [registration](registration.md) is still editable. Guests and dancers are both lines on that registration.
+- **Join with the member pin** — member, via [Join a group with a pin](../features/app/groups-join-by-pin.md). This associates the signed-in person with the group for viewing results. It does not add a row to this list.
 
 ## States
 

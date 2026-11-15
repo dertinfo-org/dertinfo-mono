@@ -2,7 +2,7 @@
 name: Playwright standards
 type: standards
 status: active
-updated: 2026-10-11
+updated: 2026-11-15
 ---
 
 # Playwright standards
@@ -28,6 +28,7 @@ Capability pages say what the product does. They keep the Gherkin and do not car
 | `_recordings/` | Gitignored videos. Retention is in [Website smoke tests](../../guides/website-smoke-tests.md#video) |
 | `tests/e2e/shared-data/logins.env` | Gitignored persona emails and passwords. `shared-tools/logins.mjs` loads this for the smoke suite and the app |
 | `tests/e2e/shared-data/auth0-personas.json` | `app_metadata` to paste onto Auth0 users. Shared by the website and the app. No passwords |
+| `tests/e2e/shared-tools/auth0-persona.mjs` | Puts one claim back on the live development tenant before the group-member app fixtures. [Auth0 Management API edits](../../testing/auth0-management.md) |
 
 ## Feature and scenario
 

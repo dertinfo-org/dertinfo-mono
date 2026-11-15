@@ -1,15 +1,15 @@
 <ion-toolbar>
     <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-menu-button data-testid="app-header-menu"></ion-menu-button>
     </ion-buttons>
     <ion-title>{{pageTitle}}</ion-title>
     <ion-buttons slot="end" *ngIf="!userAuthenticated">
-        <ion-button (click)="loginClick()">
+        <ion-button (click)="loginClick()" data-testid="app-header-login">
             <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
         </ion-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="userAuthenticated">
-        <ion-button ion-button icon-only (click)="logoutClick()">
+        <ion-button ion-button icon-only (click)="logoutClick()" data-testid="app-header-logout">
             <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
         </ion-button>
     </ion-buttons>

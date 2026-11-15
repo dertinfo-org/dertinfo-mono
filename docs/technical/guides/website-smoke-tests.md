@@ -2,7 +2,7 @@
 name: Website smoke tests
 type: guide
 status: active
-updated: 2026-10-11
+updated: 2026-11-15
 ---
 
 # Website smoke tests
@@ -128,4 +128,4 @@ A flow that does several jobs in one browser produces one clip for that stretch.
 
 `npm run test:login:warmup` runs the warmup fixture at `tests/e2e/web/fixtures/fixture-2/`. Those tests are separate from the smoke suite.
 
-`npm run test:app:smoke` runs `app/run-smoke.mjs` the same way. Today that is the venue score-capture fixture. It applies `system-basic` from that fixture's `run-config.yaml`. `--video` is forwarded, including `npm run test:app:smoke -- --video all`.
+`npm run test:app:smoke` runs the app fixtures in [Testing](../testing/README.md). `--video` is forwarded, including `npm run test:app:smoke -- --video all`. The group-member fixtures write the development Auth0 tenant before they open the browser. That write is in [Auth0 Management API edits](../testing/auth0-management.md).
