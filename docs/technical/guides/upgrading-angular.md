@@ -500,6 +500,28 @@ Ionic 7 emits `ionChange` only when the user clicks a segment. `submitScoresForm
 
 Angular 16.2 supports Node `^16.14.0 || ^18.10.0`. This hop stayed on portable Node **16.20.2**. Angular 17 does not. The next hop moves Node to 18 before `ng update`, while the app is still on Angular 16.
 
+## App watch-list from the Angular 16 to 17 upgrade
+
+These showed up on the Ionic app during the move to Angular 17.3. Check them again on the next hop. The full record is [App upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-11-15-005-app-angular-17.md).
+
+### Node 18 comes first
+
+Angular 17.3 supports Node `^18.13.0 || ^20.9.0`. The installed CLI 17.3.17 engines field is `^18.13.0 || >=20.9.0`. App CI, the app image, and local `ng` moved to Node **18.20.8** while the app was still on Angular 16.2.12. `npm install` and the production build succeeded, and the smoke suite passed, before `ng update`. npm **10.8.2** left `lockfileVersion` 3. This machine's default Node is 24.19.0. `ng` stayed on Node 18 so the lockfile stayed on npm 10. The Static Web Apps proxy on port 44300 stayed on Node 24.
+
+### Ionic 7.8.6 already covers Angular 17
+
+`@ionic/angular` stayed at **7.8.6**. Angular 17 support starts at Ionic **7.5.4**. RxJS stayed **7.8.2**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**.
+
+`ng update @angular/cli@^17 @angular/core@^17` completed with no `--force`. CLI **17.3.17**, framework **17.3.12**, TypeScript **5.4.5**, `zone.js` **0.14.10**. A later `npm install` had no peer errors. The `node-releases` engine warning from Node 16 is gone.
+
+### The CLI renamed `browserTarget` and left the webpack builder
+
+`browserTarget` became `buildTarget` on the dev server and extract-i18n targets. The webpack `browser` builder stayed. The Cordova targets still say `browserTarget`. The control-flow migration found no `@` to escape. `tsconfig.json` `target` stayed `es2020`. The CLI still applies ES2022 and still warns. The Protractor builder is still in `@angular-devkit/build-angular`, so the `e2e` target stayed. The production build still skips Ionic `:host-context`, `:dir`, and `::part`. The initial bundle is over the 2 MB warning budget. The build still completes.
+
+### The next hop is Angular 18
+
+Ionic 8 starts Angular 18 support at **8.2**. Node **18.20.8** is inside the Angular 18.2 range (`^18.19.1 || ^20.11.1 || ^22.0.0`). Keep the webpack `browser` builder. The application builder is optional.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -509,6 +531,7 @@ Angular 16.2 supports Node `^16.14.0 || ^18.10.0`. This hop stayed on portable N
 - [App upgraded from Angular 13 to Angular 14](../../operations/changelogs/2026-11-15-002-app-angular-14.md)
 - [App upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-11-15-003-app-angular-15.md)
 - [App upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-11-15-004-app-angular-16.md)
+- [App upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-11-15-005-app-angular-17.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)

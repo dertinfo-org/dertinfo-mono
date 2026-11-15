@@ -8,6 +8,7 @@ For operational how-to (CI/CD setup, configuration), see the wider docs under [`
 
 | Completed | Title | Detail |
 |-----------|--------|--------|
+| 2026-11-15 | App upgraded from Angular 16 to Angular 17 | [2026-11-15-005-app-angular-17.md](./2026-11-15-005-app-angular-17.md) |
 | 2026-11-15 | App upgraded from Angular 15 to Angular 16 | [2026-11-15-004-app-angular-16.md](./2026-11-15-004-app-angular-16.md) |
 | 2026-11-15 | App upgraded from Angular 14 to Angular 15 | [2026-11-15-003-app-angular-15.md](./2026-11-15-003-app-angular-15.md) |
 | 2026-11-15 | App upgraded from Angular 13 to Angular 14 | [2026-11-15-002-app-angular-14.md](./2026-11-15-002-app-angular-14.md) |
