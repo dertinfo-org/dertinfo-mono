@@ -19,7 +19,7 @@
 ##################################################################
 
 # Base Stage
-# Pin Node 20 — matches SPA CI and Angular 20. node:lts (24) / npm 11 fails
+# Pin Node 20 — matches SPA CI and Angular 21. node:lts (24) / npm 11 fails
 # npm install when a file: workspace target is missing from this build context.
 FROM node:20-bookworm AS base
 
@@ -33,7 +33,7 @@ FROM base AS builder
 WORKDIR /build
 
 # Install build dependencies
-RUN npm install -g @angular/cli@20 typescript
+RUN npm install -g @angular/cli@21 typescript
 
 # Copy the static web app files
 COPY ./src/client/package.json package.json

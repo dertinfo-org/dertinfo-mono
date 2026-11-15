@@ -606,6 +606,34 @@ The required CLI migration changed `tsconfig.json` `moduleResolution` from `node
 
 Ionic 8's support ceiling is Angular 20. The next hop moves to Ionic 9. Keep `IonicModule` and Zone.js. Node **20.20.2** is inside the Angular 21 range. TypeScript **5.8.3** is not. Angular 21 needs TypeScript `>=5.9.0`. Let `ng update` move it.
 
+## App watch-list from the Angular 20 to 21 upgrade
+
+These showed up on the Ionic app during the move to Angular 21.2. Check them again on the next hop. The full record is [App upgraded from Angular 20 to Angular 21](../../operations/changelogs/2026-11-15-009-app-angular-21.md).
+
+### Ionic 9.0.11 keeps `IonicModule` on the lazy entry
+
+`@ionic/angular` moved from **8.8.19** to **9.0.11** before `ng update`. Its peer range is `@angular/core` `>=18`. The production build and the smoke suite passed on Angular 20.3.35 after that move. The root export no longer includes `IonicModule`. The NgModules import it from `@ionic/angular/lazy`. `IonicModule.forRoot()` stayed. `provideIonicAngular()` is also registered, because `ModalController` from the root export is not provided by the lazy module. Without it, a saved marking-sheet photo never renders. RxJS stayed **7.8.2**. `zone.js` stayed **0.15.1**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**. `@ionic/angular-toolkit` stayed **5.0.3**.
+
+### Node stayed 20
+
+Angular 21.2 supports Node `^20.19.0 || ^22.12.0 || ^24.0.0`. The installed CLI 21.2.30 engines field is `^20.19.0 || ^22.12.0 || >=24.0.0`. This hop stayed on portable Node **20.20.2**. npm **10.8.2** left `lockfileVersion` 3. There was no engine change before `ng update`.
+
+### `ng update` runs the control-flow migration, and this hop put the templates back
+
+`ng update @angular/cli@^21 @angular/core@^21` completed with no `--force`. CLI **21.2.30**, framework **21.2.26**, TypeScript **5.9.3**. The control-flow migration is no longer optional. It rewrote 11 templates. Those files were restored, so `*ngIf` and `*ngFor` stayed. `use-application-builder` and `router-current-navigation` stayed optional and were not run. The webpack `browser` builder stayed. `APP_INITIALIZER` stayed. The `standalone: false` flags stayed. The Protractor builder is still present, so the `e2e` target stayed.
+
+### `provideZoneChangeDetection` keeps Zone change detection
+
+The bootstrap migration added `provideZoneChangeDetection()` as `applicationProviders` on `bootstrapModule` in `main.ts`. `zone.js` stayed **0.15.1**. Zoneless change detection was not adopted.
+
+### The TypeScript `lib` array was removed
+
+`tsconfig.json` `lib` was `es2018` and `dom`. The migration removed that array. `target` stayed `es2020`. `moduleResolution` stayed `bundler`. The CLI still applies ES2022 and still warns.
+
+### The next hop is Angular 22
+
+Angular 22 drops Node 20. Move app CI, the app image, and local `ng` to Node **22.23.3** while the app is still on Angular 21, and re-run the smoke suite before `ng update`. Pin the framework to the website's **22.2.1**. Keep `ChangeDetectionStrategy.Eager` and Zone.js. TypeScript **5.9.3** is outside the Angular 22 range. Let `ng update` move it.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -619,6 +647,7 @@ Ionic 8's support ceiling is Angular 20. The next hop moves to Ionic 9. Keep `Io
 - [App upgraded from Angular 17 to Angular 18](../../operations/changelogs/2026-11-15-006-app-angular-18.md)
 - [App upgraded from Angular 18 to Angular 19](../../operations/changelogs/2026-11-15-007-app-angular-19.md)
 - [App upgraded from Angular 19 to Angular 20](../../operations/changelogs/2026-11-15-008-app-angular-20.md)
+- [App upgraded from Angular 20 to Angular 21](../../operations/changelogs/2026-11-15-009-app-angular-21.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)
