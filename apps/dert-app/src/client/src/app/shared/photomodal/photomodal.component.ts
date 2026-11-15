@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ILogger } from 'src/app/providers/diagnostics/logger';
 import { SwiperOptions } from 'swiper';
@@ -11,6 +11,7 @@ SwiperCore.use([Zoom]);
     selector: 'photo-modal',
     templateUrl: 'photomodal.component.html',
     styleUrls: ['photomodal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PhotoModal {

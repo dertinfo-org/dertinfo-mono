@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { ILogger } from '../../providers/diagnostics/logger';
 import { ConfigurationService } from 'src/app/services/configuration.service';
@@ -11,6 +11,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 */
 @Component({
     templateUrl: 'settings.page.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class SettingsPage implements OnInit {

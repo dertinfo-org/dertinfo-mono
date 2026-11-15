@@ -634,6 +634,34 @@ The bootstrap migration added `provideZoneChangeDetection()` as `applicationProv
 
 Angular 22 drops Node 20. Move app CI, the app image, and local `ng` to Node **22.23.3** while the app is still on Angular 21, and re-run the smoke suite before `ng update`. Pin the framework to the website's **22.2.1**. Keep `ChangeDetectionStrategy.Eager` and Zone.js. TypeScript **5.9.3** is outside the Angular 22 range. Let `ng update` move it.
 
+## App watch-list from the Angular 21 to 22 upgrade
+
+These showed up on the Ionic app during the move to Angular 22.2. The full record is [App upgraded from Angular 21 to Angular 22](../../operations/changelogs/2026-11-15-010-app-angular-22.md).
+
+### Node 22 comes first
+
+Angular 22.2 supports Node `^22.22.3 || ^24.15.0 || ^26.0.0`. The installed CLI 22.2.1 engines field is `^22.22.3 || ^24.15.0 || >=26.0.0`. App CI, the app image, and local `ng` moved to Node **22.23.3** while the app was still on Angular 21.2.26. The production build hash matched the Node 20 build (`64549b3ec703b6a0`), and the smoke suite passed, before `ng update`. npm **10.9.9** left `lockfileVersion` 3. Node **22.22.2** is below the Angular 22 floor.
+
+### The packages are pinned to 22.2.1
+
+`ng update @angular/cli@22.2.1 @angular/core@22.2.1` completed with no `--force`. The ranges it wrote resolved to framework **22.2.6** and CLI **22.2.7**. `package.json` was then set to exact **22.2.1** for the framework, the CLI, and `@angular-devkit/build-angular`, and TypeScript to **6.0.3**, matching the website. A clean `npm install` succeeded. Ionic stayed **9.0.11**. RxJS stayed **7.8.2**. `zone.js` stayed **0.15.1**.
+
+### Optional migrations were not run
+
+The CLI listed `use-application-builder` and `migrate-karma-to-vitest` and did not run them. The webpack `browser` builder stayed. The production build prints that this builder is deprecated. The control-flow migration was not offered. `*ngIf` and `*ngFor` stayed. `APP_INITIALIZER` stayed. The `standalone: false` flags stayed. `provideZoneChangeDetection()` stayed.
+
+### Required migrations keep Eager change detection and XHR
+
+The migration added `changeDetection: ChangeDetectionStrategy.Eager` on 19 components. It added `withXhr()` beside `withInterceptorsFromDi()`. `$safeNavigationMigration` made no template changes. `paramsInheritanceStrategy` now defaults to `'always'` and has no migration. `RouterModule.forRoot` sets `paramsInheritanceStrategy: 'emptyOnly'`.
+
+### TypeScript 6 keeps the previous checking
+
+`ng update` moved TypeScript from **5.9.3** to **6.0.3**. `tsconfig.json` sets `strict: false`, `esModuleInterop: false`, and `ignoreDeprecations: "6.0"`. `target` stayed `es2020`. `moduleResolution` stayed `bundler`. `strictTemplates` stayed true. The migration suppressed `nullishCoalescingNotNullable` and `optionalChainNotNullable` in `tsconfig.app.json` and `tsconfig.spec.json`. The production build accepted that.
+
+### The Protractor builder is gone
+
+`@angular-devkit/build-angular` 22.2.1 does not ship the Protractor builder. The `e2e` target was removed from `angular.json`. The `protractor` package is still installed. The Playwright suite is the check.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -648,6 +676,7 @@ Angular 22 drops Node 20. Move app CI, the app image, and local `ng` to Node **2
 - [App upgraded from Angular 18 to Angular 19](../../operations/changelogs/2026-11-15-007-app-angular-19.md)
 - [App upgraded from Angular 19 to Angular 20](../../operations/changelogs/2026-11-15-008-app-angular-20.md)
 - [App upgraded from Angular 20 to Angular 21](../../operations/changelogs/2026-11-15-009-app-angular-21.md)
+- [App upgraded from Angular 21 to Angular 22](../../operations/changelogs/2026-11-15-010-app-angular-22.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)

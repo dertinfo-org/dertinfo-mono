@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-notification-box',
     templateUrl: './notification-box.component.html',
     styleUrls: ['./notification-box.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class NotificationBoxComponent implements OnInit {

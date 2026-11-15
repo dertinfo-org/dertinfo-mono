@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ILogger } from '../../providers/diagnostics/logger';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { ConfigurationService } from 'src/app/services/configuration.service';
@@ -6,6 +6,7 @@ import { ConfigurationService } from 'src/app/services/configuration.service';
 @Component({
     selector: 'photo-button',
     templateUrl: 'photobutton.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PhotoButton implements OnInit {

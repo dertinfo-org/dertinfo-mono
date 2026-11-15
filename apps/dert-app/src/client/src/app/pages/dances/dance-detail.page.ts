@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -28,6 +28,7 @@ import { AuthService } from 'src/app/authentication/auth.service';
     templateUrl: 'dance-detail.page.html',
     styleUrls: ['dance-detail.page.scss'],
     providers: [DanceService],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DanceDetailPage implements OnInit, OnDestroy {

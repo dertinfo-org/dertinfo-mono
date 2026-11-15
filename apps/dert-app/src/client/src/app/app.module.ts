@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular/lazy';
@@ -58,7 +58,7 @@ export function initSettings(configurationService: ConfigurationService, appInsi
         { provide: ILogger, useClass: ConsoleLogger },
         AuthGuard,
         provideIonicAngular(),
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withXhr(), withInterceptorsFromDi())
     ],
     bootstrap: [AppComponent],
     exports: [
