@@ -580,6 +580,32 @@ Angular 19.2 supports Node `^18.19.1 || ^20.11.1 || ^22.0.0`. The installed CLI 
 
 Angular 20 drops Node 18. Move app CI, the app image, and local `ng` to Node **20.20.2** while the app is still on Angular 19, and re-run the smoke suite before `ng update`. Ionic **8.8.19** still peers Angular `>=16`. Stay on it unless a peer or the build refuses it.
 
+## App watch-list from the Angular 19 to 20 upgrade
+
+These showed up on the Ionic app during the move to Angular 20.3. Check them again on the next hop. The full record is [App upgraded from Angular 19 to Angular 20](../../operations/changelogs/2026-11-15-008-app-angular-20.md).
+
+### Node 20 comes first
+
+Angular 20.3 supports Node `^20.19.0 || ^22.12.0 || ^24.0.0`. The installed CLI 20.3.43 engines field is `^20.19.0 || ^22.12.0 || >=24.0.0`. App CI, the app image, and local `ng` moved to Node **20.20.2** while the app was still on Angular 19.2.25. `npm install` and the production build succeeded, and the smoke suite passed, before `ng update`. npm **10.8.2** left `lockfileVersion` 3. This machine's default Node is 24.19.0. `ng` stayed on Node 20 so the lockfile stayed on npm 10. The Static Web Apps proxy on port 44300 stayed on Node 24. Node 20 ended on 30 April 2026. **20.20.2** is the last release on that line. Angular 21 still lists `^20.19.0`.
+
+### Ionic 8.8.19 stayed
+
+`@ionic/angular` stayed at **8.8.19**. Its peer range is `@angular/core` `>=16.0.0`. The support policy lists Ionic 8 through Angular 20. RxJS stayed **7.8.2**. TypeScript stayed **5.8.3**. `zone.js` stayed **0.15.1**. `@ionic/storage-angular` stayed **4.0.0**. `@auth0/angular-jwt` stayed **5.2.0**.
+
+`ng update @angular/cli@^20 @angular/core@^20` completed with no `--force`. CLI **20.3.43**, framework **20.3.35**. A later `npm install` completed. It warned that optional peer `karma` `^6.4.0` from `@angular/build` was overridden by the installed `karma` 6.3. The install did not fail. Karma was left at **6.3.16**.
+
+### Optional migrations were not run
+
+The CLI listed `use-application-builder`, `control-flow-migration`, and `router-current-navigation` and did not run them. The webpack `browser` builder stayed. `*ngIf`, `*ngFor`, and `*ngSwitch` stayed. `APP_INITIALIZER` stayed. `target` stayed `es2020`. The `standalone: false` flags from Angular 19 stayed. The Protractor builder is still present, so the `e2e` target stayed.
+
+### The CLI set `moduleResolution` to `bundler`
+
+The required CLI migration changed `tsconfig.json` `moduleResolution` from `node` to `bundler` and wrote schematic defaults that keep the current file-name suffixes. The `DOCUMENT`, `InjectFlags`, and `TestBed.get` migrations made no changes.
+
+### The next hop is Angular 21
+
+Ionic 8's support ceiling is Angular 20. The next hop moves to Ionic 9. Keep `IonicModule` and Zone.js. Node **20.20.2** is inside the Angular 21 range. TypeScript **5.8.3** is not. Angular 21 needs TypeScript `>=5.9.0`. Let `ng update` move it.
+
 ## Related
 
 - [Angular standards](../standards/angular/README.md)
@@ -592,6 +618,7 @@ Angular 20 drops Node 18. Move app CI, the app image, and local `ng` to Node **2
 - [App upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-11-15-005-app-angular-17.md)
 - [App upgraded from Angular 17 to Angular 18](../../operations/changelogs/2026-11-15-006-app-angular-18.md)
 - [App upgraded from Angular 18 to Angular 19](../../operations/changelogs/2026-11-15-007-app-angular-19.md)
+- [App upgraded from Angular 19 to Angular 20](../../operations/changelogs/2026-11-15-008-app-angular-20.md)
 - [Website upgraded from Angular 14 to Angular 15](../../operations/changelogs/2026-10-04-002-web-angular-15.md)
 - [Website upgraded from Angular 15 to Angular 16](../../operations/changelogs/2026-10-04-003-web-angular-16.md)
 - [Website upgraded from Angular 16 to Angular 17](../../operations/changelogs/2026-10-04-004-web-angular-17.md)
