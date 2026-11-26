@@ -8,6 +8,8 @@ The allow-list is the production leaf [`infra/bicep/subscription/main.prod.bicep
 
 This does not change the database the storage template creates. That database is still Basic until it is scaled.
 
+Pull request: https://github.com/dertinfo-org/dertinfo-mono/pull/164
+
 ## Why the work was completed
 
 Production needs a short step up from Basic when DTU pressure shows up. [Hosting and cost](../../technical/architecture/hosting-and-cost.md) already treats S0 as that relief valve. The subscription policy denied every SKU except Basic, so the scale could not be applied.
