@@ -82,7 +82,7 @@ param allowedAppServicePlanSkus array = [
   'Basic'
 ]
 
-@description('SQL database SKU names allowed by policy (Deny). Basic only for now.')
+@description('SQL database sku.name values allowed by policy (Deny). Shared default is Basic.')
 param allowedSqlDatabaseSkus array = [
   'Basic'
 ]

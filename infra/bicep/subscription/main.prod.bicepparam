@@ -11,3 +11,8 @@ using 'main.bicep'
 extends './main.shared.bicepparam'
 
 param environmentTag = 'prd'
+
+param allowedSqlDatabaseSkus = [
+  'Basic'
+  'S0'
+]
