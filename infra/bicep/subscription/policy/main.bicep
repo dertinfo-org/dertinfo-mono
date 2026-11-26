@@ -18,7 +18,7 @@ param allowedResourceTypes array
 @description('App Service plan SKU names allowed (Deny otherwise).')
 param allowedAppServicePlanSkus array
 
-@description('SQL database SKU names allowed (Deny otherwise). Basic only initially.')
+@description('SQL database sku.name values allowed (Deny otherwise).')
 param allowedSqlDatabaseSkus array
 
 @description('Disable AVM telemetry.')
@@ -32,6 +32,7 @@ param enableTelemetry bool = false
 var policyAllowedResourceTypesId = '/providers/Microsoft.Authorization/policyDefinitions/a08ec900-254a-4555-9bf5-e42af04b5c5c'
 var appServiceSkuPolicyName = 'di-policy-appservice-skus-${assignmentSuffix}'
 var sqlSkuPolicyName = 'di-policy-sql-skus-${assignmentSuffix}'
+var sqlSkuPolicyDescription = 'Deny SQL database SKUs other than ${join(allowedSqlDatabaseSkus, ', ')}.'
 
 // #####################################################
 // References
@@ -74,7 +75,7 @@ resource sqlSkuPolicy 'Microsoft.Authorization/policyDefinitions@2021-06-01' = {
   name: sqlSkuPolicyName
   properties: {
     displayName: 'DertInfo allowed SQL database SKUs (${assignmentSuffix})'
-    description: 'Only Basic SQL database SKU is allowed until policy is expanded.'
+    description: sqlSkuPolicyDescription
     mode: 'Indexed'
     policyRule: {
       if: {
@@ -144,7 +145,7 @@ module sqlSkuAssignment 'br/public:avm/res/authorization/policy-assignment/sub-s
   params: {
     name: 'di-assign-sql-skus-${assignmentSuffix}'
     displayName: 'DertInfo SQL database SKUs (${assignmentSuffix})'
-    description: 'Deny SQL database SKUs other than Basic.'
+    description: sqlSkuPolicyDescription
     policyDefinitionId: sqlSkuPolicy.id
     enforcementMode: 'Default'
     enableTelemetry: enableTelemetry
